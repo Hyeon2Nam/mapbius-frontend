@@ -1,0 +1,109 @@
+@import "util.scss";
+
+.login-container {
+  font-family: "malssami815";
+
+  color: $main-color;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .img-wrapper {
+    background-color: aquamarine;
+    background: url("../../public//imgs/gyeongbokgung.jpg") no-repeat;
+    background-size: cover;
+    background-position: 60%;
+    width: 40vw;
+    height: 100vh;
+  }
+
+  .login-info-wrapper {
+    width: 60vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+
+    .sub-title {
+      font-size: 2.1rem;
+      padding: 40px 0 20px 0;
+    }
+
+    .login-info {
+      width: 70%;
+      padding: 10%;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+
+      input {
+        width: 100%;
+        border: none;
+        padding: 10px;
+        outline: none;
+        font-size: 28px;
+        border-bottom: 1px solid $main-color;
+      }
+
+      .side-link-wrapper {
+        width: 100%;
+        font-size: 1.2rem;
+        display: flex;
+        justify-content: space-between;
+        padding-top: 20px;
+
+        div :first-child {
+          margin-right: 20px;
+        }
+      }
+    }
+  }
+
+  .btn-wrapper {
+    display: flex;
+    width: 100%;
+    margin-top: 100px;
+    justify-content: flex-end;
+  }
+
+  button {
+    font-family: "malssami815";
+    border: none;
+    padding: 20px;
+    border-radius: 50px;
+    font-size: 1.2rem;
+    height: 60px;
+  }
+
+  .default-btn {
+    color: white;
+    background-color: $btn-blue;
+    margin-right: 30px;
+    width: 140px;
+  }
+
+  .kakao-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $btn-yellow;
+    width: 200px;
+
+    img {
+      width: 50px;
+      height: auto;
+    }
+  }
+
+  a {
+    @include linkTextDecorate();
+  }
+
+  .logo-img {
+    display: block;
+    position: fixed;
+    top: 10px;
+    right: 80px;
+  }
+}
