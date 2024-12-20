@@ -1,7 +1,11 @@
-@import "util.scss";
+@use "util.scss" as *;
 
 .login-container {
   font-family: "malssami815";
+
+  .login-info {
+    width: 70%;
+  }
 
   color: $main-color;
   display: flex;
@@ -30,8 +34,13 @@
       padding: 40px 0 20px 0;
     }
 
+    @include large-desktop {
+      .login-info {
+        width: 40%;
+      }
+    }
+
     .login-info {
-      width: 70%;
       padding: 10%;
       display: flex;
       flex-direction: column;
