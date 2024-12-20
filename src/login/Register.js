@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import "../style/Register.scss";
-import Button from "@mui/material/Button";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 
@@ -16,6 +15,15 @@ export default function Register() {
   });
   const [open, setOpen] = React.useState(false);
   const [errMsg, setErrMsg] = useState("");
+  const customSx = {
+    fontFamily: "malssami815",
+    fontSize: "25px",
+    backgroundColor: "#cd4d36",
+    color: "#fff",
+    "& .MuiAlert-icon": {
+      fontSize: "30px",
+    },
+  };
 
   const maxDate = () => {
     const today = new Date();
@@ -78,11 +86,17 @@ export default function Register() {
       />
       <div>
         <Snackbar
-          anchorOrigin={{ vertical: "top", horizontal: "left" }}
+          anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
           open={open}
           autoHideDuration={3000}
+          sx={{
+            "& .MuiSnackbarContent-root": {
+              backgroundColor: "transparent",
+            },
+          }}
+          onClose={() => setOpen(false)}
         >
-          <Alert severity="error" variant="filled" sx={{ width: "100%" }}>
+          <Alert severity="error" variant="filled" sx={customSx}>
             {errMsg}
           </Alert>
         </Snackbar>
@@ -154,7 +168,7 @@ export default function Register() {
             <option value={"female"}>여</option>
           </select>
         </div>
-        <button onClick={tryRegister}>Register</button>
+        <button onClick={tryRegister}>완료</button>
       </div>
       <img
         className="back-img"

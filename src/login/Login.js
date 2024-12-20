@@ -2,10 +2,23 @@ import React, { useState } from "react";
 import "../style/Login.scss";
 import { Link } from "react-router-dom";
 import { tryLogin } from "../api/loginApi";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
 
 export default function Login() {
   const [userId, setUserId] = useState("");
   const [userPw, setUserPw] = useState("");
+  const [open, setOpen] = React.useState(false);
+  const [errMsg, setErrMsg] = useState("");
+  const customSx = {
+    fontFamily: "malssami815",
+    fontSize: "25px",
+    backgroundColor: "#cd4d36",
+    color: "#fff",
+    "& .MuiAlert-icon": {
+      fontSize: "30px",
+    },
+  };
 
   const loginHandler = () => {
     if (userId && userPw) {
@@ -18,21 +31,42 @@ export default function Login() {
         .then((res) => {
           if (res.status === 200) {
             console.log(res);
+            setOpen(false);
             console.log("Success~!~!!");
           }
         })
         .catch((e) => {
           if (e.response.status === 401) {
             console.log("Wrong Id, Pw");
+            setErrMsg("아이디와 비밀번호가 다릅니다");
+            setOpen(true);
           }
         });
     } else {
-      console.log("채워");
+      setErrMsg("아이디와 비밀번호를 입력해주세요");
+      setOpen(true);
     }
   };
 
   return (
     <div className="login-container">
+      <div>
+        <Snackbar
+          anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+          open={open}
+          autoHideDuration={3000}
+          sx={{
+            "& .MuiSnackbarContent-root": {
+              backgroundColor: "transparent",
+            },
+          }}
+          onClose={() => setOpen(false)}
+        >
+          <Alert severity="error" variant="filled" sx={customSx}>
+            {errMsg}
+          </Alert>
+        </Snackbar>
+      </div>
       <div className="img-wrapper"></div>
       <div className="login-info-wrapper">
         <div className="login-info">
