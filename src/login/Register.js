@@ -3,6 +3,8 @@ import "../style/Register.scss";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 
+// register api 제작해야됨됨
+
 export default function Register() {
   const [userInfo, setUserInfo] = useState({
     userId: "",
