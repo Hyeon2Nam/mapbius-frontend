@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "../style/Login.scss";
 import { Link } from "react-router-dom";
+import { tryLogin } from "../api/loginApi";
 
 export default function Login() {
   const [userId, setUserId] = useState("");
@@ -9,9 +10,22 @@ export default function Login() {
   const loginHandler = () => {
     if (userId && userPw) {
       let obj = {
-        userId: userId,
-        userPw: userPw,
+        id: userId,
+        pw: userPw,
       };
+
+      tryLogin(obj)
+        .then((res) => {
+          if (res.status === 200) {
+            console.log(res);
+            console.log("Success~!~!!");
+          }
+        })
+        .catch((e) => {
+          if (e.response.status === 401) {
+            console.log("Wrong Id, Pw");
+          }
+        });
     } else {
       console.log("채워");
     }
