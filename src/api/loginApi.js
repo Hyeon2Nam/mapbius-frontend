@@ -4,6 +4,10 @@ export const tryLogin = (obj) => {
   return api.post("/login", JSON.stringify(obj));
 };
 
+export const tryRegister = (obj) => {
+  return api.post("/register", JSON.stringify(obj));
+};
+
 // export const areaList = () => {
 //     return api.get("/area/list");
 //   };

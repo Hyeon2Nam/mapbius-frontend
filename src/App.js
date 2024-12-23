@@ -1,5 +1,5 @@
 import "./App.css";
-import { Link, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Login from "./login/Login";
 import Register from "./login/Register";
 import Auth from "./login/Auth";

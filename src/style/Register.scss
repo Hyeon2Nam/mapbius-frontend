@@ -1,0 +1,105 @@
+@use "util.scss" as *;
+
+.register-info-wrapper {
+  width: 40vw;
+}
+
+.register-container {
+  overflow-x: hidden;
+  height: 100vh;
+  width: 100vw;
+  font-family: "malssami815";
+
+  color: $main-color;
+
+  @include large-desktop {
+    .register-info-wrapper {
+      width: 25vw;
+    }
+  }
+
+  .register-info-wrapper {
+    margin: 0 auto;
+    background-color: #bec3c728;
+    border: 2px solid #e7e2ec;
+    border-radius: 30px;
+    padding: 2rem 5rem;
+    margin-bottom: 300px;
+
+    @include blue-btn;
+
+    div:nth-child(1n),
+    input:nth-child(1n) {
+      width: 100%;
+    }
+  }
+
+  .id-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    input[type="button"] {
+      width: 120px;
+      height: 40px;
+      font-size: 1rem;
+      padding: 10px;
+    }
+  }
+
+  .back-img {
+    width: 100vw;
+    height: 40vh;
+    position: fixed;
+    left: 0;
+    bottom: -250px;
+    z-index: -10;
+  }
+
+  .list-wrapper {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 50px;
+    border-bottom: 1px solid $main-color;
+    padding: 10px;
+
+    :nth-child(1n) {
+      height: 40px;
+      font-size: 1.4rem;
+      outline: none;
+      border: none;
+      background-color: initial;
+      font-family: "malssami815";
+    }
+
+    input[type="date"] {
+      width: 50%;
+    }
+
+    select {
+      width: 20%;
+    }
+  }
+
+  h1 {
+    font-size: 2.5rem;
+  }
+
+  .sub-title {
+    width: 100%;
+    text-align: left;
+    font-size: 1.7rem;
+    margin: 50px 0 10px 0;
+  }
+
+  .info-input {
+    font-size: 1.4rem;
+    padding: 10px;
+    outline: none;
+    border: none;
+    background-color: initial;
+    border-bottom: 1px solid $main-color;
+  }
+}
