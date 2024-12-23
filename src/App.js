@@ -9,6 +9,8 @@ import FindIdAndPw from "./login/FindIdAndPw";
 import Notice from "./Notice/NoticeBoard";
 import NoticeDetail from "./Notice/NoticeDetail";
 import NoticeCreate from "./Notice/NoticeCreate";
+import UserInfoView from "./User/UserInfoView";
+import UserInfoEdit from "./User/UserInfoEdit";
 
 function App() {
   return (
@@ -23,6 +25,8 @@ function App() {
         <Route path="/notice" element={<Notice />} />
         <Route path="/notice/view/:id" element={<NoticeDetail />} />
         <Route path="/notice/:mode/:id" element={<NoticeCreate />} />
+        <Route path="/user-info/view" element={<UserInfoView />} />
+        <Route path="/user-info/edit" element={<UserInfoEdit />} />
         <Route path="/auth" element={<Auth />} />
       </Routes>
     </div>
