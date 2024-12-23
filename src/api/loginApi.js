@@ -8,6 +8,14 @@ export const tryRegister = (obj) => {
   return api.post("/register", JSON.stringify(obj));
 };
 
+export const findId = (obj) => {
+  return api.post("/findId", JSON.stringify(obj));
+};
+
+export const findPw = (obj) => {
+  return api.post("/findPw", JSON.stringify(obj));
+};
+
 // export const areaList = () => {
 //     return api.get("/area/list");
 //   };

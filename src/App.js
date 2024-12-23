@@ -5,6 +5,7 @@ import Register from "./login/Register";
 import Auth from "./login/Auth";
 import SelectRegisterWay from "./login/SelectRegisterWay";
 import MainPage from "./map/Temp";
+import FindIdAndPw from "./login/FindIdAndPw";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/select-register" element={<SelectRegisterWay />} />
         <Route path="/default-register" element={<Register />} />
         <Route path="/kakao-register" element={<Register />} />
+        <Route path="/find-idpw" element={<FindIdAndPw />} />
         <Route path="/auth" element={<Auth />} />
       </Routes>
     </div>
