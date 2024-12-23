@@ -10,6 +10,8 @@ export default function MainPage() {
       <Link to={"/login"}>Login</Link>
       <br />
       <Link to={"/select-register"}>register</Link>
+      <br />
+      <Link to={"/notice"}>공지사항</Link>
     </div>
   );
 }
