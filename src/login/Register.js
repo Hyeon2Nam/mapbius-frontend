@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import "../style/Register.scss";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
-
-// register api 제작해야됨됨
+import { tryRegister } from "../api/loginApi";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Register() {
+  const nav = useNavigate();
   const [userInfo, setUserInfo] = useState({
     userId: "",
     userPw: "",
@@ -48,7 +49,7 @@ export default function Register() {
     });
   };
 
-  const tryRegister = () => {
+  const registerHandler = () => {
     const {
       userId,
       userPw,
@@ -77,15 +78,33 @@ export default function Register() {
       return;
     }
 
+    const obj = {
+      id: userId,
+      pw: userPw,
+      email: userEmail,
+      nickname: userNickName,
+      birth: date,
+      gender: gender,
+    };
+
     setOpen(false);
+    tryRegister(obj).then((res) => {
+      if (res.status === 200) {
+        console.log(res);
+        console.log("success");
+        nav("/");
+      }
+    });
   };
 
   return (
     <div className="register-container">
-      <img
-        className="logo-img"
-        src={process.env.PUBLIC_URL + "/imgs/logo.jpg"}
-      />
+      <Link to={"/"}>
+        <img
+          className="logo-img"
+          src={process.env.PUBLIC_URL + "/imgs/logo.jpg"}
+        />
+      </Link>
       <div>
         <Snackbar
           anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
@@ -170,7 +189,7 @@ export default function Register() {
             <option value={"female"}>여</option>
           </select>
         </div>
-        <button onClick={tryRegister}>완료</button>
+        <button onClick={registerHandler}>완료</button>
       </div>
       <img
         className="back-img"

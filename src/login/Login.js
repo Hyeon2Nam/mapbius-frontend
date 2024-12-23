@@ -96,10 +96,12 @@ export default function Login() {
           </div>
         </div>
       </div>
-      <img
-        className="logo-img"
-        src={process.env.PUBLIC_URL + "/imgs/logo.jpg"}
-      />
+      <Link to={"/"}>
+        <img
+          className="logo-img"
+          src={process.env.PUBLIC_URL + "/imgs/logo.jpg"}
+        />
+      </Link>
     </div>
   );
 }
