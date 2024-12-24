@@ -27,6 +27,10 @@ export default function Register() {
       fontSize: "30px",
     },
   };
+  const [idDuplicated, setIdDuplicated] = useState({
+    isChecked: false,
+    isDuplicated: false,
+  });
 
   const maxDate = () => {
     const today = new Date();
@@ -49,34 +53,88 @@ export default function Register() {
     });
   };
 
-  const registerHandler = () => {
-    const {
-      userId,
-      userPw,
-      userPwCheck,
-      userEmail,
-      userNickName,
-      date,
-      gender,
-    } = userInfo;
+  const snackbarHandler = (msg) => {
+    setErrMsg(msg);
+    setOpen(true);
+  };
+
+  const validateHandler = () => {
+    let { userId, userPw, userPwCheck, userEmail, userNickName, date, gender } =
+      userInfo;
     const emailRegex =
       /^(([^<>()\[\].,;:\s@"]+(\.[^<>()\[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
+    const idRegex = /^[a-z0-9-_]{5,20}$/g;
+    const pwRegx = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,20}$/;
+    const spaceRegx = /\s/g;
+    const nicknameRegx = /^[가-힣a-zA-Z0-9]{2,8}$/;
+
+    userId = userId.trim();
+    userPw = userPw.trim();
+    userEmail = userEmail.trim();
+    userNickName = userNickName.trim();
 
     if (!(userId && userPw && userEmail && userNickName && date && gender)) {
-      setErrMsg("양식을 전부 기입해주세요");
-      setOpen(true);
-      return;
+      snackbarHandler("양식을 전부 기입해주세요");
+      return true;
+    }
+
+    if (!idDuplicated.isChecked) {
+      snackbarHandler("아이디 중복 체크를 해주세요");
+      return true;
+    } else if (idDuplicated.isDuplicated) {
+      snackbarHandler("중복된 아이디는 사용하실 수 없습니다");
+      return true;
     }
 
     if (userPw !== userPwCheck) {
-      setErrMsg("비밀번호가 일치하지 않습니다");
-      setOpen(true);
-      return;
-    } else if (!emailRegex.test(userEmail)) {
-      setErrMsg("이메일을 제대로 작성해주세요");
-      setOpen(true);
-      return;
+      snackbarHandler("비밀번호가 일치하지 않습니다");
+      return true;
+    } else if (!idRegex.test(userId) || userId.match(spaceRegx)) {
+      snackbarHandler("아이디를 제대로 작성해주세요");
+      return true;
+    } else if (!pwRegx.test(userPw) || userPw.match(spaceRegx)) {
+      snackbarHandler("비밀번호를 제대로 작성해주세요");
+      return true;
+    } else if (!emailRegex.test(userEmail) || userEmail.match(spaceRegx)) {
+      snackbarHandler("이메일을 제대로 작성해주세요");
+      return true;
+    } else if (
+      !nicknameRegx.test(userNickName) ||
+      userNickName.match(spaceRegx)
+    ) {
+      snackbarHandler("닉네임을 제대로 작성해주세요");
+      return true;
     }
+
+    if (!(gender === "male" || gender === "female")) return true;
+
+    if (isValidDate(date)) {
+      snackbarHandler("유효하지 않은 날짜입니다");
+      return true;
+    }
+
+    return false;
+  };
+
+  const isValidDate = (userDate) => {
+    const date = new Date(userDate);
+
+    if (isNaN(date.getTime())) return true;
+
+    const today = new Date();
+    if (date.getTime() > today.getTime()) {
+      return true;
+    }
+
+    return false;
+  };
+
+  const registerHandler = () => {
+    const { userId, userPw, userEmail, userNickName, date, gender } = userInfo;
+
+    if (validateHandler()) return;
+
+    console.log("OK");
 
     const obj = {
       id: userId,
@@ -88,13 +146,17 @@ export default function Register() {
     };
 
     setOpen(false);
-    tryRegister(obj).then((res) => {
-      if (res.status === 200) {
-        console.log(res);
-        console.log("success");
-        nav("/");
-      }
-    });
+    // tryRegister(obj).then((res) => {
+    //   if (res.status === 200) {
+    //     console.log(res);
+    //     console.log("success");
+    //     nav("/");
+    //   }
+    // });
+  };
+
+  const duplicateCheck = () => {
+    setIdDuplicated({ isChecked: true, idDuplicated: false });
   };
 
   return (
@@ -126,7 +188,7 @@ export default function Register() {
         <h1>회원가입</h1>
         <div className="id-wrapper sub-title">
           <div>아이디</div>
-          <input type="button" value={"중복확인"} />
+          <input type="button" value={"중복확인"} onClick={duplicateCheck} />
         </div>
         <input
           className="info-input"
