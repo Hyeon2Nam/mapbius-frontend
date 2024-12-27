@@ -81,8 +81,8 @@ export default function Login() {
           <div className="side-link-wrapper">
             <Link to={"/select-register"}>회원가입</Link>
             <div>
-              <Link to={"/find-idpw"}>아이디 찾기</Link>
-              <Link to={"/find-idpw"}>비밀번호 찾기</Link>
+              <Link to={"/find-id"}>아이디 찾기</Link>
+              <Link to={"/find-pw"}>비밀번호 찾기</Link>
             </div>
           </div>
           <div className="btn-wrapper">
