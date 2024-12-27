@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { findId, findPw } from "../api/loginApi";
+import { findPw } from "../api/loginApi";
 import { Link } from "react-router-dom";
 import "../style/FindIdPw.scss";
 
@@ -14,10 +14,10 @@ export default function FindPw() {
       email: userEmail,
     };
 
-    console.log(obj);
+    // console.log(obj);
     // findPw(obj).then((res) => {
     //   if (res.status === 200) {
-    // console.log(res);
+    //     console.log(res);
     //   }
     // });
   };
@@ -44,10 +44,6 @@ export default function FindPw() {
         <div className="move-link">
           <Link to={"/select-register"}>회원가입</Link>
           <Link to={"/login"}>로그인</Link>
-        </div>
-        <div>
-          결과
-          {result}
         </div>
       </div>
     </div>

@@ -72,3 +72,17 @@ $breakpoint-large-desktop: 2048px;
     background-color: $btn-blue;
   }
 }
+
+@mixin class-blu-btn {
+  button,
+  input[type="button"] {
+    font-family: "malssami815";
+    border: none;
+    padding: 20px;
+    border-radius: 50px;
+    color: white;
+    background-color: $btn-blue;
+    margin-right: 30px;
+    font-size: 1.2rem;
+  }
+}

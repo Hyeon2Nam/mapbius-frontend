@@ -1,23 +1,36 @@
 import React, { useState } from "react";
-import { findId, findPw } from "../api/loginApi";
-import { Link } from "react-router-dom";
+import { findId } from "../api/loginApi";
+import { Link, useNavigate } from "react-router-dom";
 import "../style/FindIdPw.scss";
 
 export default function FindId() {
+  const nav = useNavigate();
   const [userEmail, setUserEmail] = useState("");
   const [result, setResult] = useState("");
+  const [openModal, setopenModal] = useState(false);
 
   const findIdHandler = () => {
     let obj = {
       email: userEmail,
     };
-    console.log(obj);
 
-    // findId(obj).then((res) => {
-    //   if (res.status === 200) {
-    // console.log(res);
-    //   }
-    // });
+    findId(obj)
+      .then((res) => {
+        if (res.status === 200) {
+          setResult(res.data.id);
+          setopenModal(true);
+        } else {
+          setResult("조회된 결과가 없습니다");
+        }
+      })
+      .catch((e) => {
+        setResult("조회된 결과가 없습니다");
+        setopenModal(true);
+      });
+  };
+
+  const modalCloseHandler = () => {
+    setopenModal(false);
   };
 
   return (
@@ -38,7 +51,25 @@ export default function FindId() {
           <Link to={"/login"}>로그인</Link>
         </div>
       </div>
-      <div>결과</div>
+      <div className={openModal ? "result-form" : "none"}>
+        <div className="form-wrapper">
+          <button className="close-btn" onClick={modalCloseHandler}>
+            X
+          </button>
+          <div className="info-container">
+            <h1>회원님의 아이디를 확인해주세요</h1>
+            <span className="result-text">{result}</span>
+            <div className="result-btn">
+              <button className="short-btn" onClick={() => nav("/login")}>
+                로그인
+              </button>
+              <button className="long-btn" onClick={() => nav("/find-pw")}>
+                비밀번호 찾기
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
