@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "../style/Register.scss";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
-import { tryRegister } from "../api/loginApi";
+import { idDuplicateCheck, tryRegister } from "../api/loginApi";
 import { Link, useNavigate } from "react-router-dom";
 
 export default function Register() {
@@ -16,18 +16,24 @@ export default function Register() {
     date: "",
     gender: "",
   });
+  const [snackbarType, setsnackbarType] = useState("error");
   const [open, setOpen] = React.useState(false);
   const [errMsg, setErrMsg] = useState("");
+  const [snackbarColor, setSnackbarColor] = useState("#cd4d36");
   const customSx = {
     fontFamily: "malssami815",
     fontSize: "25px",
-    backgroundColor: "#cd4d36",
+    backgroundColor: snackbarColor,
     color: "#fff",
     "& .MuiAlert-icon": {
       fontSize: "30px",
     },
   };
   const [idDuplicated, setIdDuplicated] = useState({
+    isChecked: false,
+    isDuplicated: false,
+  });
+  const [emailDuplicated, setEmailDuplicated] = useState({
     isChecked: false,
     isDuplicated: false,
   });
@@ -47,6 +53,11 @@ export default function Register() {
   const userInfoHandler = (e) => {
     const { name, value } = e.target;
 
+    if (name === "userId")
+      setIdDuplicated({ isChecked: false, isDuplicated: false });
+    else if (name === "userEmail")
+      setEmailDuplicated({ isChecked: false, isDuplicated: false });
+
     setUserInfo({
       ...userInfo,
       [name]: value,
@@ -59,8 +70,8 @@ export default function Register() {
   };
 
   const validateHandler = () => {
-    let { userId, userPw, userPwCheck, userEmail, userNickName, date, gender } =
-      userInfo;
+    let userId, userPw, userEmail, userNickName;
+    const { userPwCheck, date, gender } = userInfo;
     const emailRegex =
       /^(([^<>()\[\].,;:\s@"]+(\.[^<>()\[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
     const idRegex = /^[a-z0-9-_]{5,20}$/g;
@@ -68,10 +79,10 @@ export default function Register() {
     const spaceRegx = /\s/g;
     const nicknameRegx = /^[가-힣a-zA-Z0-9]{2,8}$/;
 
-    userId = userId.trim();
-    userPw = userPw.trim();
-    userEmail = userEmail.trim();
-    userNickName = userNickName.trim();
+    userId = userInfo.userId.trim();
+    userPw = userInfo.userPw.trim();
+    userEmail = userInfo.userEmail.trim();
+    userNickName = userInfo.userNickName.trim();
 
     if (!(userId && userPw && userEmail && userNickName && date && gender)) {
       snackbarHandler("양식을 전부 기입해주세요");
@@ -83,6 +94,14 @@ export default function Register() {
       return true;
     } else if (idDuplicated.isDuplicated) {
       snackbarHandler("중복된 아이디는 사용하실 수 없습니다");
+      return true;
+    }
+
+    if (!emailDuplicated.isChecked) {
+      snackbarHandler("이메일 중복 체크를 해주세요");
+      return true;
+    } else if (emailDuplicated.isDuplicated) {
+      snackbarHandler("중복된 이메일은 사용하실 수 없습니다");
       return true;
     }
 
@@ -140,23 +159,86 @@ export default function Register() {
       id: userId,
       pw: userPw,
       email: userEmail,
-      nickname: userNickName,
-      birth: date,
+      nickName: userNickName,
+      birthDate: date,
       gender: gender,
     };
 
     setOpen(false);
-    // tryRegister(obj).then((res) => {
-    //   if (res.status === 200) {
-    //     console.log(res);
-    //     console.log("success");
-    //     nav("/");
-    //   }
-    // });
+
+    tryRegister(obj)
+      .then((res) => {
+        if (res.status === 200) {
+          nav("/");
+        } else {
+          snackbarHandler("회원가입에 실페했습니다.");
+        }
+      })
+      .catch((e) => {
+        snackbarHandler("회원가입에 실페했습니다.");
+      });
   };
 
-  const duplicateCheck = () => {
-    setIdDuplicated({ isChecked: true, idDuplicated: false });
+  const idDuplicateCheckHandler = () => {
+    if (!userInfo.userId || !userInfo.userId.trim()) return;
+
+    let obj = {
+      id: userInfo.userId,
+    };
+
+    idDuplicateCheck(obj)
+      .then((res) => {
+        if (res.status === 200) {
+          setsnackbarType("success");
+          setSnackbarColor("#26913b");
+          snackbarHandler("사용가능한 아이디 입니다.");
+          setIdDuplicated({ isChecked: true, idDuplicated: false });
+        } else {
+          snackbarHandler("중복된 아이디 입니다.");
+          setIdDuplicated({ isChecked: true, idDuplicated: true });
+        }
+      })
+      .catch((e) => {
+        snackbarHandler("중복된 아이디 입니다.");
+        setIdDuplicated({ isChecked: true, idDuplicated: true });
+      });
+
+    setsnackbarType("error");
+    setSnackbarColor("#cd4d36");
+  };
+
+  const emailDuplicateCheckHandler = () => {
+    const emailRegex =
+      /^(([^<>()\[\].,;:\s@"]+(\.[^<>()\[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
+    const spaceRegx = /\s/g;
+    let userEmail = userInfo.userEmail.trim();
+
+    if (!userEmail) return;
+    if (!emailRegex.test(userEmail) || userEmail.match(spaceRegx)) return;
+
+    let obj = {
+      email: userInfo.userEmail,
+    };
+
+    idDuplicateCheck(obj)
+      .then((res) => {
+        if (res.status === 200) {
+          setsnackbarType("success");
+          setSnackbarColor("#26913b");
+          snackbarHandler("사용가능한 이메일 입니다.");
+          setEmailDuplicated({ isChecked: true, idDuplicated: false });
+        } else {
+          snackbarHandler("중복된 이메일 입니다.");
+          setEmailDuplicated({ isChecked: true, idDuplicated: true });
+        }
+      })
+      .catch((e) => {
+        snackbarHandler("중복된 이메일 입니다.");
+        setEmailDuplicated({ isChecked: true, idDuplicated: true });
+      });
+
+    setsnackbarType("error");
+    setSnackbarColor("#cd4d36");
   };
 
   return (
@@ -179,7 +261,7 @@ export default function Register() {
           }}
           onClose={() => setOpen(false)}
         >
-          <Alert severity="error" variant="filled" sx={customSx}>
+          <Alert severity={snackbarType} variant="filled" sx={customSx}>
             {errMsg}
           </Alert>
         </Snackbar>
@@ -188,7 +270,11 @@ export default function Register() {
         <h1>회원가입</h1>
         <div className="id-wrapper sub-title">
           <div>아이디</div>
-          <input type="button" value={"중복확인"} onClick={duplicateCheck} />
+          <input
+            type="button"
+            value={"중복확인"}
+            onClick={idDuplicateCheckHandler}
+          />
         </div>
         <input
           className="info-input"
@@ -215,7 +301,14 @@ export default function Register() {
           onChange={(e) => userInfoHandler(e)}
         />
         <br />
-        <div className="sub-title">이메일</div>
+        <div className="id-wrapper sub-title">
+          <div>이메일</div>
+          <input
+            type="button"
+            value={"중복확인"}
+            onClick={emailDuplicateCheckHandler}
+          />
+        </div>
         <input
           className="info-input"
           name="userEmail"
