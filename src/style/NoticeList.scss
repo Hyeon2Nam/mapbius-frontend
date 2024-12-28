@@ -1,0 +1,115 @@
+@use "util.scss" as *;
+
+.notice-board-container {
+  font-family: "malssami815";
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+
+  .page-title-wrapper {
+    width: 25%;
+    text-align: end;
+    margin: 70px 0;
+
+    img {
+      width: 150px;
+      height: 30px;
+    }
+
+    .page-title {
+      font-size: 3rem;
+    }
+  }
+
+  .pagenation {
+    margin: 30px 0;
+
+    button {
+      margin: 0 5px;
+      background: initial;
+      border: none;
+      font-size: 1.2rem;
+      padding: 10px;
+      width: 40px;
+      border-radius: 30px;
+    }
+
+    button:hover {
+      background-color: #e1e1e1;
+      border-radius: 30px;
+    }
+
+    .cur-page {
+      color: $main-color;
+      font-weight: bold;
+    }
+  }
+
+  .bottom-menu {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .search {
+      display: flex;
+      align-items: center;
+
+      :last-child {
+        margin-left: 10px;
+      }
+    }
+
+    input,
+    button {
+      font-family: "malssami815";
+      font-size: 17px;
+      background: initial;
+      border-radius: 15px;
+      padding: 10px;
+      border: 2px solid $main-color;
+    }
+  }
+
+  .back-text {
+    position: absolute;
+    font-size: 5.5rem;
+    color: #e1e1e1;
+    z-index: -1;
+    top: 14%;
+    right: 6%;
+  }
+
+  .notice-list {
+    width: 70%;
+    height: 50%;
+    margin: 2% auto;
+  }
+
+  table {
+    width: 100%;
+    height: 100%;
+    border-top: 1px solid black;
+
+    @for $i from 1 through 3 {
+      td:nth-child(#{$i}) {
+        width: if($i%2==1, 20%, 60%);
+      }
+    }
+
+    th {
+      padding: 20px 0;
+    }
+
+    th,
+    td {
+      border-bottom: 1px solid #cdcdcd;
+      font-size: 1.1rem;
+    }
+
+    a {
+      @include linkTextDecorate;
+      color: #000;
+    }
+  }
+}

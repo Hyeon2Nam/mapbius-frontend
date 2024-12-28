@@ -39,6 +39,9 @@ export default function NoticeCreate() {
   };
 
   useEffect(() => {
+    if (params.mode !== "edit" || params.mode !== "create")
+      document.location = "/";
+
     if (params.mode === "edit") {
       console.log("edit mode");
       setIsEditMode(true);

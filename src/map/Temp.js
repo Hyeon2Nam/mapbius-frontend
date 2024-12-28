@@ -11,7 +11,7 @@ export default function MainPage() {
       <br />
       <Link to={"/select-register"}>register</Link>
       <br />
-      <Link to={"/notice"}>공지사항</Link>
+      <Link to={"/notice/1"}>공지사항</Link>
     </div>
   );
 }

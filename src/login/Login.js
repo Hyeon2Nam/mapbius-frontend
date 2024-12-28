@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import "../style/Login.scss";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { tryLogin } from "../api/loginApi";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 
 export default function Login() {
+  const nav = useNavigate();
   const [userId, setUserId] = useState("");
   const [userPw, setUserPw] = useState("");
   const [open, setOpen] = React.useState(false);
@@ -30,14 +31,12 @@ export default function Login() {
       tryLogin(obj)
         .then((res) => {
           if (res.status === 200) {
-            console.log(res);
             setOpen(false);
-            console.log("Success~!~!!");
+            nav("/");
           }
         })
         .catch((e) => {
           if (e.response.status === 401) {
-            console.log("Wrong Id, Pw");
             setErrMsg("아이디와 비밀번호가 다릅니다");
             setOpen(true);
           }

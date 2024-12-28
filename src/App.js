@@ -24,7 +24,7 @@ function App() {
         <Route path="/kakao-register" element={<Register />} />
         <Route path="/find-id" element={<FindId />} />
         <Route path="/find-pw" element={<FindPw />} />
-        <Route path="/notice" element={<Notice />} />
+        <Route path="/notice/:page" element={<Notice />} />
         <Route path="/notice/view/:id" element={<NoticeDetail />} />
         <Route path="/notice/:mode/:id" element={<NoticeCreate />} />
         <Route path="/user-info/view" element={<UserInfoView />} />
