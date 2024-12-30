@@ -1,0 +1,81 @@
+@use "util.scss" as *;
+
+.notice-detail {
+  font-family: "malssami815";
+
+  .page-title-wrapper {
+    width: 25%;
+    text-align: end;
+    margin: 70px 0;
+
+    img {
+      width: 150px;
+      height: 30px;
+    }
+
+    .page-title {
+      font-size: 3rem;
+    }
+  }
+
+  .main-container {
+    width: 70%;
+    margin: 0 auto;
+  }
+
+  .title-bar {
+    border-top: 1px solid #000;
+    border-bottom: 1px solid #cdcdcd;
+    padding: 30px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
+    @for $i from 1 through 3 {
+      :nth-child(#{$i}) {
+        width: if($i%2==1, 20%, 60%);
+      }
+    }
+
+    .blue-text {
+      color: $main-color;
+    }
+
+    .notice-title {
+      font-weight: bold;
+    }
+  }
+
+  .content {
+    font-family: sans-serif;
+    text-align: left;
+    padding: 30px;
+    border-bottom: 1px solid #cdcdcd;
+    white-space: pre-wrap;
+  }
+
+  a {
+    @include linkTextDecorate;
+    color: #fff;
+  }
+
+  .list-btn {
+    @include rounded-blue;
+    margin: 50px 0;
+  }
+
+  .btn-wrapper {
+    text-align: end;
+    margin: 10px 0;
+
+    button:last-child {
+      margin-left: 10px;
+    }
+  }
+
+  .gray-btn {
+    @include size-btn(80px, 30px, 15px);
+    background-color: gray;
+    padding: 5px;
+  }
+}

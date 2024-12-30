@@ -58,6 +58,19 @@ $breakpoint-large-desktop: 2048px;
   }
 }
 
+@mixin rounded-blue() {
+  font-family: "malssami815";
+  border: none;
+  padding: 20px;
+  border-radius: 50px;
+  font-size: 1.2rem;
+  height: 60px;
+  color: white;
+  background-color: $btn-blue;
+  margin-right: 30px;
+  width: 140px;
+}
+
 @mixin size-blue-btn($w, $h, $font) {
   button,
   input[type="button"] {
@@ -71,6 +84,18 @@ $breakpoint-large-desktop: 2048px;
     color: white;
     background-color: $btn-blue;
   }
+}
+
+@mixin size-btn($w, $h, $font) {
+  width: $w;
+  height: $h;
+  font-family: "malssami815";
+  border: none;
+  padding: 20px;
+  border-radius: 50px;
+  font-size: $font;
+  color: white;
+  background-color: $btn-blue;
 }
 
 @mixin class-blu-btn {
