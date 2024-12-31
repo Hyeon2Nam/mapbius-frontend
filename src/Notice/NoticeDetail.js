@@ -1,10 +1,15 @@
 import { Link, useParams } from "react-router-dom";
 import "../style/NoticeDetail.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { deleteItem } from "../api/noticeApi";
 
 export default function NoticeDetail() {
   const params = useParams();
-  const [isAdmin, setisAdmin] = useState(true);
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    if (localStorage.getItem("people1") === "partsOfGun") setIsAdmin(true);
+  }, []);
 
   const dump = {
     title: "Hello World",
@@ -12,7 +17,16 @@ export default function NoticeDetail() {
     date: "2024-12-25",
   };
 
-  const deleteNoticeHandler = () => {};
+  const deleteNoticeHandler = () => {
+    deleteItem(params.id, localStorage.getItem("userToken"))
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
   return (
     <div className="notice-detail">
       <div className="page-title-wrapper">

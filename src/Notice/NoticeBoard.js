@@ -38,8 +38,6 @@ export default function Notice() {
   }, [params.page]);
 
   useEffect(() => {
-    console.log(maxpage);
-
     const start = (Math.ceil(params.page / 5) - 1) * 5 + 1;
     setPages(
       Array.from(

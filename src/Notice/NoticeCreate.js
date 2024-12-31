@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { editNotice, writeNotice } from "../api/noticeApi";
 
 export default function NoticeCreate() {
+  const nav = useNavigate();
   const params = useParams();
   const [isEditMode, setIsEditMode] = useState(false);
   const [articleInfo, setArticleInfo] = useState({
     title: "",
     content: "",
-    category: "",
   });
-  const categories = ["1", "2", "3", "4", "5"];
 
   const articleInfoHandler = (e) => {
     const { name, value } = e.target;
@@ -18,34 +18,54 @@ export default function NoticeCreate() {
       ...articleInfo,
       [name]: value,
     });
-
-    // console.log(articleInfo);
   };
 
   const articleHandler = () => {
     let obj = {
-      title: articleInfo.title,
-      content: articleInfo.content,
-      category: articleInfo.category,
+      boardTitle: articleInfo.title,
+      boardContent: articleInfo.content,
+      boardAuthor: localStorage.getItem("loginUser"),
     };
 
-    if (!(obj.title && obj.content)) console.log("작성하세요");
+    if (!(obj.boardTitle && obj.boardContent)) {
+      console.log("작성하세요");
+    }
 
     if (isEditMode) {
-      // edit api
+      obj.boardIdx = params.id;
+      editNotice(obj, localStorage.getItem("userToken"))
+        .then((res) => {
+          console.log(res);
+
+          if (res.status === 201) {
+            nav("/notice/1");
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+        });
     } else {
-      //create api
+      writeNotice(obj, localStorage.getItem("userToken"))
+        .then((res) => {
+          console.log(res);
+
+          if (res.status === 201) {
+            nav("/notice/1");
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+        });
     }
   };
 
   useEffect(() => {
-    if (params.mode !== "edit" || params.mode !== "create")
+    if (params.mode !== "edit" && params.mode !== "create")
       document.location = "/";
 
     if (params.mode === "edit") {
       console.log("edit mode");
       setIsEditMode(true);
-      // load data api
     }
   }, []);
 
@@ -64,17 +84,6 @@ export default function NoticeCreate() {
         name="content"
         onChange={articleInfoHandler}
       />
-      <h2>카테고리</h2>
-      <select onChange={articleInfoHandler} name="category">
-        {categories.map((item, index) => (
-          <option value={item} key={index}>
-            {item}
-          </option>
-        ))}
-      </select>
-
-      {params.id}
-
       <button onClick={articleHandler}>작성</button>
     </div>
   );
