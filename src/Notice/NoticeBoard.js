@@ -15,40 +15,6 @@ export default function Notice() {
   const [curpage, setCurpage] = useState(1);
   const [maxpage, setMaxpage] = useState(1);
 
-  const dumpList = [
-    {
-      id: 1,
-      title:
-        "가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하",
-      category: "공지",
-      date: "2024-12-12",
-    },
-    {
-      id: 2,
-      title: "1234",
-      category: "공지",
-      date: "2024-12-14",
-    },
-    {
-      id: 3,
-      title: "1234",
-      category: "공지",
-      date: "2024-12-16",
-    },
-    {
-      id: 4,
-      title: "1234",
-      category: "공지",
-      date: "2024-12-18",
-    },
-    {
-      id: 5,
-      title: "1234",
-      category: "공지",
-      date: "2024-12-20",
-    },
-  ];
-
   useEffect(() => {
     if (params.page > maxpage || params.page < 1) {
       nav("/notice/1");
@@ -68,8 +34,6 @@ export default function Notice() {
   }, [params.page]);
 
   useEffect(() => {
-    // console.log(maxpage);
-
     const start = (Math.ceil(params.page / 5) - 1) * 5 + 1;
     setPages(
       Array.from(
@@ -78,18 +42,6 @@ export default function Notice() {
       )
     );
   }, [noticeList]);
-
-  // const setPagenation = () => {
-  //   console.log(maxpage);
-
-  //   const start = (Math.ceil(params.page / 5) - 1) * 5 + 1;
-  //   setPages(
-  //     Array.from(
-  //       { length: Math.min(maxpage - start + 1, 5) },
-  //       (v, i) => i + start
-  //     )
-  //   );
-  // };
 
   const searchNoticeHandler = () => {
     let obj = {
