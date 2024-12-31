@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { tryLogin } from "../api/loginApi";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
+import base64 from "base-64";
 
 export default function Login() {
   const nav = useNavigate();
@@ -23,9 +24,21 @@ export default function Login() {
 
   useEffect(() => {
     if (localStorage.getItem("userToken")) {
-      nav("/");
+      localStorage.removeItem("people1");
+      localStorage.removeItem("userToken");
     }
   }, []);
+
+  const adminCheck = (token) => {
+    let payload = token.substring(
+      token.indexOf(".") + 1,
+      token.lastIndexOf(".")
+    );
+    let dec = JSON.parse(base64.decode(payload));
+
+    if (dec.role === "ROLE_ADMIN")
+      localStorage.setItem("people1", "partsOfGun");
+  };
 
   const loginHandler = () => {
     if (userId && userPw) {
@@ -38,8 +51,9 @@ export default function Login() {
         .then((res) => {
           if (res.status === 200) {
             setOpen(false);
+            adminCheck(res.data.token);
             localStorage.setItem("userToken", res.data.token);
-            // nav("/");
+            nav("/");
           }
         })
         .catch((e) => {
