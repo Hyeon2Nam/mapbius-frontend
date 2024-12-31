@@ -3,16 +3,17 @@ import NoticeList from "./NoticeList";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import "../style/NoticeList.scss";
 import PageNation from "./PageNation";
+import { getItemWithPage } from "./../api/noticeApi";
 
 export default function Notice() {
   const nav = useNavigate();
   const params = useParams();
-  const [noticeList, setNoticeList] = useState({});
+  const [noticeList, setNoticeList] = useState([]);
   const [search, setSearch] = useState("");
   const [pages, setPages] = useState([]);
   const [isAdmin, setIsAdmin] = useState(true);
   const [curpage, setCurpage] = useState(1);
-  const MAXPage = 13;
+  const [maxpage, setMaxpage] = useState(1);
 
   const dumpList = [
     {
@@ -49,20 +50,46 @@ export default function Notice() {
   ];
 
   useEffect(() => {
-    if (params.page > MAXPage || params.page < 1) {
+    if (params.page > maxpage || params.page < 1) {
       nav("/notice/1");
       return;
     }
 
-    const start = (Math.ceil(params.page / 5) - 1) * 5 + 1;
     setCurpage(params.page);
+
+    getItemWithPage({ curpage: params.page })
+      .then((res) => {
+        if (res.status === 200) {
+          setNoticeList(res.data.items);
+          setMaxpage(res.data.maxpage);
+        }
+      })
+      .catch((e) => {});
+  }, [params.page]);
+
+  useEffect(() => {
+    // console.log(maxpage);
+
+    const start = (Math.ceil(params.page / 5) - 1) * 5 + 1;
     setPages(
       Array.from(
-        { length: Math.min(MAXPage - start + 1, 5) },
+        { length: Math.min(maxpage - start + 1, 5) },
         (v, i) => i + start
       )
     );
-  }, [params.page]);
+  }, [noticeList]);
+
+  // const setPagenation = () => {
+  //   console.log(maxpage);
+
+  //   const start = (Math.ceil(params.page / 5) - 1) * 5 + 1;
+  //   setPages(
+  //     Array.from(
+  //       { length: Math.min(maxpage - start + 1, 5) },
+  //       (v, i) => i + start
+  //     )
+  //   );
+  // };
 
   const searchNoticeHandler = () => {
     let obj = {
@@ -78,8 +105,8 @@ export default function Notice() {
       </div>
       <div className="back-text">NOTICE</div>
       <div className="notice-list">
-        <NoticeList list={dumpList.reverse()} />
-        <PageNation pages={pages} curpage={curpage} MAXPage={MAXPage} />
+        <NoticeList list={noticeList.reverse()} />
+        <PageNation pages={pages} curpage={curpage} maxpage={maxpage} />
         <div className="bottom-menu">
           <div className="search">
             <input type="button" value={"검색"} onClick={searchNoticeHandler} />
