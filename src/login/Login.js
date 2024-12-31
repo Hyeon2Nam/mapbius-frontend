@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../style/Login.scss";
 import { Link, useNavigate } from "react-router-dom";
 import { tryLogin } from "../api/loginApi";
@@ -21,6 +21,12 @@ export default function Login() {
     },
   };
 
+  useEffect(() => {
+    if (localStorage.getItem("userToken")) {
+      nav("/");
+    }
+  }, []);
+
   const loginHandler = () => {
     if (userId && userPw) {
       let obj = {
@@ -32,7 +38,8 @@ export default function Login() {
         .then((res) => {
           if (res.status === 200) {
             setOpen(false);
-            nav("/");
+            localStorage.setItem("userToken", res.data.token);
+            // nav("/");
           }
         })
         .catch((e) => {
