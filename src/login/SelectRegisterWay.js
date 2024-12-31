@@ -1,6 +1,9 @@
-import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function SelectRegisterWay() {
+  const nav = useNavigate();
+
   // rest api 방식
   const REST_API_KEY = process.env.REACT_APP_REST_API_KEY;
   const REDIRECT_URI = "http://localhost:3000/auth";
@@ -9,6 +12,12 @@ export default function SelectRegisterWay() {
   const kakaoRegisterHandler = () => {
     window.location.href = kakaoURL;
   };
+
+  useEffect(() => {
+    if (localStorage.getItem("userToken")) {
+      nav("/");
+    }
+  }, []);
 
   return (
     <div>
