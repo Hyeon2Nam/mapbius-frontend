@@ -76,7 +76,7 @@
     font-size: 5.5rem;
     color: #e1e1e1;
     z-index: -1;
-    top: 14%;
+    top: 9%;
     right: 6%;
   }
 
@@ -88,7 +88,6 @@
 
   table {
     width: 100%;
-    height: 100%;
     border-top: 1px solid black;
 
     @for $i from 1 through 3 {
@@ -99,6 +98,10 @@
 
     th {
       padding: 20px 0;
+    }
+
+    tr {
+      height: 60px;
     }
 
     th,
