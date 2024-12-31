@@ -11,9 +11,13 @@ export default function Notice() {
   const [noticeList, setNoticeList] = useState([]);
   const [search, setSearch] = useState("");
   const [pages, setPages] = useState([]);
-  const [isAdmin, setIsAdmin] = useState(true);
+  const [isAdmin, setIsAdmin] = useState(false);
   const [curpage, setCurpage] = useState(1);
   const [maxpage, setMaxpage] = useState(1);
+
+  useEffect(() => {
+    if (localStorage.getItem("people1") === "partsOfGun") setIsAdmin(true);
+  }, []);
 
   useEffect(() => {
     if (params.page > maxpage || params.page < 1) {
@@ -34,6 +38,8 @@ export default function Notice() {
   }, [params.page]);
 
   useEffect(() => {
+    console.log(maxpage);
+
     const start = (Math.ceil(params.page / 5) - 1) * 5 + 1;
     setPages(
       Array.from(

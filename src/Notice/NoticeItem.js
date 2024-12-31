@@ -4,20 +4,20 @@ export default function NoticeItem({ item }) {
   const spliteTitleText = () => {
     const MAX_LEN = 20;
 
-    if (item.boardTitle.length > MAX_LEN) {
-      return item.boardTitle.substr(0, MAX_LEN) + "...";
+    if (item.title.length > MAX_LEN) {
+      return item.title.substr(0, MAX_LEN) + "...";
     }
 
-    return item.boardTitle;
+    return item.title;
   };
 
   return (
     <tr className="notice-item">
-      <td>{item.boardIdx}</td>
+      <td>{item.id}</td>
       <td>
-        <Link to={"/notice/view/" + item.boardIdx}>{spliteTitleText()}</Link>
+        <Link to={"/notice/view/" + item.id}>{spliteTitleText()}</Link>
       </td>
-      <td>{item.boardCreatedDate}</td>
+      <td>{item.created_date}</td>
     </tr>
   );
 }
