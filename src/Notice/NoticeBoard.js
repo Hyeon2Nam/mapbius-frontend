@@ -20,19 +20,23 @@ export default function Notice() {
     if (localStorage.getItem("people1") === "partsOfGun") setIsAdmin(true);
   }, []);
 
-  const getItemList = () => {
-    getItemWithPage({ curpage: params.page, keyword: search, type: searchType })
+  const getItemList = async () => {
+    await getItemWithPage({
+      curpage: params.page,
+      keyword: search,
+      type: searchType,
+    })
       .then((res) => {
         if (res.status === 200) {
           setNoticeList(res.data.objData.items);
-          setMaxpage(res.data.maxpage);
+          setMaxpage(res.data.objData.maxpage);
         }
       })
       .catch((e) => {});
   };
 
   useEffect(() => {
-    if (params.page > maxpage || params.page < 1) {
+    if (params.page > maxpage || params.page < 1 || params.page === undefined) {
       nav("/notice/1");
       return;
     }
@@ -64,7 +68,7 @@ export default function Notice() {
       </div>
       <div className="back-text">NOTICE</div>
       <div className="notice-list">
-        <NoticeList list={noticeList.reverse()} />
+        <NoticeList list={noticeList} />
         <PageNation pages={pages} curpage={curpage} maxpage={maxpage} />
         <div className="bottom-menu">
           <div className="search">

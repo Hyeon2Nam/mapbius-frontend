@@ -28,15 +28,13 @@ export default function NoticeCreate() {
     };
 
     if (!(obj.boardTitle && obj.boardContent)) {
-      console.log("작성하세요");
+      alert("제목과 내용을 작성하세요");
     }
 
     if (isEditMode) {
       obj.boardIdx = params.id;
       editNotice(obj, localStorage.getItem("userToken"))
         .then((res) => {
-          console.log(res);
-
           if (res.status === 200) {
             nav("/notice/1");
           }
@@ -48,8 +46,6 @@ export default function NoticeCreate() {
     } else {
       writeNotice(obj, localStorage.getItem("userToken"))
         .then((res) => {
-          console.log(res);
-
           if (res.status === 201) {
             nav("/notice/1");
           }
@@ -85,7 +81,6 @@ export default function NoticeCreate() {
       document.location = "/";
 
     if (params.mode === "edit") {
-      console.log("edit mode");
       setIsEditMode(true);
       setItemInfo();
     }
