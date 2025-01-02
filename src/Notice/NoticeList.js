@@ -14,7 +14,7 @@ export default function NoticeList({ list }) {
           </thead>
           <tbody>
             {list.map((item) => {
-              return <NoticeItem item={item} key={item.boardIdx} />;
+              return <NoticeItem item={item} key={item.id} />;
             })}
           </tbody>
         </table>

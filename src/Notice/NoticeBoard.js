@@ -11,9 +11,25 @@ export default function Notice() {
   const [noticeList, setNoticeList] = useState([]);
   const [search, setSearch] = useState("");
   const [pages, setPages] = useState([]);
-  const [isAdmin, setIsAdmin] = useState(true);
+  const [isAdmin, setIsAdmin] = useState(false);
   const [curpage, setCurpage] = useState(1);
   const [maxpage, setMaxpage] = useState(1);
+  const [searchType, setSearchType] = useState("title");
+
+  useEffect(() => {
+    if (localStorage.getItem("people1") === "partsOfGun") setIsAdmin(true);
+  }, []);
+
+  const getItemList = () => {
+    getItemWithPage({ curpage: params.page, keyword: search, type: searchType })
+      .then((res) => {
+        if (res.status === 200) {
+          setNoticeList(res.data.objData.items);
+          setMaxpage(res.data.maxpage);
+        }
+      })
+      .catch((e) => {});
+  };
 
   useEffect(() => {
     if (params.page > maxpage || params.page < 1) {
@@ -22,19 +38,12 @@ export default function Notice() {
     }
 
     setCurpage(params.page);
-
-    getItemWithPage({ curpage: params.page })
-      .then((res) => {
-        if (res.status === 200) {
-          setNoticeList(res.data.items);
-          setMaxpage(res.data.maxpage);
-        }
-      })
-      .catch((e) => {});
+    getItemList();
   }, [params.page]);
 
   useEffect(() => {
     const start = (Math.ceil(params.page / 5) - 1) * 5 + 1;
+
     setPages(
       Array.from(
         { length: Math.min(maxpage - start + 1, 5) },
@@ -44,9 +53,7 @@ export default function Notice() {
   }, [noticeList]);
 
   const searchNoticeHandler = () => {
-    let obj = {
-      title: search,
-    };
+    getItemList();
   };
 
   return (
