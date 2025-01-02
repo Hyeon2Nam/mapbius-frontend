@@ -11,30 +11,43 @@ export default function Notice() {
   const [noticeList, setNoticeList] = useState([]);
   const [search, setSearch] = useState("");
   const [pages, setPages] = useState([]);
-  const [isAdmin, setIsAdmin] = useState(true);
+  const [isAdmin, setIsAdmin] = useState(false);
   const [curpage, setCurpage] = useState(1);
   const [maxpage, setMaxpage] = useState(1);
+  const [searchType, setSearchType] = useState("title");
 
   useEffect(() => {
-    if (params.page > maxpage || params.page < 1) {
+    if (localStorage.getItem("people1") === "partsOfGun") setIsAdmin(true);
+  }, []);
+
+  const getItemList = async () => {
+    await getItemWithPage({
+      curpage: params.page,
+      keyword: search,
+      type: searchType,
+    })
+      .then((res) => {
+        if (res.status === 200) {
+          setNoticeList(res.data.objData.items);
+          setMaxpage(res.data.objData.maxpage);
+        }
+      })
+      .catch((e) => {});
+  };
+
+  useEffect(() => {
+    if (params.page > maxpage || params.page < 1 || params.page === undefined) {
       nav("/notice/1");
       return;
     }
 
     setCurpage(params.page);
-
-    getItemWithPage({ curpage: params.page })
-      .then((res) => {
-        if (res.status === 200) {
-          setNoticeList(res.data.items);
-          setMaxpage(res.data.maxpage);
-        }
-      })
-      .catch((e) => {});
+    getItemList();
   }, [params.page]);
 
   useEffect(() => {
     const start = (Math.ceil(params.page / 5) - 1) * 5 + 1;
+
     setPages(
       Array.from(
         { length: Math.min(maxpage - start + 1, 5) },
@@ -44,9 +57,7 @@ export default function Notice() {
   }, [noticeList]);
 
   const searchNoticeHandler = () => {
-    let obj = {
-      title: search,
-    };
+    getItemList();
   };
 
   return (
@@ -55,9 +66,9 @@ export default function Notice() {
         <img src={process.env.PUBLIC_URL + "/imgs/logo.jpg"} />
         <div className="page-title">공지사항</div>
       </div>
-      <div className="back-text">NOTICE</div>
       <div className="notice-list">
-        <NoticeList list={noticeList.reverse()} />
+        <div className="back-text">NOTICE</div>
+        <NoticeList list={noticeList} />
         <PageNation pages={pages} curpage={curpage} maxpage={maxpage} />
         <div className="bottom-menu">
           <div className="search">
@@ -67,6 +78,15 @@ export default function Notice() {
               placeholder="검색어 입력"
               onChange={(e) => setSearch(e.target.value)}
             />
+            <select
+              value={searchType}
+              onChange={(e) => {
+                setSearchType(e.target.value);
+              }}
+            >
+              <option value={"title"}>제목</option>
+              <option value={"content"}>내용</option>
+            </select>
           </div>
           {isAdmin && (
             <button

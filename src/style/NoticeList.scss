@@ -72,12 +72,12 @@
   }
 
   .back-text {
-    position: absolute;
+    position: relative;
     font-size: 5.5rem;
     color: #e1e1e1;
     z-index: -1;
-    top: 9%;
-    right: 6%;
+    top: 2%;
+    right: -50%;
   }
 
   .notice-list {
