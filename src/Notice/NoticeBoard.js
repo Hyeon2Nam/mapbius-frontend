@@ -66,8 +66,8 @@ export default function Notice() {
         <img src={process.env.PUBLIC_URL + "/imgs/logo.jpg"} />
         <div className="page-title">공지사항</div>
       </div>
-      <div className="back-text">NOTICE</div>
       <div className="notice-list">
+        <div className="back-text">NOTICE</div>
         <NoticeList list={noticeList} />
         <PageNation pages={pages} curpage={curpage} maxpage={maxpage} />
         <div className="bottom-menu">
