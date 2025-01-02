@@ -35,13 +35,6 @@ export default function FindId() {
 
   return (
     <div className="find-idpwForm">
-      <img
-        className="logo-img"
-        src={process.env.PUBLIC_URL + "/imgs/logoFit.jpg"}
-        onClick={() => {
-          nav("/");
-        }}
-      />
       <div className="find-form-wrapper">
         <h1>아이디 찾기</h1>
         <input

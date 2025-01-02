@@ -92,13 +92,6 @@ export default function NoticeCreate() {
   return (
     <div className="create-notice">
       <div className="page-title-wrapper">
-        <img
-          className="logo-img"
-          src={process.env.PUBLIC_URL + "/imgs/logoFit.jpg"}
-          onClick={() => {
-            nav("/");
-          }}
-        />
         <div className="page-title">공지사항 작성</div>
       </div>
       <div className="main-content">
