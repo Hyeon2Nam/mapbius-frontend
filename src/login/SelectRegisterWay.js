@@ -15,7 +15,9 @@ export default function SelectRegisterWay() {
 
   useEffect(() => {
     if (localStorage.getItem("userToken")) {
-      nav("/");
+      localStorage.removeItem("people1");
+      localStorage.removeItem("userToken");
+      localStorage.removeItem("loginUser");
     }
   }, []);
 
