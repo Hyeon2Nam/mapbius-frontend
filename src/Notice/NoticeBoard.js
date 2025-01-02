@@ -35,17 +35,21 @@ export default function Notice() {
       .catch((e) => {});
   };
 
-  useEffect(() => {
+  const checkPage = () => {
     if (params.page > maxpage || params.page < 1 || params.page === undefined) {
       nav("/notice/1");
       return;
     }
+  };
 
+  useEffect(() => {
+    checkPage();
     setCurpage(params.page);
     getItemList();
   }, [params.page]);
 
   useEffect(() => {
+    checkPage();
     const start = (Math.ceil(params.page / 5) - 1) * 5 + 1;
 
     setPages(
@@ -57,6 +61,7 @@ export default function Notice() {
   }, [noticeList]);
 
   const searchNoticeHandler = () => {
+    setCurpage(1);
     getItemList();
   };
 

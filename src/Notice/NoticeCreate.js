@@ -77,8 +77,7 @@ export default function NoticeCreate() {
   };
 
   useEffect(() => {
-    if (params.mode !== "edit" && params.mode !== "create")
-      document.location = "/";
+    if (params.mode !== "edit" && params.mode !== "create") nav("/");
 
     if (params.mode === "edit") {
       setIsEditMode(true);
