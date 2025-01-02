@@ -25,6 +25,8 @@ export const editNotice = (obj, token) => {
 };
 
 export const writeNotice = (obj, token) => {
+  console.log(obj);
+
   return api.post("/api/private/notice-post", JSON.stringify(obj), {
     headers: {
       Authorization: `Bearer ${token}`,
