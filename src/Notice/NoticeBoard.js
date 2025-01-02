@@ -74,6 +74,15 @@ export default function Notice() {
               placeholder="검색어 입력"
               onChange={(e) => setSearch(e.target.value)}
             />
+            <select
+              value={searchType}
+              onChange={(e) => {
+                setSearchType(e.target.value);
+              }}
+            >
+              <option value={"title"}>제목</option>
+              <option value={"content"}>내용</option>
+            </select>
           </div>
           {isAdmin && (
             <button
