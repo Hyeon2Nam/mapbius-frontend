@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { findPw } from "../api/loginApi";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../style/FindIdPw.scss";
 
 export default function FindPw() {
+  const nav = useNavigate();
   const [userId, setUserId] = useState("");
   const [userEmail, setUserEmail] = useState("");
   const [result, setResult] = useState("");
@@ -24,6 +25,13 @@ export default function FindPw() {
 
   return (
     <div className="find-idpwForm">
+      <img
+        className="logo-img"
+        src={process.env.PUBLIC_URL + "/imgs/logoFit.jpg"}
+        onClick={() => {
+          nav("/");
+        }}
+      />
       <div className="find-form-wrapper">
         <h1>비밀번호 찾기</h1>
         <div className="input-wrapper">
