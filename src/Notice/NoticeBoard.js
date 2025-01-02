@@ -68,31 +68,38 @@ export default function Notice() {
   return (
     <div className="notice-board-container">
       <div className="page-title-wrapper">
-        <img src={process.env.PUBLIC_URL + "/imgs/logo.jpg"} />
+        <img
+          src={process.env.PUBLIC_URL + "/imgs/logoFit.jpg"}
+          onClick={() => {
+            nav("/");
+          }}
+        />
         <div className="page-title">공지사항</div>
       </div>
       <div className="notice-list">
         <div className="back-text">NOTICE</div>
+        <div className="search">
+          <select
+            value={searchType}
+            onChange={(e) => {
+              setSearchType(e.target.value);
+            }}
+          >
+            <option value={"title"}>제목</option>
+            <option value={"content"}>내용</option>
+          </select>
+          <input
+            type="text"
+            value={search}
+            placeholder="검색어 입력"
+            onChange={(e) => setSearch(e.target.value)}
+          />
+          <button onClick={searchNoticeHandler}>
+            <img src={process.env.PUBLIC_URL + "/imgs/searchIcon.png"} />
+          </button>
+        </div>
         <NoticeList list={noticeList} />
-        <PageNation pages={pages} curpage={curpage} maxpage={maxpage} />
         <div className="bottom-menu">
-          <div className="search">
-            <input type="button" value={"검색"} onClick={searchNoticeHandler} />
-            <input
-              value={search}
-              placeholder="검색어 입력"
-              onChange={(e) => setSearch(e.target.value)}
-            />
-            <select
-              value={searchType}
-              onChange={(e) => {
-                setSearchType(e.target.value);
-              }}
-            >
-              <option value={"title"}>제목</option>
-              <option value={"content"}>내용</option>
-            </select>
-          </div>
           {isAdmin && (
             <button
               onClick={() => {
@@ -103,6 +110,7 @@ export default function Notice() {
             </button>
           )}
         </div>
+        <PageNation pages={pages} curpage={curpage} maxpage={maxpage} />
       </div>
     </div>
   );
