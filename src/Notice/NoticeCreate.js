@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { editNotice, getItemInfo, writeNotice } from "../api/noticeApi";
+import "../style/NoticeCreate.scss";
 
 export default function NoticeCreate() {
   const nav = useNavigate();
