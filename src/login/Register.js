@@ -153,6 +153,8 @@ export default function Register() {
 
     if (validateHandler()) return;
 
+    console.log("OK");
+
     const obj = {
       id: userId,
       pw: userPw,

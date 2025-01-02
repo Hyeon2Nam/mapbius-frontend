@@ -26,7 +26,6 @@ export default function Login() {
     if (localStorage.getItem("userToken")) {
       localStorage.removeItem("people1");
       localStorage.removeItem("userToken");
-      localStorage.removeItem("loginUser");
     }
   }, []);
 
@@ -54,7 +53,6 @@ export default function Login() {
             setOpen(false);
             adminCheck(res.data.token);
             localStorage.setItem("userToken", res.data.token);
-            localStorage.setItem("loginUser", res.data.objData.id);
             nav("/");
           }
         })

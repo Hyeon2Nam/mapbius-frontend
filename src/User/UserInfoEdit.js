@@ -16,6 +16,8 @@ export default function UserInfoEdit() {
       ...userInfo,
       [name]: value,
     });
+
+    // console.log(articleInfo);
   };
 
   const userInfoChangeHandler = () => {

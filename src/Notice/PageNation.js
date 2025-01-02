@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-export default function PageNation({ pages, curpage, maxpage }) {
+export default function PageNation({ pages, curpage, MAXPage }) {
   const nav = useNavigate();
 
   return (
@@ -27,13 +27,13 @@ export default function PageNation({ pages, curpage, maxpage }) {
       ))}
       <button
         onClick={() => {
-          const targetPage = curpage < maxpage ? +curpage + 1 : maxpage;
+          const targetPage = curpage < MAXPage ? +curpage + 1 : MAXPage;
           nav(`/notice/${targetPage}`);
         }}
       >
         &gt;
       </button>
-      <button onClick={() => nav("/notice/" + maxpage)}>&gt;&gt;</button>
+      <button onClick={() => nav("/notice/" + MAXPage)}>&gt;&gt;</button>
     </div>
   );
 }
