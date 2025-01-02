@@ -90,21 +90,36 @@ export default function NoticeCreate() {
   }, []);
 
   return (
-    <div>
-      <h2>제목</h2>
-      <input
-        value={articleInfo.title}
-        onChange={articleInfoHandler}
-        name="title"
-      />
-      <hr />
-      <h2>내용</h2>
-      <textarea
-        value={articleInfo.content}
-        name="content"
-        onChange={articleInfoHandler}
-      />
-      <button onClick={articleHandler}>작성</button>
+    <div className="create-notice">
+      <div className="page-title-wrapper">
+        <img
+          className="logo-img"
+          src={process.env.PUBLIC_URL + "/imgs/logoFit.jpg"}
+          onClick={() => {
+            nav("/");
+          }}
+        />
+        <div className="page-title">공지사항 작성</div>
+      </div>
+      <div className="main-content">
+        <div className="title-section section">
+          <span className="sub-title title-text">제목</span>
+          <input
+            value={articleInfo.title}
+            onChange={articleInfoHandler}
+            name="title"
+          />{" "}
+        </div>
+        <div className="content-section section">
+          <span className="sub-title content-text">내용</span>
+          <textarea
+            value={articleInfo.content}
+            name="content"
+            onChange={articleInfoHandler}
+          />
+        </div>
+        <button onClick={articleHandler}>등록</button>
+      </div>
     </div>
   );
 }

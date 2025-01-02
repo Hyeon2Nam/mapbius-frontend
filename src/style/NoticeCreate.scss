@@ -1,1 +1,72 @@
 @use "util.scss" as *;
+
+.create-notice {
+  font-family: "malssami815";
+
+  .page-title-wrapper {
+    width: 70%;
+    text-align: start;
+    margin: auto;
+    margin-top: 10rem;
+
+    .logo-img {
+      position: absolute;
+      left: 5%;
+      top: 5%;
+    }
+
+    .page-title {
+      font-size: 3rem;
+    }
+  }
+
+  .main-content {
+    width: 70vw;
+    height: 60vh;
+    margin: 1rem auto 2rem auto;
+    border-top: 2px solid black;
+    border-collapse: collapse;
+
+    input,
+    textarea {
+      width: 80%;
+      margin: 5% auto;
+      resize: none;
+      font-size: 1.2rem;
+      border: 1.5px solid black;
+      border-radius: 10px;
+      padding: 5px;
+    }
+
+    input {
+      height: 55%;
+    }
+
+    textarea {
+      height: 90%;
+    }
+
+    .sub-title {
+      width: 150px;
+      font-size: 1.3rem;
+    }
+
+    .section {
+      border-bottom: 1px solid #525252;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+    }
+
+    .title-section {
+      height: 80px;
+    }
+
+    .content-section {
+      height: 350px;
+      margin-bottom: 50px;
+    }
+  }
+
+  @include blue-btn;
+}
