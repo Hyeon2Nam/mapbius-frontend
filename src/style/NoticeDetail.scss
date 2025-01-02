@@ -9,12 +9,14 @@
     margin: 70px 0;
 
     img {
-      width: 150px;
-      height: 30px;
+      position: absolute;
+      left: 5%;
+      top: 5%;
     }
 
     .page-title {
       font-size: 3rem;
+      margin-top: 10rem;
     }
   }
 

@@ -58,7 +58,12 @@ export default function NoticeDetail() {
   return (
     <div className="notice-detail">
       <div className="page-title-wrapper">
-        <img src={process.env.PUBLIC_URL + "/imgs/logo.jpg"} />
+        <img
+          src={process.env.PUBLIC_URL + "/imgs/logoFit.jpg"}
+          onClick={() => {
+            nav("/");
+          }}
+        />
         <div className="page-title">공지사항</div>
       </div>
       <div className="main-container">

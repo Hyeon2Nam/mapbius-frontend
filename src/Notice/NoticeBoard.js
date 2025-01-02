@@ -77,28 +77,26 @@ export default function Notice() {
         <div className="page-title">공지사항</div>
       </div>
       <div className="notice-list">
-        <div>
-          <div className="back-text">NOTICE</div>
-          <div className="search">
-            <select
-              value={searchType}
-              onChange={(e) => {
-                setSearchType(e.target.value);
-              }}
-            >
-              <option value={"title"}>제목</option>
-              <option value={"content"}>내용</option>
-            </select>
-            <input
-              type="text"
-              value={search}
-              placeholder="검색어 입력"
-              onChange={(e) => setSearch(e.target.value)}
-            />
-            <button onClick={searchNoticeHandler}>
-              <img src={process.env.PUBLIC_URL + "/imgs/searchIcon.png"} />
-            </button>
-          </div>
+        <div className="back-text">NOTICE</div>
+        <div className="search">
+          <select
+            value={searchType}
+            onChange={(e) => {
+              setSearchType(e.target.value);
+            }}
+          >
+            <option value={"title"}>제목</option>
+            <option value={"content"}>내용</option>
+          </select>
+          <input
+            type="text"
+            value={search}
+            placeholder="검색어 입력"
+            onChange={(e) => setSearch(e.target.value)}
+          />
+          <button onClick={searchNoticeHandler}>
+            <img src={process.env.PUBLIC_URL + "/imgs/searchIcon.png"} />
+          </button>
         </div>
         <NoticeList list={noticeList} />
         <div className="bottom-menu">
