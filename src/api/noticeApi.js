@@ -4,12 +4,8 @@ export const getItemWithPage = (obj) => {
   return api.get("/api/public/notices", { params: obj });
 };
 
-export const getItemInfo = (obj) => {
-  return api.post("/api/private/notice-update", JSON.stringify(obj), {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+export const getItemInfo = (boardIdx) => {
+  return api.get(`/api/public/notices/${boardIdx}`);
 };
 
 export const deleteItem = (obj, token) => {
@@ -21,7 +17,7 @@ export const deleteItem = (obj, token) => {
 };
 
 export const editNotice = (obj, token) => {
-  return api.post("/api/private/notice-update", JSON.stringify(obj), {
+  return api.post("/api/private/notice-update", obj, {
     headers: {
       Authorization: `Bearer ${token}`,
     },

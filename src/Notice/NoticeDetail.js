@@ -1,14 +1,30 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import "../style/NoticeDetail.scss";
 import { useEffect, useState } from "react";
-import { deleteItem } from "../api/noticeApi";
+import { deleteItem, getItemInfo } from "../api/noticeApi";
 
 export default function NoticeDetail() {
   const params = useParams();
+  const nav = useNavigate();
+  const [itemInfo, setItemInfo] = useState({});
   const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
     if (localStorage.getItem("people1") === "partsOfGun") setIsAdmin(true);
+
+    getItemInfo(params.id)
+      .then((res) => {
+        if (res.status === 200) {
+          setItemInfo(res.data.objData);
+        } else {
+          alert("존재하지 않는 글입니다.");
+          nav("/notice/1");
+        }
+      })
+      .catch((e) => {
+        alert("존재하지 않는 글입니다.");
+        nav("/notice/1");
+      });
   }, []);
 
   const dump = {
@@ -21,10 +37,22 @@ export default function NoticeDetail() {
     deleteItem(params.id, localStorage.getItem("userToken"))
       .then((res) => {
         console.log(res);
+
+        if (res.status === 200) {
+          alert("글이 성공적으로 삭제되었습니다");
+          nav("/notice/1");
+        }
       })
       .catch((e) => {
-        console.log(e);
+        alert("권한이 없습니다");
+        nav("/notice/1");
       });
+  };
+
+  const reFormateDate = () => {
+    const date = new Date(itemInfo.boardCreatedDate);
+
+    return date.toLocaleString();
   };
 
   return (
@@ -39,17 +67,26 @@ export default function NoticeDetail() {
             <button className="gray-btn" onClick={deleteNoticeHandler}>
               삭제
             </button>
-            <button className="gray-btn">
-              <Link to={"/notice/edit/" + params.id}>수정</Link>
+            <button
+              className="gray-btn"
+              onClick={() => {
+                nav("/notice/edit/" + itemInfo.boardIdx);
+              }}
+            >
+              수정
             </button>
           </div>
         )}
         <div className="title-bar">
           <span className="blue-text">NOTICE</span>
-          <span className="notice-title">{dump.title}</span>
-          <span>{dump.date}</span>
+          <span className="notice-title">
+            {itemInfo ? itemInfo.boardTitle : dump.title}
+          </span>
+          <span>{itemInfo ? reFormateDate() : dump.date}</span>
         </div>
-        <div className="content">{dump.content}</div>
+        <div className="content">
+          {itemInfo ? itemInfo.boardContent : dump.content}
+        </div>
         <button className="list-btn">
           <Link to={"/notice/1"}>목록으로</Link>
         </button>

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { editNotice, writeNotice } from "../api/noticeApi";
+import { editNotice, getItemInfo, writeNotice } from "../api/noticeApi";
 
 export default function NoticeCreate() {
   const nav = useNavigate();
@@ -37,7 +37,7 @@ export default function NoticeCreate() {
         .then((res) => {
           console.log(res);
 
-          if (res.status === 201) {
+          if (res.status === 200) {
             nav("/notice/1");
           }
         })
@@ -59,6 +59,25 @@ export default function NoticeCreate() {
     }
   };
 
+  const setItemInfo = () => {
+    getItemInfo(params.id)
+      .then((res) => {
+        if (res.status === 200) {
+          setArticleInfo({
+            title: res.data.objData.boardTitle,
+            content: res.data.objData.boardContent,
+          });
+        } else {
+          alert("존재하지 않는 글입니다.");
+          nav("/notice/1");
+        }
+      })
+      .catch((e) => {
+        alert("존재하지 않는 글입니다.");
+        nav("/notice/1");
+      });
+  };
+
   useEffect(() => {
     if (params.mode !== "edit" && params.mode !== "create")
       document.location = "/";
@@ -66,6 +85,7 @@ export default function NoticeCreate() {
     if (params.mode === "edit") {
       console.log("edit mode");
       setIsEditMode(true);
+      setItemInfo();
     }
   }, []);
 
