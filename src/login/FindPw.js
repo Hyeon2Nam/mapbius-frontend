@@ -25,13 +25,6 @@ export default function FindPw() {
 
   return (
     <div className="find-idpwForm">
-      <img
-        className="logo-img"
-        src={process.env.PUBLIC_URL + "/imgs/logoFit.jpg"}
-        onClick={() => {
-          nav("/");
-        }}
-      />
       <div className="find-form-wrapper">
         <h1>비밀번호 찾기</h1>
         <div className="input-wrapper">
