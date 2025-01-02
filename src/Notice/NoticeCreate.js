@@ -29,6 +29,7 @@ export default function NoticeCreate() {
 
     if (!(obj.boardTitle && obj.boardContent)) {
       alert("제목과 내용을 작성하세요");
+      return;
     }
 
     if (isEditMode) {
@@ -40,7 +41,7 @@ export default function NoticeCreate() {
           }
         })
         .catch((e) => {
-          alert("권한이 없습니다다");
+          alert("권한이 없습니다");
           nav("/notice/1");
         });
     } else {
@@ -51,8 +52,10 @@ export default function NoticeCreate() {
           }
         })
         .catch((e) => {
-          alert("권한이 없습니다다");
-          nav("/notice/1");
+          console.log(e);
+
+          // alert("권한이 없습니다");
+          // nav("/notice/1");
         });
     }
   };
