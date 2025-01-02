@@ -42,7 +42,8 @@ export default function NoticeCreate() {
           }
         })
         .catch((e) => {
-          console.log(e);
+          alert("권한이 없습니다다");
+          nav("/notice/1");
         });
     } else {
       writeNotice(obj, localStorage.getItem("userToken"))
@@ -54,7 +55,8 @@ export default function NoticeCreate() {
           }
         })
         .catch((e) => {
-          console.log(e);
+          alert("권한이 없습니다다");
+          nav("/notice/1");
         });
     }
   };
