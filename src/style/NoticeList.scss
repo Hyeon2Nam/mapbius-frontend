@@ -101,14 +101,15 @@
     align-items: center;
     justify-content: end;
 
-    input,
     button {
       font-family: "malssami815";
       font-size: 17px;
-      background: initial;
-      border-radius: 15px;
+      background: gray;
+      border-radius: 20px;
       padding: 10px;
-      border: 2px solid $main-color;
+      color: #fff;
+      border: none;
+      width: 90px;
     }
   }
 
