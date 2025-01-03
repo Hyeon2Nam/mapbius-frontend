@@ -22,7 +22,7 @@ export default function Notice() {
 
   const getItemList = async () => {
     await getItemWithPage({
-      curpage: params.page,
+      curpage: curpage,
       keyword: search,
       type: searchType,
     })
