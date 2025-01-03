@@ -35,8 +35,12 @@ export const tryKakaoLogin = (authorizationCode) => {
   return api.post("/oauth/kakao/login", { code: authorizationCode });
 };
 
-export const tryKakaoRegister = (obj) => {
-  return api.post("/api/private/kakao/join", JSON.stringify(obj));
+export const tryKakaoRegister = (obj, token) => {
+  return api.post("/api/private/kakao/join", JSON.stringify(obj), {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
 };
 
 // export const areaList = () => {
