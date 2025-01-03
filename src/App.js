@@ -2,7 +2,6 @@ import "./App.css";
 import { Outlet, Route, Routes } from "react-router-dom";
 import Login from "./login/Login";
 import Register from "./login/Register";
-import Auth from "./login/Auth";
 import SelectRegisterWay from "./login/SelectRegisterWay";
 import MainPage from "./map/Temp";
 import Notice from "./Notice/NoticeBoard";
@@ -13,6 +12,7 @@ import UserInfoEdit from "./User/UserInfoEdit";
 import FindId from "./login/FindId";
 import FindPw from "./login/FindPw";
 import Header from "./common/Header";
+import KakaoLogin from "./login/KakaoLogin";
 
 const Layout = () => {
   return (
@@ -41,8 +41,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/select-register" element={<SelectRegisterWay />} />
         <Route path="/default-register" element={<Register />} />
-        <Route path="/kakao-register" element={<Register />} />
-        <Route path="/auth" element={<Auth />} />
+        <Route path="/kakao-register" element={<KakaoLogin />} />
       </Routes>
     </div>
   );
