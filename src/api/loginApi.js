@@ -31,8 +31,12 @@ export const adminLogin = (obj) => {
   return api.post("/api/public/login-admin", JSON.stringify(obj));
 };
 
-export const kakaoRegister = (authorizationCode) => {
+export const tryKakaoLogin = (authorizationCode) => {
   return api.post("/oauth/kakao/login", { code: authorizationCode });
+};
+
+export const tryKakaoRegister = (obj) => {
+  return api.post("/api/private/kakao/join", JSON.stringify(obj));
 };
 
 // export const areaList = () => {

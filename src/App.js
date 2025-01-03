@@ -13,6 +13,7 @@ import FindId from "./login/FindId";
 import FindPw from "./login/FindPw";
 import Header from "./common/Header";
 import KakaoLogin from "./login/KakaoLogin";
+import KakaoRegisterFrom from "./login/KakaoRegisterFrom";
 
 const Layout = () => {
   return (
@@ -42,6 +43,7 @@ function App() {
         <Route path="/select-register" element={<SelectRegisterWay />} />
         <Route path="/default-register" element={<Register />} />
         <Route path="/kakao-register" element={<KakaoLogin />} />
+        <Route path="/kakao-register/form" element={<KakaoRegisterFrom />} />
       </Routes>
     </div>
   );
