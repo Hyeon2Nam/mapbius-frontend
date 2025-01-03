@@ -107,6 +107,7 @@ const KakaoRegisterFrom = () => {
     tryKakaoRegister(obj, localStorage.getItem("jwtToken"))
       .then((res) => {
         if (res.status === 200) {
+          alert("회원가입에 성공하셨습니다");
           nav("/");
         } else {
           snackbarHandler("회원가입에 실페했습니다.");

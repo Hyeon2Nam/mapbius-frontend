@@ -1,6 +1,7 @@
-import React, { useEffect } from "react";
-import { kakaoRegister, tryKakaoLogin } from "../api/loginApi";
+import React, { useEffect, useState } from "react";
+import { tryKakaoLogin } from "../api/loginApi";
 import { useNavigate } from "react-router-dom";
+import base64 from "base-64";
 
 const KakaoLogin = () => {
   const nav = useNavigate();
@@ -8,6 +9,17 @@ const KakaoLogin = () => {
   useEffect(() => {
     handleCallback();
   }, []);
+
+  const adminCheck = (token) => {
+    let payload = token.substring(
+      token.indexOf(".") + 1,
+      token.lastIndexOf(".")
+    );
+    let dec = JSON.parse(base64.decode(payload));
+
+    if (dec.role === "ROLE_ADMIN")
+      localStorage.setItem("people1", "partsOfGun");
+  };
 
   const handleCallback = async () => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -17,14 +29,16 @@ const KakaoLogin = () => {
       tryKakaoLogin(authorizationCode)
         .then((res) => {
           if (res.status === 200) {
-            // console.log(res.data.objData);
-            alert("카카오 계정으로 회원가입을 진행합니다.");
             localStorage.setItem("jwtToken", res.data.objData);
             nav("/kakao-register/form");
-          } else if (res.status === 404) {
+          } else if (res.status === 226) {
             // console.log(res.data.objData);
-            alert("카카오 계정으로 로그인 합니다.");
+            alert("로그인 성공");
+            adminCheck(res.data.token);
+            localStorage.setItem("userToken", res.data.token);
+            localStorage.setItem("loginUser", res.data.objData.id);
             localStorage.setItem("jwtToken", res.data.objData);
+            nav("/");
           }
         })
         .catch((e) => {
