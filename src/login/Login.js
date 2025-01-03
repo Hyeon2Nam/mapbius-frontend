@@ -41,6 +41,22 @@ export default function Login() {
       localStorage.setItem("people1", "partsOfGun");
   };
 
+  useEffect(() => {
+    if (window.Kakao && !window.Kakao.isInitialized()) {
+      const appkey = process.env.REACT_APP_JS_API_KEY + "";
+      window.Kakao.init(appkey);
+    }
+  }, []);
+
+  const handleKakaoLogin = () => {
+    if (window.Kakao && window.Kakao.Auth) {
+      const redirectUri = "http://localhost:3000/kakao-register";
+      window.Kakao.Auth.authorize({
+        redirectUri: redirectUri,
+      });
+    }
+  };
+
   const loginHandler = () => {
     if (userId && userPw) {
       let obj = {
@@ -111,7 +127,7 @@ export default function Login() {
             <button className="default-btn" onClick={loginHandler}>
               로그인
             </button>
-            <button className="kakao-btn">
+            <button className="kakao-btn" onClick={handleKakaoLogin}>
               <img src={process.env.PUBLIC_URL + "/imgs/kakaoIcon.png"} />
               카카오 로그인
             </button>
