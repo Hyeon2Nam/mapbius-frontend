@@ -12,6 +12,8 @@ export default function MainPage() {
       <Link to={"/select-register"}>register</Link>
       <br />
       <Link to={"/notice/1"}>공지사항</Link>
+      <br />
+      <Link to={"/mypage/main"}>마이페이지</Link>
     </div>
   );
 }
