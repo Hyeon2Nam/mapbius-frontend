@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import "../style/mypageCommon.scss";
 
 const MypageSideMenu = () => {
   const sideMenuList = [
@@ -18,7 +17,7 @@ const MypageSideMenu = () => {
       <div className="main-menu">
         {sideMenuList.map((e, i) => {
           return (
-            <div>
+            <div key={e.name}>
               <Link to={"/mypage" + e.link}>{e.name}</Link>
             </div>
           );
@@ -27,7 +26,7 @@ const MypageSideMenu = () => {
       <div className="sub-menu">
         {sideSmallMenuList.map((e, i) => {
           return (
-            <div>
+            <div key={e.name}>
               <Link to={"/mypage" + e.link}>{e.name}</Link>
             </div>
           );

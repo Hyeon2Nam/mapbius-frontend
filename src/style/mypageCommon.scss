@@ -4,17 +4,32 @@
   font-family: "malssami815";
 }
 
+.mypage-container {
+  width: 70%;
+  margin: 0 auto;
+
+  .bottom-contents {
+    display: flex;
+  }
+}
+
 .mypage-side-menu {
-  width: 15%;
+  max-width: 150px;
+  min-width: 150px;
   display: flex;
   flex-direction: column;
   text-align: left;
+  margin: 0px 50px 0 0;
 
   .main-menu,
   .sub-menu {
     :nth-child(1n) {
       @include linkTextDecorate;
       margin: 15px 0;
+    }
+
+    :first-child {
+      margin-top: 0;
     }
   }
 
@@ -34,11 +49,10 @@
 }
 
 .mypage-userheader {
-  width: 70%;
   padding: 10px 0;
   border-top: 1px solid #c1c1c1;
   border-bottom: 1px solid #c1c1c1;
-  margin: 0 auto;
+  margin-bottom: 30px;
 
   display: flex;
   justify-content: start;
