@@ -1,6 +1,14 @@
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 
 const MypageSideMenu = () => {
+  const location = useLocation();
+  const [curPage, setCurPage] = useState("");
+
+  useEffect(() => {
+    setCurPage("/" + location.pathname.split("/")[2]);
+  }, [location]);
+
   const sideMenuList = [
     { name: "즐겨찾기 목록", link: "/favorite-list" },
     { name: "후기 목록", link: "/reiew-list" },
@@ -17,7 +25,7 @@ const MypageSideMenu = () => {
       <div className="main-menu">
         {sideMenuList.map((e, i) => {
           return (
-            <div key={e.name}>
+            <div key={e.name} className={curPage === e.link ? "curpage" : ""}>
               <Link to={"/mypage" + e.link}>{e.name}</Link>
             </div>
           );
