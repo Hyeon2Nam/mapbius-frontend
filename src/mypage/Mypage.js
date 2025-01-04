@@ -1,11 +1,15 @@
 import { Outlet } from "react-router-dom";
 import MypageUserHeader from "./MypageUserHeader";
+import MypageSideMenu from "./MypageSideMenu";
 
 const Mypage = () => {
   return (
-    <div>
+    <div className="mypage-container">
       <MypageUserHeader />
-      <Outlet />
+      <div>
+        <MypageSideMenu />
+        <Outlet />
+      </div>
     </div>
   );
 };

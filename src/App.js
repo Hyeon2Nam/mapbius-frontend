@@ -7,7 +7,6 @@ import MainPage from "./map/Temp";
 import Notice from "./Notice/NoticeBoard";
 import NoticeDetail from "./Notice/NoticeDetail";
 import NoticeCreate from "./Notice/NoticeCreate";
-import UserInfoView from "./User/UserInfoView";
 import UserInfoEdit from "./User/UserInfoEdit";
 import FindId from "./login/FindId";
 import FindPw from "./login/FindPw";
@@ -37,7 +36,7 @@ function App() {
           <Route path="/notice/:mode/:id" element={<NoticeCreate />} />
           <Route element={<Mypage />}>
             <Route path="/mypage/main" element={<UserInfoEdit />} />
-            <Route path="/mypage/user-info" element={<UserInfoEdit />} />
+            <Route path="/mypage/edit-user-info" element={<UserInfoEdit />} />
           </Route>
         </Route>
 
