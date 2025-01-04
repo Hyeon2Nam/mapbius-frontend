@@ -2,7 +2,11 @@ import React, { useState } from "react";
 import "../style/Register.scss";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
-import { idDuplicateCheck, tryRegister } from "../api/loginApi";
+import {
+  emailDuplicateCheck,
+  idDuplicateCheck,
+  tryRegister,
+} from "../api/loginApi";
 import { Link, useNavigate } from "react-router-dom";
 
 export default function Register() {
@@ -218,7 +222,7 @@ export default function Register() {
       email: userInfo.userEmail,
     };
 
-    idDuplicateCheck(obj)
+    emailDuplicateCheck(obj)
       .then((res) => {
         if (res.status === 200) {
           setsnackbarType("success");
