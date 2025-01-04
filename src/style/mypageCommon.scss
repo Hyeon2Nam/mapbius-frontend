@@ -1,0 +1,96 @@
+@use "util.scss" as *;
+
+* {
+  font-family: "malssami815";
+}
+
+.mypage-container {
+  width: 70%;
+  margin: 0 auto;
+
+  .bottom-contents {
+    display: flex;
+  }
+}
+
+.mypage-side-menu {
+  max-width: 150px;
+  min-width: 150px;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  margin: 0px 50px 0 0;
+
+  div {
+    position: relative;
+  }
+
+  .curpage::after {
+    content: "";
+    position: absolute;
+    width: 150px;
+    height: 20px;
+    top: 50%;
+    left: -5%;
+    z-index: -100;
+    background-color: aqua;
+  }
+
+  .main-menu,
+  .sub-menu {
+    :nth-child(1n) {
+      @include linkTextDecorate;
+      margin: 15px 0;
+    }
+
+    :first-child {
+      margin-top: 0;
+    }
+  }
+
+  .main-menu {
+    :nth-child(1n) {
+      color: #000;
+      font-size: 1.3rem;
+    }
+  }
+
+  .sub-menu {
+    :nth-child(1n) {
+      color: gray;
+      font-size: 1.1rem;
+    }
+  }
+}
+
+.mypage-userheader {
+  padding: 10px 0;
+  border-top: 1px solid #c1c1c1;
+  border-bottom: 1px solid #c1c1c1;
+  margin-bottom: 30px;
+
+  display: flex;
+  justify-content: start;
+  align-items: center;
+
+  .user-img img {
+    width: 100px;
+    height: auto;
+    margin: 0 20px;
+    border: 1px solid #000;
+    border-radius: 100px;
+  }
+
+  .text-wrapper {
+    text-align: left;
+
+    .hello-user {
+      color: gray;
+    }
+
+    .intro-text {
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+  }
+}

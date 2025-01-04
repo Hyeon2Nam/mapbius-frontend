@@ -7,13 +7,14 @@ import MainPage from "./map/Temp";
 import Notice from "./Notice/NoticeBoard";
 import NoticeDetail from "./Notice/NoticeDetail";
 import NoticeCreate from "./Notice/NoticeCreate";
-import UserInfoView from "./User/UserInfoView";
 import UserInfoEdit from "./User/UserInfoEdit";
 import FindId from "./login/FindId";
 import FindPw from "./login/FindPw";
 import Header from "./common/Header";
 import KakaoLogin from "./login/KakaoLogin";
 import KakaoRegisterFrom from "./login/KakaoRegisterFrom";
+import Mypage from "./mypage/Mypage";
+import MypageMainCardList from "./mypage/MyPageMainCardList";
 
 const Layout = () => {
   return (
@@ -34,8 +35,10 @@ function App() {
           <Route path="/notice/:page" element={<Notice />} />
           <Route path="/notice/view/:id" element={<NoticeDetail />} />
           <Route path="/notice/:mode/:id" element={<NoticeCreate />} />
-          <Route path="/user-info/view" element={<UserInfoView />} />
-          <Route path="/user-info/edit" element={<UserInfoEdit />} />
+          <Route element={<Mypage />}>
+            <Route path="/mypage/main" element={<MypageMainCardList />} />
+            <Route path="/mypage/edit-user-info" element={<UserInfoEdit />} />
+          </Route>
         </Route>
 
         <Route path="/" element={<MainPage />} />
