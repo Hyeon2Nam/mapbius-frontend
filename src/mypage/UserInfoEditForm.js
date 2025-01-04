@@ -216,55 +216,69 @@ export default function UserInfoEditForm() {
         </Snackbar>
       </div>
       <div className="user-info-section">
-        <button onClick={profileImgeChangeHandler}>프로필 사진 변경</button>
-        <div>
-          <span className="sub-title">ID</span>
-          <span>{userInfo.userId}</span>
-        </div>
-        <div>
-          <span className="sub-title">비밀번호</span>
-          <input
-            name="userPw"
-            onChange={userInfoHandler}
-            value={userInfo.userPw}
-          />
-        </div>
-        <div>
-          <span className="sub-title">이메일</span>
-          <input
-            name="userEmail"
-            onChange={userInfoHandler}
-            value={userInfo.userEmail}
-          />
-          <input
-            type="button"
-            value={"중복 확인"}
-            onClick={emailDuplicateCheckHandler}
-          />
-        </div>
-        <div>
-          <span className="sub-title">닉네임</span>
-          <input
-            name="nickname"
-            onChange={userInfoHandler}
-            value={userInfo.nickname}
-          />
-        </div>
-        <div>
-          <span className="sub-title">성별</span>
-          <span>{userInfo.gender}</span>
-        </div>
-        <div>
-          <span className="sub-title">생년월일</span>
-          <span>{userBirthFormat()}</span>
-        </div>
+        <table>
+          <tbody>
+            <tr>
+              <td color="2">
+                <button onClick={profileImgeChangeHandler}>
+                  프로필 사진 변경
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td className="sub-title">닉네임</td>
+              <input
+                type="text"
+                name="nickname"
+                onChange={userInfoHandler}
+                value={userInfo.nickname}
+              />
+            </tr>
+            <tr>
+              <td className="sub-title">ID</td>
+              <td>{userInfo.userId}</td>
+            </tr>
+            <tr>
+              <td className="sub-title">비밀번호</td>
+              <input
+                name="userPw"
+                type="text"
+                onChange={userInfoHandler}
+                value={userInfo.userPw}
+              />
+            </tr>
+            <tr>
+              <td className="sub-title">이메일</td>
+              <input
+                name="userEmail"
+                type="text"
+                onChange={userInfoHandler}
+                value={userInfo.userEmail}
+              />
+              <input
+                type="button"
+                value={"중복 확인"}
+                onClick={emailDuplicateCheckHandler}
+              />
+            </tr>
+            <tr>
+              <td className="sub-title">성별</td>
+              <td>{userInfo.gender}</td>
+            </tr>
+            <tr>
+              <td className="sub-title">생년월일</td>
+              <td>{userBirthFormat()}</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-
+      <div className="big-section-title">계정 연결하기</div>
       <div className="account-link-section">
-        <div className="big-section-title">계정 연결하기</div>
-        <div>
-          <img src={process.env.PUBLIC_URL + "/imgs/logo.jpg"} />
-          <span>카카오톡</span>
+        <div className="kakao-link">
+          <div>
+            <img src={process.env.PUBLIC_URL + "/imgs/logo.jpg"} />
+            <div>카카오톡</div>
+          </div>
           <button
             onClick={
               userInfo.isKakaoLink ? kakaoUnlinkHandler : kakaoLinkHandler
@@ -274,14 +288,19 @@ export default function UserInfoEditForm() {
           </button>
         </div>
       </div>
-      <button
-        onClick={() => {
-          setUserInfo(originData);
-        }}
-      >
-        취소
-      </button>
-      <button onClick={userInfoChangeHandler}>수정</button>
+      <div className="btn-wrapper">
+        <button
+          className="reset-btn"
+          onClick={() => {
+            setUserInfo(originData);
+          }}
+        >
+          취소
+        </button>
+        <button className="edit-btn" onClick={userInfoChangeHandler}>
+          수정
+        </button>
+      </div>
     </div>
   );
 }

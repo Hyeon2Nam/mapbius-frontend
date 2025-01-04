@@ -34,7 +34,7 @@ const MypageSideMenu = () => {
       <div className="sub-menu">
         {sideSmallMenuList.map((e, i) => {
           return (
-            <div key={e.name}>
+            <div key={e.name} className={curPage === e.link ? "curpage" : ""}>
               <Link to={"/mypage" + e.link}>{e.name}</Link>
             </div>
           );

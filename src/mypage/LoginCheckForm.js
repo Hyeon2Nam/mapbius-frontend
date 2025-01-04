@@ -18,6 +18,7 @@ const LoginCheckForm = ({ setIsLogin }) => {
           <span>아이디</span>
           <span className="id-text">{"ID"}</span>
         </div>
+        <div className="divide-section"></div>
         <div className="pw-section">
           <span>비밀번호</span>
           <input
