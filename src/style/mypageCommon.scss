@@ -52,6 +52,16 @@
       left: -5%;
       z-index: -100;
       background-color: aqua;
+      animation: showunderline 0.5s;
+    }
+
+    @keyframes showunderline {
+      0% {
+        width: 0;
+      }
+      100% {
+        width: 150px;
+      }
     }
   }
 
