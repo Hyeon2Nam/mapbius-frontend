@@ -8,14 +8,30 @@ $breakpoint-tablet: 758px;
 $breakpoint-desktop: 1024px;
 $breakpoint-large-desktop: 2048px;
 
-@mixin linkTextDecorate() {
-  text-decoration: none;
-  color: $main-color;
-}
-
 @font-face {
   font-family: "malssami815";
   src: url("./fonts/malssami815.otf");
+}
+
+@font-face {
+  font-family: "DNFForgedBlade";
+  font-style: normal;
+  font-weight: 300;
+  src: url("//cdn.df.nexon.com/img/common/font/DNFForgedBlade-Light.otf")
+    format("opentype");
+}
+
+@font-face {
+  font-family: "Wolyeonggyo";
+  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_13@1.0/Wolyeonggyo.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@mixin linkTextDecorate() {
+  text-decoration: none;
+  color: $main-color;
 }
 
 @mixin mobile {

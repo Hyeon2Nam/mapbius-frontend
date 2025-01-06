@@ -51,7 +51,7 @@
       top: 50%;
       left: -5%;
       z-index: -100;
-      background-color: aqua;
+      background-color: #a9b8ff;
       animation: showunderline 0.5s;
     }
 
@@ -72,7 +72,7 @@
     }
 
     .curpage a {
-      color: $main-color;
+      color: #5271ff;
     }
   }
 }
@@ -98,14 +98,18 @@
 
   .text-wrapper {
     text-align: left;
+    line-height: 1.2;
+    cursor: pointer;
 
     .hello-user {
-      color: gray;
+      font-size: 1.8rem;
+      margin-bottom: 5px;
+      font-family: "DNFForgedBlade";
     }
 
     .intro-text {
-      font-size: 1.2rem;
-      cursor: pointer;
+      font-family: "Wolyeonggyo";
+      color: gray;
     }
   }
 }
