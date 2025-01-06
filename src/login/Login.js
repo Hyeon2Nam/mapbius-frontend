@@ -27,6 +27,7 @@ export default function Login() {
       localStorage.removeItem("people1");
       localStorage.removeItem("userToken");
       localStorage.removeItem("loginUser");
+      localStorage.removeItem("jwtToken");
     }
   }, []);
 

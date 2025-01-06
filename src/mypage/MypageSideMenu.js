@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { leaveAccount } from "../api/myPageApi";
 
 const MypageSideMenu = () => {
+  const nav = useNavigate();
   const location = useLocation();
-  const [curPage, setCurPage] = useState("");
+  const [curPage, setCurPage] = useState("/");
+  const [openModal, setopenModal] = useState(false);
 
   useEffect(() => {
     setCurPage("/" + location.pathname.split("/")[2]);
@@ -17,8 +20,23 @@ const MypageSideMenu = () => {
   ];
   const sideSmallMenuList = [
     { name: "회원정보 변경", link: "/edit-user-info" },
-    { name: "회원탈퇴", link: "/user-leave" },
   ];
+
+  const leaveAccountHanlder = () => {
+    leaveAccount(localStorage.getItem("userToken"))
+      .then((res) => {
+        if (res.status === 200) {
+          alert("성공적으로 탈퇴되었습니다");
+          setopenModal(false);
+          nav("/");
+        } else {
+          alert("탈퇴 실패. 나중에 다시 시도해주세요");
+        }
+      })
+      .catch((e) => {
+        alert("탈퇴 실패. 나중에 다시 시도해주세요");
+      });
+  };
 
   return (
     <div className="mypage-side-menu">
@@ -39,6 +57,33 @@ const MypageSideMenu = () => {
             </div>
           );
         })}
+        <div
+          onClick={() => {
+            setopenModal(true);
+          }}
+        >
+          회원탈퇴
+        </div>
+      </div>
+      <div className={openModal ? "result-form" : "none"}>
+        <div className="form-wrapper">
+          <div className="info-container">
+            <h1>탈퇴하시겠습니까?</h1>
+            <div className="result-btn">
+              <button
+                className="short-btn"
+                onClick={() => {
+                  setopenModal(false);
+                }}
+              >
+                취소
+              </button>
+              <button className="long-btn" onClick={leaveAccountHanlder}>
+                탈퇴
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
