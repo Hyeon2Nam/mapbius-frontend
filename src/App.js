@@ -38,6 +38,9 @@ function App() {
           <Route element={<Mypage />}>
             <Route path="/mypage/main" element={<MypageMainCardList />} />
             <Route path="/mypage/edit-user-info" element={<EditUserInfo />} />
+            <Route path="/mypage/reiew-list" element={<EditUserInfo />} />
+            <Route path="/mypage/trip-route-list" element={<EditUserInfo />} />
+            <Route path="/mypage/favorite-list" element={<EditUserInfo />} />
           </Route>
         </Route>
 
