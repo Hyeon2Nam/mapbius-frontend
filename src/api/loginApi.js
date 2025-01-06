@@ -22,9 +22,9 @@ export const findId = (obj) => {
   return api.post("/api/public/forget-id", JSON.stringify(obj));
 };
 
-// 아직 없음
 export const findPw = (obj) => {
-  return api.post("/api/public/forget-pw", JSON.stringify(obj));
+  console.log(obj);
+  return api.post("/api/public/account-exist", JSON.stringify(obj));
 };
 
 export const adminLogin = (obj) => {
@@ -42,15 +42,3 @@ export const tryKakaoRegister = (obj, token) => {
     },
   });
 };
-
-// export const areaList = () => {
-//     return api.get("/area/list");
-//   };
-
-//   export const memberRegist = (obj) => {
-//     return api.post("/member/regist", JSON.stringify(obj));
-//   };
-
-// export const itemGood = (obj) => {
-//     return api.get("/item/good", { params: obj });
-//   };
