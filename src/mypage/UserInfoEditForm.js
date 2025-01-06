@@ -227,12 +227,14 @@ export default function UserInfoEditForm() {
             </tr>
             <tr>
               <td className="sub-title">닉네임</td>
-              <input
-                type="text"
-                name="nickname"
-                onChange={userInfoHandler}
-                value={userInfo.nickname}
-              />
+              <td>
+                <input
+                  type="text"
+                  name="nickname"
+                  onChange={userInfoHandler}
+                  value={userInfo.nickname}
+                />
+              </td>
             </tr>
             <tr>
               <td className="sub-title">ID</td>
@@ -240,26 +242,32 @@ export default function UserInfoEditForm() {
             </tr>
             <tr>
               <td className="sub-title">비밀번호</td>
-              <input
-                name="userPw"
-                type="text"
-                onChange={userInfoHandler}
-                value={userInfo.userPw}
-              />
+              <td>
+                <input
+                  name="userPw"
+                  type="text"
+                  onChange={userInfoHandler}
+                  value={userInfo.userPw}
+                />
+              </td>
             </tr>
             <tr>
               <td className="sub-title">이메일</td>
-              <input
-                name="userEmail"
-                type="text"
-                onChange={userInfoHandler}
-                value={userInfo.userEmail}
-              />
-              <input
-                type="button"
-                value={"중복 확인"}
-                onClick={emailDuplicateCheckHandler}
-              />
+              <td>
+                <input
+                  name="userEmail"
+                  type="text"
+                  onChange={userInfoHandler}
+                  value={userInfo.userEmail}
+                />
+              </td>
+              <td>
+                <input
+                  type="button"
+                  value={"중복 확인"}
+                  onClick={emailDuplicateCheckHandler}
+                />
+              </td>
             </tr>
             <tr>
               <td className="sub-title">성별</td>
