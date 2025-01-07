@@ -17,6 +17,7 @@ export default function UserInfoEditForm() {
   const [userInfo, setUserInfo] = useState({
     userId: "mapbius",
     userPw: "123",
+    userPwCheck: "1",
     userEmail: "mapbius@gmail.com",
     nickname: "mapbius",
     date: "2000-01-01",
@@ -41,10 +42,6 @@ export default function UserInfoEditForm() {
       fontSize: "30px",
     },
   };
-
-  useEffect(() => {
-    // call  get user Info api
-  }, []);
 
   const userInfoHandler = (e) => {
     const { name, value } = e.target;
@@ -82,7 +79,7 @@ export default function UserInfoEditForm() {
     //   });
   };
 
-  const emailDuplicateCheckHandler = () => {
+  const emailDuplicateCheckHandler = async () => {
     const emailRegex =
       /^(([^<>()\[\].,;:\s@"]+(\.[^<>()\[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
     const spaceRegx = /\s/g;
@@ -95,7 +92,7 @@ export default function UserInfoEditForm() {
       email: userInfo.userEmail,
     };
 
-    emailDuplicateCheck(obj)
+    await emailDuplicateCheck(obj)
       .then((res) => {
         if (res.status === 200) {
           setsnackbarType("success");
@@ -122,7 +119,7 @@ export default function UserInfoEditForm() {
   };
 
   const validateHandler = () => {
-    let userPw, userEmail, userNickName;
+    let userPw, userEmail, nickname;
     const { userPwCheck } = userInfo;
     const emailRegex =
       /^(([^<>()\[\].,;:\s@"]+(\.[^<>()\[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
@@ -130,14 +127,16 @@ export default function UserInfoEditForm() {
     const spaceRegx = /\s/g;
     const nicknameRegx = /^[가-힣a-zA-Z0-9]{2,8}$/;
 
-    userPw = userInfo.userPw.trim();
-    userEmail = userInfo.userEmail.trim();
-    userNickName = userInfo.userNickName.trim();
+    if (!(userInfo.userPw && userInfo.userEmail && userInfo.nickname)) {
+      console.log(userInfo.userPw, userInfo.userEmail, userInfo.nickname);
 
-    if (!(userPw && userEmail && userNickName)) {
       snackbarHandler("양식을 전부 기입해주세요");
       return true;
     }
+
+    userPw = userInfo.userPw.trim();
+    userEmail = userInfo.userEmail.trim();
+    nickname = userInfo.nickname.trim();
 
     if (!emailDuplicated.isChecked) {
       snackbarHandler("이메일 중복 체크를 해주세요");
@@ -156,10 +155,7 @@ export default function UserInfoEditForm() {
     } else if (!emailRegex.test(userEmail) || userEmail.match(spaceRegx)) {
       snackbarHandler("이메일을 제대로 작성해주세요");
       return true;
-    } else if (
-      !nicknameRegx.test(userNickName) ||
-      userNickName.match(spaceRegx)
-    ) {
+    } else if (!nicknameRegx.test(nickname) || nickname.match(spaceRegx)) {
       snackbarHandler("닉네임을 제대로 작성해주세요");
       return true;
     }
@@ -252,6 +248,17 @@ export default function UserInfoEditForm() {
               </td>
             </tr>
             <tr>
+              <td className="sub-title">비밀번호 확인</td>
+              <td>
+                <input
+                  name="userPw"
+                  type="text"
+                  onChange={userInfoHandler}
+                  value={userInfo.userPwCheck}
+                />
+              </td>
+            </tr>
+            <tr>
               <td className="sub-title">이메일</td>
               <td>
                 <input
@@ -284,7 +291,7 @@ export default function UserInfoEditForm() {
       <div className="account-link-section">
         <div className="kakao-link">
           <div>
-            <img src={process.env.PUBLIC_URL + "/imgs/logo.jpg"} />
+            <img src={process.env.PUBLIC_URL + "/imgs/kakaoLogoIcon.png"} />
             <div>카카오톡</div>
           </div>
           <button
@@ -300,7 +307,7 @@ export default function UserInfoEditForm() {
         <button
           className="reset-btn"
           onClick={() => {
-            setUserInfo(originData);
+            setUserInfo({ ...originData, userPwCheck: "" });
           }}
         >
           취소
