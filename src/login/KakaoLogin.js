@@ -17,6 +17,9 @@ const KakaoLogin = () => {
     );
     let dec = JSON.parse(base64.decode(payload));
 
+    localStorage.setItem("RegType", dec.login_type);
+    localStorage.setItem("loginUser", dec.sub);
+
     if (dec.role === "ROLE_ADMIN")
       localStorage.setItem("people1", "partsOfGun");
   };
@@ -32,17 +35,17 @@ const KakaoLogin = () => {
             localStorage.setItem("jwtToken", res.data.objData);
             nav("/kakao-register/form");
           } else if (res.status === 226) {
-            // console.log(res.data.objData);
             alert("로그인 성공");
-            adminCheck(res.data.token);
-            localStorage.setItem("userToken", res.data.token);
-            localStorage.setItem("loginUser", res.data.objData.id);
-            localStorage.setItem("jwtToken", res.data.objData);
+            adminCheck(res.data.objData);
+            localStorage.setItem("userToken", res.data.objData);
             nav("/");
           }
         })
         .catch((e) => {
-          alert("회원가입 실패");
+          if (e.status >= 400) {
+            alert("회원가입 실패");
+            nav("/login");
+          }
         });
     }
   };
