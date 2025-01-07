@@ -2,8 +2,11 @@ import React, { useEffect, useState } from "react";
 import { emailDuplicateCheck } from "../api/loginApi";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
+import { useNavigate } from "react-router-dom";
+import { editUserData } from "../api/myPageApi";
 
 const UserInfoEditForm = ({ originData }) => {
+  const nav = useNavigate();
   const [userInfo, setUserInfo] = useState({
     birthDate: "",
     email: "",
@@ -82,17 +85,22 @@ const UserInfoEditForm = ({ originData }) => {
 
     setOpen(false);
 
-    // tryRegister(obj)
-    //   .then((res) => {
-    //     if (res.status === 200) {
-    //       nav("/");
-    //     } else {
-    //       snackbarHandler("회원가입에 실페했습니다.");
-    //     }
-    //   })
-    //   .catch((e) => {
-    //     snackbarHandler("회원가입에 실페했습니다.");
-    //   });
+    editUserData(obj, localStorage.getItem("userToken"))
+      .then((res) => {
+        console.log(res);
+
+        if (res.status === 200) {
+          alert("수정 성공");
+        } else {
+          alert("수정 실패");
+        }
+      })
+      .catch((e) => {
+        if (e.status === 403) {
+          alert("로그인 시간 만료. 다시 로그인해주세요");
+          nav("/login");
+        }
+      });
   };
 
   const emailDuplicateCheckHandler = () => {
@@ -147,33 +155,43 @@ const UserInfoEditForm = ({ originData }) => {
     setsnackbarType("error");
     setSnackbarColor("#cd4d36");
 
-    if (!(userInfo.pw && userInfo.email && userInfo.nickName)) {
+    if (kakaoReg) {
+      if (!userInfo.nickName) {
+        snackbarHandler("양식을 전부 기입해주세요");
+        return true;
+      }
+    } else if (!(userInfo.pw && userInfo.email && userInfo.nickName)) {
       snackbarHandler("양식을 전부 기입해주세요");
       return true;
     }
 
-    pw = userInfo.pw.trim();
-    email = userInfo.email.trim();
-    nickName = userInfo.nickName.trim();
+    if (!kakaoReg) {
+      pw = userInfo.pw.trim();
+      email = userInfo.email.trim();
 
-    if (!emailDuplicated.isChecked) {
-      snackbarHandler("이메일 중복 체크를 해주세요");
-      return true;
-    } else if (emailDuplicated.isDuplicated) {
-      snackbarHandler("중복된 이메일은 사용하실 수 없습니다");
-      return true;
+      if (!emailDuplicated.isChecked) {
+        snackbarHandler("이메일 중복 체크를 해주세요");
+        return true;
+      } else if (emailDuplicated.isDuplicated) {
+        snackbarHandler("중복된 이메일은 사용하실 수 없습니다");
+        return true;
+      }
+
+      if (pw !== userPwCheck) {
+        snackbarHandler("비밀번호가 일치하지 않습니다");
+        return true;
+      } else if (!pwRegx.test(pw) || pw.match(spaceRegx)) {
+        snackbarHandler("비밀번호를 제대로 작성해주세요");
+        return true;
+      } else if (!emailRegex.test(email) || email.match(spaceRegx)) {
+        snackbarHandler("이메일을 제대로 작성해주세요");
+        return true;
+      }
     }
 
-    if (pw !== userPwCheck) {
-      snackbarHandler("비밀번호가 일치하지 않습니다");
-      return true;
-    } else if (!pwRegx.test(pw) || pw.match(spaceRegx)) {
-      snackbarHandler("비밀번호를 제대로 작성해주세요");
-      return true;
-    } else if (!emailRegex.test(email) || email.match(spaceRegx)) {
-      snackbarHandler("이메일을 제대로 작성해주세요");
-      return true;
-    } else if (!nicknameRegx.test(nickName) || nickName.match(spaceRegx)) {
+    nickName = userInfo.nickName.trim();
+
+    if (!nicknameRegx.test(nickName) || nickName.match(spaceRegx)) {
       snackbarHandler("닉네임을 제대로 작성해주세요");
       return true;
     }

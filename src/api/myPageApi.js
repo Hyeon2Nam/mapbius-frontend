@@ -15,3 +15,11 @@ export const getUserInfo = (obj, token) => {
     },
   });
 };
+
+export const editUserData = (obj, token) => {
+  return api.post("/api/private/account/update", JSON.stringify(obj), {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
