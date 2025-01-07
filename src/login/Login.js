@@ -39,8 +39,6 @@ export default function Login() {
     );
     let dec = JSON.parse(base64.decode(payload));
 
-    console.log(dec);
-
     localStorage.setItem("RegType", dec.login_type);
 
     if (dec.role === "ROLE_ADMIN")
@@ -73,8 +71,6 @@ export default function Login() {
       tryLogin(obj)
         .then((res) => {
           if (res.status === 200) {
-            console.log(res);
-
             setOpen(false);
             adminCheck(res.data.token);
             localStorage.setItem("userToken", res.data.token);

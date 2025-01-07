@@ -53,10 +53,8 @@ export default function NoticeCreate() {
           }
         })
         .catch((e) => {
-          console.log(e);
-
-          // alert("권한이 없습니다");
-          // nav("/notice/1");
+          alert("권한이 없습니다");
+          nav("/notice/1");
         });
     }
   };

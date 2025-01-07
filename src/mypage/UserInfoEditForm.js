@@ -87,8 +87,6 @@ const UserInfoEditForm = ({ originData }) => {
 
     editUserData(obj, localStorage.getItem("userToken"))
       .then((res) => {
-        console.log(res);
-
         if (res.status === 200) {
           alert("수정 성공");
         } else {
