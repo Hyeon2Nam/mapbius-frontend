@@ -1,11 +1,7 @@
 import { useState } from "react";
 
-const LoginCheckForm = ({ setIsLogin }) => {
+const LoginCheckForm = ({ getUserInfoHandler }) => {
   const [pw, setPw] = useState("");
-
-  const pwCheckHandler = () => {
-    setIsLogin(true);
-  };
 
   return (
     <div className="login-form">
@@ -30,7 +26,13 @@ const LoginCheckForm = ({ setIsLogin }) => {
           />
         </div>
       </div>
-      <button onClick={pwCheckHandler}>확인</button>
+      <button
+        onClick={() => {
+          getUserInfoHandler(pw);
+        }}
+      >
+        확인
+      </button>
     </div>
   );
 };

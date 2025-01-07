@@ -2,27 +2,23 @@ import React, { useEffect, useState } from "react";
 import { emailDuplicateCheck } from "../api/loginApi";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
+import { useNavigate } from "react-router-dom";
+import { editUserData } from "../api/myPageApi";
 
-export default function UserInfoEditForm() {
-  let originData = {
-    userId: "mapbius",
-    userPw: "123",
-    userEmail: "mapbius@gmail.com",
-    nickname: "mapbius",
-    date: "2000-01-01",
-    gender: "여",
-    isKakaoLink: false,
-  };
-
+const UserInfoEditForm = ({ originData }) => {
+  const nav = useNavigate();
   const [userInfo, setUserInfo] = useState({
-    userId: "mapbius",
-    userPw: "123",
-    userEmail: "mapbius@gmail.com",
-    nickname: "mapbius",
-    date: "2000-01-01",
-    gender: "여",
-    isKakaoLink: false,
+    birthDate: "",
+    email: "",
+    gender: "",
+    id: "",
+    kakaoId: null,
+    nickName: "",
+    profileImage: null,
+    pw: "",
   });
+  const [kakaoReg, setKakaoReg] = useState(false);
+
   const [emailDuplicated, setEmailDuplicated] = useState({
     isChecked: false,
     isDuplicated: false,
@@ -43,138 +39,12 @@ export default function UserInfoEditForm() {
   };
 
   useEffect(() => {
-    // call  get user Info api
+    setUserInfo({ ...originData, userPwCheck: "" });
+
+    if (localStorage.getItem("RegType") === "kakao") {
+      setKakaoReg(true);
+    }
   }, []);
-
-  const userInfoHandler = (e) => {
-    const { name, value } = e.target;
-
-    if (name === "userEmail")
-      setEmailDuplicated({ isChecked: false, isDuplicated: false });
-
-    setUserInfo({
-      ...userInfo,
-      [name]: value,
-    });
-  };
-
-  const userInfoChangeHandler = () => {
-    let obj = {
-      pw: userInfo.userPw,
-      email: userInfo.userEmail,
-      nickname: userInfo.nickname,
-    };
-
-    if (validateHandler()) return;
-
-    setOpen(false);
-
-    // tryRegister(obj)
-    //   .then((res) => {
-    //     if (res.status === 200) {
-    //       nav("/");
-    //     } else {
-    //       snackbarHandler("회원가입에 실페했습니다.");
-    //     }
-    //   })
-    //   .catch((e) => {
-    //     snackbarHandler("회원가입에 실페했습니다.");
-    //   });
-  };
-
-  const emailDuplicateCheckHandler = () => {
-    const emailRegex =
-      /^(([^<>()\[\].,;:\s@"]+(\.[^<>()\[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
-    const spaceRegx = /\s/g;
-    let userEmail = userInfo.userEmail.trim();
-
-    if (!userEmail) return;
-    if (!emailRegex.test(userEmail) || userEmail.match(spaceRegx)) return;
-
-    let obj = {
-      email: userInfo.userEmail,
-    };
-
-    emailDuplicateCheck(obj)
-      .then((res) => {
-        if (res.status === 200) {
-          setsnackbarType("success");
-          setSnackbarColor("#26913b");
-          snackbarHandler("사용가능한 이메일 입니다.");
-          setEmailDuplicated({ isChecked: true, idDuplicated: false });
-        } else {
-          snackbarHandler("중복된 이메일 입니다.");
-          setEmailDuplicated({ isChecked: true, idDuplicated: true });
-        }
-      })
-      .catch((e) => {
-        snackbarHandler("중복된 이메일 입니다.");
-        setEmailDuplicated({ isChecked: true, idDuplicated: true });
-      });
-
-    setsnackbarType("error");
-    setSnackbarColor("#cd4d36");
-  };
-
-  const snackbarHandler = (msg) => {
-    setErrMsg(msg);
-    setOpen(true);
-  };
-
-  const validateHandler = () => {
-    let userPw, userEmail, userNickName;
-    const { userPwCheck } = userInfo;
-    const emailRegex =
-      /^(([^<>()\[\].,;:\s@"]+(\.[^<>()\[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
-    const pwRegx = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,20}$/;
-    const spaceRegx = /\s/g;
-    const nicknameRegx = /^[가-힣a-zA-Z0-9]{2,8}$/;
-
-    userPw = userInfo.userPw.trim();
-    userEmail = userInfo.userEmail.trim();
-    userNickName = userInfo.userNickName.trim();
-
-    if (!(userPw && userEmail && userNickName)) {
-      snackbarHandler("양식을 전부 기입해주세요");
-      return true;
-    }
-
-    if (!emailDuplicated.isChecked) {
-      snackbarHandler("이메일 중복 체크를 해주세요");
-      return true;
-    } else if (emailDuplicated.isDuplicated) {
-      snackbarHandler("중복된 이메일은 사용하실 수 없습니다");
-      return true;
-    }
-
-    if (userPw !== userPwCheck) {
-      snackbarHandler("비밀번호가 일치하지 않습니다");
-      return true;
-    } else if (!pwRegx.test(userPw) || userPw.match(spaceRegx)) {
-      snackbarHandler("비밀번호를 제대로 작성해주세요");
-      return true;
-    } else if (!emailRegex.test(userEmail) || userEmail.match(spaceRegx)) {
-      snackbarHandler("이메일을 제대로 작성해주세요");
-      return true;
-    } else if (
-      !nicknameRegx.test(userNickName) ||
-      userNickName.match(spaceRegx)
-    ) {
-      snackbarHandler("닉네임을 제대로 작성해주세요");
-      return true;
-    }
-
-    return false;
-  };
-
-  const userBirthFormat = () => {
-    const date = new Date(userInfo.date);
-    const year = date.getFullYear();
-    const month = (date.getMonth() + 1).toString().padStart(2, "0");
-    const day = date.getDate().toString().padStart(2, "0");
-
-    return `${year}년 ${month}월 ${day}일`;
-  };
 
   useEffect(() => {
     if (window.Kakao && !window.Kakao.isInitialized()) {
@@ -190,6 +60,152 @@ export default function UserInfoEditForm() {
         redirectUri: redirectUri,
       });
     }
+  };
+
+  const userInfoHandler = (e) => {
+    const { name, value } = e.target;
+
+    if (name === "email")
+      setEmailDuplicated({ isChecked: false, isDuplicated: false });
+
+    setUserInfo({
+      ...userInfo,
+      [name]: value,
+    });
+  };
+
+  const userInfoChangeHandler = () => {
+    let obj = {
+      pw: kakaoReg ? "" : userInfo.pw,
+      email: kakaoReg ? "" : userInfo.email,
+      nickName: userInfo.nickName,
+    };
+
+    if (validateHandler()) return;
+
+    setOpen(false);
+
+    editUserData(obj, localStorage.getItem("userToken"))
+      .then((res) => {
+        console.log(res);
+
+        if (res.status === 200) {
+          alert("수정 성공");
+        } else {
+          alert("수정 실패");
+        }
+      })
+      .catch((e) => {
+        if (e.status === 403) {
+          alert("로그인 시간 만료. 다시 로그인해주세요");
+          nav("/login");
+        }
+      });
+  };
+
+  const emailDuplicateCheckHandler = () => {
+    const emailRegex =
+      /^(([^<>()\[\].,;:\s@"]+(\.[^<>()\[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
+    const spaceRegx = /\s/g;
+    let email = userInfo.email.trim();
+
+    if (!email) return;
+    if (!emailRegex.test(email) || email.match(spaceRegx)) return;
+
+    let obj = {
+      email: userInfo.email,
+    };
+
+    emailDuplicateCheck(obj)
+      .then((res) => {
+        if (res.status === 200) {
+          setsnackbarType("success");
+          setSnackbarColor("#26913b");
+          snackbarHandler("사용가능한 이메일 입니다.");
+          setEmailDuplicated({ isChecked: true, idDuplicated: false });
+        } else {
+          setsnackbarType("error");
+          setSnackbarColor("#cd4d36");
+          snackbarHandler("중복된 이메일 입니다.");
+          setEmailDuplicated({ isChecked: true, idDuplicated: true });
+        }
+      })
+      .catch((e) => {
+        setsnackbarType("error");
+        setSnackbarColor("#cd4d36");
+        snackbarHandler("중복된 이메일 입니다.");
+        setEmailDuplicated({ isChecked: true, idDuplicated: true });
+      });
+  };
+
+  const snackbarHandler = (msg) => {
+    setErrMsg(msg);
+    setOpen(true);
+  };
+
+  const validateHandler = () => {
+    let pw, email, nickName;
+    const { userPwCheck } = userInfo;
+    const emailRegex =
+      /^(([^<>()\[\].,;:\s@"]+(\.[^<>()\[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
+    const pwRegx = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,20}$/;
+    const spaceRegx = /\s/g;
+    const nicknameRegx = /^[가-힣a-zA-Z0-9]{2,8}$/;
+
+    setsnackbarType("error");
+    setSnackbarColor("#cd4d36");
+
+    if (kakaoReg) {
+      if (!userInfo.nickName) {
+        snackbarHandler("양식을 전부 기입해주세요");
+        return true;
+      }
+    } else if (!(userInfo.pw && userInfo.email && userInfo.nickName)) {
+      snackbarHandler("양식을 전부 기입해주세요");
+      return true;
+    }
+
+    if (!kakaoReg) {
+      pw = userInfo.pw.trim();
+      email = userInfo.email.trim();
+
+      if (!emailDuplicated.isChecked) {
+        snackbarHandler("이메일 중복 체크를 해주세요");
+        return true;
+      } else if (emailDuplicated.isDuplicated) {
+        snackbarHandler("중복된 이메일은 사용하실 수 없습니다");
+        return true;
+      }
+
+      if (pw !== userPwCheck) {
+        snackbarHandler("비밀번호가 일치하지 않습니다");
+        return true;
+      } else if (!pwRegx.test(pw) || pw.match(spaceRegx)) {
+        snackbarHandler("비밀번호를 제대로 작성해주세요");
+        return true;
+      } else if (!emailRegex.test(email) || email.match(spaceRegx)) {
+        snackbarHandler("이메일을 제대로 작성해주세요");
+        return true;
+      }
+    }
+
+    nickName = userInfo.nickName.trim();
+
+    if (!nicknameRegx.test(nickName) || nickName.match(spaceRegx)) {
+      snackbarHandler("닉네임을 제대로 작성해주세요");
+      return true;
+    }
+
+    return false;
+  };
+
+  const userBirthFormat = () => {
+    const date = new Date(userInfo.birthDate);
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    const day = date.getDate().toString().padStart(2, "0");
+
+    return `${year}년 ${month}월 ${day}일`;
   };
 
   const kakaoUnlinkHandler = () => {};
@@ -230,48 +246,65 @@ export default function UserInfoEditForm() {
               <td>
                 <input
                   type="text"
-                  name="nickname"
+                  name="nickName"
                   onChange={userInfoHandler}
-                  value={userInfo.nickname}
+                  value={userInfo.nickName || ""}
                 />
               </td>
             </tr>
-            <tr>
-              <td className="sub-title">ID</td>
-              <td>{userInfo.userId}</td>
-            </tr>
-            <tr>
-              <td className="sub-title">비밀번호</td>
-              <td>
-                <input
-                  name="userPw"
-                  type="text"
-                  onChange={userInfoHandler}
-                  value={userInfo.userPw}
-                />
-              </td>
-            </tr>
-            <tr>
-              <td className="sub-title">이메일</td>
-              <td>
-                <input
-                  name="userEmail"
-                  type="text"
-                  onChange={userInfoHandler}
-                  value={userInfo.userEmail}
-                />
-              </td>
-              <td>
-                <input
-                  type="button"
-                  value={"중복 확인"}
-                  onClick={emailDuplicateCheckHandler}
-                />
-              </td>
-            </tr>
+
+            {kakaoReg === false && (
+              <>
+                <tr>
+                  <td className="sub-title ">ID</td>
+                  <td>{userInfo.id}</td>
+                </tr>
+                <tr>
+                  <td className="sub-title">비밀번호</td>
+                  <td>
+                    <input
+                      name="pw"
+                      type="password"
+                      onChange={userInfoHandler}
+                      value={userInfo.pw || ""}
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td className="sub-title">비밀번호 확인</td>
+                  <td>
+                    <input
+                      name="userPwCheck"
+                      type="password"
+                      onChange={userInfoHandler}
+                      value={userInfo.userPwCheck || ""}
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td className="sub-title">이메일</td>
+                  <td>
+                    <input
+                      name="email"
+                      type="text"
+                      onChange={userInfoHandler}
+                      value={userInfo.email || ""}
+                    />
+                  </td>
+
+                  <td>
+                    <input
+                      type="button"
+                      value={"중복 확인"}
+                      onClick={emailDuplicateCheckHandler}
+                    />
+                  </td>
+                </tr>
+              </>
+            )}
             <tr>
               <td className="sub-title">성별</td>
-              <td>{userInfo.gender}</td>
+              <td>{userInfo.gender === "male" ? "남성" : "여성"}</td>
             </tr>
             <tr>
               <td className="sub-title">생년월일</td>
@@ -284,7 +317,7 @@ export default function UserInfoEditForm() {
       <div className="account-link-section">
         <div className="kakao-link">
           <div>
-            <img src={process.env.PUBLIC_URL + "/imgs/logo.jpg"} />
+            <img src={process.env.PUBLIC_URL + "/imgs/kakaoLogoIcon.png"} />
             <div>카카오톡</div>
           </div>
           <button
@@ -292,7 +325,7 @@ export default function UserInfoEditForm() {
               userInfo.isKakaoLink ? kakaoUnlinkHandler : kakaoLinkHandler
             }
           >
-            {userInfo.isKakaoLink ? "연결해제" : "계졍연결"}
+            {userInfo.kakaoId !== null ? "연결해제" : "계졍연결"}
           </button>
         </div>
       </div>
@@ -300,7 +333,7 @@ export default function UserInfoEditForm() {
         <button
           className="reset-btn"
           onClick={() => {
-            setUserInfo(originData);
+            setUserInfo({ ...originData, userPwCheck: "" });
           }}
         >
           취소
@@ -311,4 +344,6 @@ export default function UserInfoEditForm() {
       </div>
     </div>
   );
-}
+};
+
+export default UserInfoEditForm;

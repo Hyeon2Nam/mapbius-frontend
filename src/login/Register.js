@@ -83,15 +83,24 @@ export default function Register() {
     const spaceRegx = /\s/g;
     const nicknameRegx = /^[가-힣a-zA-Z0-9]{2,8}$/;
 
+    if (
+      !(
+        userInfo.userId &&
+        userInfo.userPw &&
+        userInfo.userEmail &&
+        userInfo.userNickName &&
+        date &&
+        gender
+      )
+    ) {
+      snackbarHandler("양식을 전부 기입해주세요");
+      return true;
+    }
+
     userId = userInfo.userId.trim();
     userPw = userInfo.userPw.trim();
     userEmail = userInfo.userEmail.trim();
     userNickName = userInfo.userNickName.trim();
-
-    if (!(userId && userPw && userEmail && userNickName && date && gender)) {
-      snackbarHandler("양식을 전부 기입해주세요");
-      return true;
-    }
 
     if (!idDuplicated.isChecked) {
       snackbarHandler("아이디 중복 체크를 해주세요");

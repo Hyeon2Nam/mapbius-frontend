@@ -1,8 +1,10 @@
 .header-container {
+  background-color: white;
+  height: 100px;
+  width: 100vw;
+  text-align: left;
+
   .logo-img {
-    position: fixed;
-    left: 5%;
-    top: 30px;
+    margin: 30px 0 0 40px;
   }
-  margin-bottom: 7rem;
 }

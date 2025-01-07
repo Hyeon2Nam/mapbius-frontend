@@ -28,6 +28,7 @@ export default function Login() {
       localStorage.removeItem("userToken");
       localStorage.removeItem("loginUser");
       localStorage.removeItem("jwtToken");
+      localStorage.removeItem("RegType");
     }
   }, []);
 
@@ -37,6 +38,10 @@ export default function Login() {
       token.lastIndexOf(".")
     );
     let dec = JSON.parse(base64.decode(payload));
+
+    console.log(dec);
+
+    localStorage.setItem("RegType", dec.login_type);
 
     if (dec.role === "ROLE_ADMIN")
       localStorage.setItem("people1", "partsOfGun");
@@ -68,10 +73,12 @@ export default function Login() {
       tryLogin(obj)
         .then((res) => {
           if (res.status === 200) {
+            console.log(res);
+
             setOpen(false);
             adminCheck(res.data.token);
             localStorage.setItem("userToken", res.data.token);
-            localStorage.setItem("loginUser", res.data.objData.id);
+            localStorage.setItem("loginUser", res.data.objData);
             nav("/");
           }
         })
