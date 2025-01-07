@@ -79,7 +79,7 @@ export default function UserInfoEditForm() {
     //   });
   };
 
-  const emailDuplicateCheckHandler = async () => {
+  const emailDuplicateCheckHandler = () => {
     const emailRegex =
       /^(([^<>()\[\].,;:\s@"]+(\.[^<>()\[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
     const spaceRegx = /\s/g;
@@ -92,7 +92,7 @@ export default function UserInfoEditForm() {
       email: userInfo.userEmail,
     };
 
-    await emailDuplicateCheck(obj)
+    emailDuplicateCheck(obj)
       .then((res) => {
         if (res.status === 200) {
           setsnackbarType("success");
@@ -100,17 +100,18 @@ export default function UserInfoEditForm() {
           snackbarHandler("사용가능한 이메일 입니다.");
           setEmailDuplicated({ isChecked: true, idDuplicated: false });
         } else {
+          setsnackbarType("error");
+          setSnackbarColor("#cd4d36");
           snackbarHandler("중복된 이메일 입니다.");
           setEmailDuplicated({ isChecked: true, idDuplicated: true });
         }
       })
       .catch((e) => {
+        setsnackbarType("error");
+        setSnackbarColor("#cd4d36");
         snackbarHandler("중복된 이메일 입니다.");
         setEmailDuplicated({ isChecked: true, idDuplicated: true });
       });
-
-    setsnackbarType("error");
-    setSnackbarColor("#cd4d36");
   };
 
   const snackbarHandler = (msg) => {
@@ -126,6 +127,9 @@ export default function UserInfoEditForm() {
     const pwRegx = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,20}$/;
     const spaceRegx = /\s/g;
     const nicknameRegx = /^[가-힣a-zA-Z0-9]{2,8}$/;
+
+    setsnackbarType("error");
+    setSnackbarColor("#cd4d36");
 
     if (!(userInfo.userPw && userInfo.userEmail && userInfo.nickname)) {
       console.log(userInfo.userPw, userInfo.userEmail, userInfo.nickname);
@@ -241,7 +245,7 @@ export default function UserInfoEditForm() {
               <td>
                 <input
                   name="userPw"
-                  type="text"
+                  type="password"
                   onChange={userInfoHandler}
                   value={userInfo.userPw}
                 />
@@ -251,8 +255,8 @@ export default function UserInfoEditForm() {
               <td className="sub-title">비밀번호 확인</td>
               <td>
                 <input
-                  name="userPw"
-                  type="text"
+                  name="userPwCheck"
+                  type="password"
                   onChange={userInfoHandler}
                   value={userInfo.userPwCheck}
                 />
