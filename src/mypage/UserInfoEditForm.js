@@ -206,8 +206,6 @@ const UserInfoEditForm = ({ originData }) => {
     return `${year}년 ${month}월 ${day}일`;
   };
 
-  const kakaoUnlinkHandler = () => {};
-
   const profileImgeChangeHandler = () => {};
 
   return (
@@ -279,27 +277,33 @@ const UserInfoEditForm = ({ originData }) => {
                     />
                   </td>
                 </tr>
-                <tr>
-                  <td className="sub-title">이메일</td>
-                  <td>
-                    <input
-                      name="email"
-                      type="text"
-                      onChange={userInfoHandler}
-                      value={userInfo.email || ""}
-                    />
-                  </td>
-
+              </>
+            )}
+            <tr>
+              <td className="sub-title">이메일</td>
+              <td>
+                <input
+                  name="email"
+                  type="text"
+                  onChange={userInfoHandler}
+                  value={userInfo.email || ""}
+                  disabled={kakaoReg}
+                />
+              </td>
+              {kakaoReg === false && (
+                <>
                   <td>
                     <input
                       type="button"
                       value={"중복 확인"}
                       onClick={emailDuplicateCheckHandler}
+                      disabled={kakaoReg}
                     />
                   </td>
-                </tr>
-              </>
-            )}
+                </>
+              )}
+            </tr>
+
             <tr>
               <td className="sub-title">성별</td>
               <td>{userInfo.gender === "male" ? "남성" : "여성"}</td>
@@ -322,11 +326,10 @@ const UserInfoEditForm = ({ originData }) => {
             <div>카카오톡</div>
           </div>
           <button
-            onClick={
-              userInfo.isKakaoLink ? kakaoUnlinkHandler : kakaoLinkHandler
-            }
+            onClick={userInfo.isKakaoLink ? () => {} : kakaoLinkHandler}
+            disabled={kakaoReg}
           >
-            {userInfo.kakaoId !== null ? "연결해제" : "계졍연결"}
+            {userInfo.kakaoId !== null ? "연결 완료" : "계졍연결"}
           </button>
         </div>
       </div>
