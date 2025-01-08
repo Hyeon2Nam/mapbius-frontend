@@ -23,3 +23,11 @@ export const editUserData = (obj, token) => {
     },
   });
 };
+
+export const accountKakaoLink = (obj, token) => {
+  return api.post("/api/private/account/kakao/connect", JSON.stringify(obj), {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};

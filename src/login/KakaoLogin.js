@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { tryKakaoLogin } from "../api/loginApi";
 import { useNavigate } from "react-router-dom";
 import base64 from "base-64";
+import { accountKakaoLink } from "../api/myPageApi";
 
 const KakaoLogin = () => {
   const nav = useNavigate();
@@ -28,7 +29,7 @@ const KakaoLogin = () => {
     const urlParams = new URLSearchParams(window.location.search);
     const authorizationCode = urlParams.get("code");
 
-    if (authorizationCode) {
+    if (authorizationCode && localStorage.getItem("RegType") !== "normal") {
       tryKakaoLogin(authorizationCode)
         .then((res) => {
           if (res.status === 200) {
@@ -45,6 +46,33 @@ const KakaoLogin = () => {
           if (e.status >= 400) {
             alert("회원가입 실패");
             nav("/login");
+          }
+        });
+    } else if (
+      authorizationCode &&
+      localStorage.getItem("RegType") === "normal"
+    ) {
+      accountKakaoLink(
+        { code: authorizationCode },
+        localStorage.getItem("userToken")
+      )
+        .then((res) => {
+          if (res.status === 200) {
+            alert("계정 통합에 성공하였습니다");
+            nav("/mypage/edit-user-info");
+            localStorage.setItem("RegType", "kakao");
+          } else {
+            alert("오류가 발생하였습니다");
+            nav("/");
+          }
+        })
+        .catch((e) => {
+          if (e.status === 403) {
+            alert("로그인 정보가 없습니다");
+            nav("/login");
+          } else {
+            alert("오류가 발생하였습니다");
+            nav("/");
           }
         });
     }
