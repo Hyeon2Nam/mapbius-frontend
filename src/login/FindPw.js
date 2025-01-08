@@ -16,7 +16,6 @@ export default function FindPw() {
       email: userEmail,
     };
 
-    // console.log(obj);
     findPw(obj)
       .then((res) => {
         if (res.status === 200) {

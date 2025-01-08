@@ -23,7 +23,6 @@ export const findId = (obj) => {
 };
 
 export const findPw = (obj) => {
-  console.log(obj);
   return api.post("/api/public/account-exist", JSON.stringify(obj));
 };
 

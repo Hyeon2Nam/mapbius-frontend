@@ -36,8 +36,6 @@ export default function NoticeDetail() {
   const deleteNoticeHandler = () => {
     deleteItem(params.id, localStorage.getItem("userToken"))
       .then((res) => {
-        console.log(res);
-
         if (res.status === 200) {
           alert("글이 성공적으로 삭제되었습니다");
           nav("/notice/1");

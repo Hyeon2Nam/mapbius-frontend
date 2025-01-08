@@ -20,7 +20,6 @@ const EditUserInfo = () => {
         if (res.status === 200) {
           setUserInfo(res.data.objData);
           setIsLogin(true);
-          console.log(res);
         }
       })
       .catch((e) => {
