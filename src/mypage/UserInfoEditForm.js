@@ -311,7 +311,10 @@ const UserInfoEditForm = ({ originData }) => {
           </tbody>
         </table>
       </div>
-      <div className="big-section-title">계정 연결하기</div>
+      <div className="big-section-title">계정 통합하기</div>
+      <span className="gray-text">
+        계정을 통합하면 카카오계정으로만 로그인이 가능합니다
+      </span>
       <div className="account-link-section">
         <div className="kakao-link">
           <div>
