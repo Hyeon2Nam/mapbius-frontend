@@ -29,6 +29,10 @@ $breakpoint-large-desktop: 2048px;
   font-style: normal;
 }
 
+@mixin random-bgr() {
+  background: rgb(random(255), random(255), random(255));
+}
+
 @mixin linkTextDecorate() {
   text-decoration: none;
   color: $main-color;
