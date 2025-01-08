@@ -2,10 +2,24 @@
 
 .favorite-page {
   font-family: "malssami815";
+  width: 100%;
+  margin-bottom: 10rem;
+
+  @include blue-btn;
+
+  .big-section-title {
+    font-size: 1.5rem;
+    width: 100%;
+    text-align: left;
+    border-bottom: 2px solid #000;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+  }
 
   .favorite-list {
     display: flex;
     flex-direction: column;
+    margin-bottom: 20px;
   }
 
   .is-flipped {
@@ -30,7 +44,7 @@
     .flip-front,
     .flip-back {
       // height: 100%;
-      width: 100%;
+      // width: 100%;
       backface-visibility: hidden;
     }
 
