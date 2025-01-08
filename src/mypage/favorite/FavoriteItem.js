@@ -36,6 +36,7 @@ const FavoriteItem = ({ item }) => {
     <div
       className={`favorite-item ${isFlipped ? "is-flipped" : ""}`}
       onClick={flipHandler}
+      style={dimensions.width > 0 ? dimensions : {}}
     >
       <div className={`content-wraper ${setAbsolute ? "absolute" : ""}`}>
         <div
