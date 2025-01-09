@@ -19,7 +19,7 @@
   .favorite-list {
     display: flex;
     flex-direction: column;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
   }
 
   .is-flipped {
@@ -27,7 +27,6 @@
   }
 
   .favorite-item {
-    // height: 150px;
     display: flex;
     margin: 15px 20px;
     transition: transform 0.5s;
@@ -84,7 +83,7 @@
       }
       .item-name {
         font-size: 37px;
-        margin-bottom: 20px;
+        margin-bottom: 10px;
       }
 
       .upside,

@@ -1,6 +1,9 @@
 @use "util.scss" as *;
 
 .review-page {
+  font-family: "malssami815";
+  width: 100%;
+
   .more-btn {
     @include rounded-blue;
   }

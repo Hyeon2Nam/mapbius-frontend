@@ -31,3 +31,28 @@ export const accountKakaoLink = (obj, token) => {
     },
   });
 };
+
+export const uploadProfileImg = (obj, token) => {
+  if (!(obj instanceof FormData)) {
+    const formData = new FormData();
+    for (const key in obj) {
+      formData.append(key, obj[key]);
+    }
+    obj = formData;
+  }
+
+  return api.post("/api/private/account/uploadProfileImage", obj, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
+export const getProfileImg = (token) => {
+  return api.post("/api/private/account/getProfileImage", "", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
