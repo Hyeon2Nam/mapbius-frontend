@@ -4,6 +4,7 @@ import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import { useNavigate } from "react-router-dom";
 import { editUserData } from "../api/myPageApi";
+import ProfileImageUpload from "./ProfileImageUpload";
 
 const UserInfoEditForm = ({ originData }) => {
   const nav = useNavigate();
@@ -232,9 +233,7 @@ const UserInfoEditForm = ({ originData }) => {
           <tbody>
             <tr>
               <td color="2">
-                <button onClick={profileImgeChangeHandler}>
-                  프로필 사진 변경
-                </button>
+                <ProfileImageUpload />
               </td>
             </tr>
             <tr>

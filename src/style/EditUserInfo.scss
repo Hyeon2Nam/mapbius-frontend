@@ -26,6 +26,7 @@
       margin: 20px auto 50px auto;
 
       input[type="button"],
+      input[type="file"]::file-selector-button,
       button {
         font-family: "malssami815";
         background-color: #e1e1e1;
