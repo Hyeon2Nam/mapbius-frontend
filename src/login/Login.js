@@ -82,6 +82,9 @@ export default function Login() {
           if (e.response.status === 401) {
             setErrMsg("아이디와 비밀번호가 다릅니다");
             setOpen(true);
+          } else if (e.status === 423) {
+            setErrMsg("비활성화된 계정입니다.");
+            setOpen(true);
           }
         });
     } else {

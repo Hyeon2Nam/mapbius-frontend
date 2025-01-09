@@ -3,7 +3,7 @@ export const concatListHandler = (
   dump,
   setDataList,
   setCurIdx,
-  sliceCnt = 3
+  sliceCnt
 ) => {
   console.log(curIdx, sliceCnt);
 
