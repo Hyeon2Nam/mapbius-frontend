@@ -7,7 +7,7 @@ const TripItem = ({ item }) => {
       <div className="content-wrapper">
         <div className="text-wrapper">
           <div className="title-text">
-            <span>{sliceText(item.name, 10, "루트 이름")}</span>
+            <span>{sliceText(item.name, 13, "루트 이름")}</span>
             <img
               src={process.env.PUBLIC_URL + "/imgs/passwordIcon.png"}
               alt=""
