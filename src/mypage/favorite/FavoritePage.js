@@ -44,7 +44,7 @@ const FavoritePage = () => {
   // const sliceCnt = 5;
 
   useEffect(() => {
-    concatListHandler(curIdx, dump, setDataList, setCurIdx);
+    concatListHandler(curIdx, dump, setDataList, setCurIdx, 5);
   }, []);
 
   return (

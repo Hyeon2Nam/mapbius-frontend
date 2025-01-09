@@ -3,10 +3,8 @@ export const concatListHandler = (
   dump,
   setDataList,
   setCurIdx,
-  sliceCnt
+  sliceCnt = 3
 ) => {
-  console.log(curIdx, sliceCnt);
-
   if (!dump) return;
 
   if (curIdx >= dump.length) {
