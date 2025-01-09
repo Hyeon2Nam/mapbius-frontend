@@ -17,6 +17,7 @@ import MypageMainCardList from "./mypage/MyPageMainCardList";
 import EditUserInfo from "./mypage/EditUserInfo";
 import FavoritePage from "./mypage/favorite/FavoritePage";
 import ReviewPage from "./mypage/review/ReviewPage";
+import TripListPage from "./mypage/trip/TripListPage";
 
 const Layout = () => {
   return (
@@ -41,7 +42,7 @@ function App() {
             <Route path="/mypage/main" element={<MypageMainCardList />} />
             <Route path="/mypage/edit-user-info" element={<EditUserInfo />} />
             <Route path="/mypage/reiew-list" element={<ReviewPage />} />
-            <Route path="/mypage/trip-route-list" element={<EditUserInfo />} />
+            <Route path="/mypage/trip-route-list" element={<TripListPage />} />
             <Route path="/mypage/favorite-list" element={<FavoritePage />} />
           </Route>
         </Route>

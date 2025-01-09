@@ -32,25 +32,6 @@ const ProfileImageUpload = () => {
       .catch((e) => {
         console.log(e);
       });
-
-    // try {
-    //   console.log(formData instanceof FormData);
-
-    //   await axios.post(
-    //     "http://127.0.0.1:8080/api/private/account/uploadProfileImage",
-    //     formData,
-    //     {
-    //       headers: {
-    //         "Content-Type": "multipart/form-data",
-    //         Authorization: "Bearer " + localStorage.getItem("userToken"),
-    //       },
-    //     }
-    //   );
-    //   alert("업로드 성공!");
-    // } catch (error) {
-    //   console.error("업로드 실패:", error);
-    //   alert("업로드 중 오류가 발생했습니다.");
-    // }
   };
 
   return (
