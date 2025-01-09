@@ -1,6 +1,7 @@
 import FavoriteList from "./FavoriteList";
 import "../../style/FavoritePage.scss";
 import { useEffect, useState } from "react";
+import concatListHandler from "../UtileFunc";
 
 const FavoritePage = () => {
   const [curIdx, setCurIdx] = useState(0);
@@ -40,30 +41,23 @@ const FavoritePage = () => {
     },
   ];
   const [dataList, setDataList] = useState([]);
+  const sliceCnt = 5;
 
   useEffect(() => {
-    concatListHandler();
+    concatListHandler(curIdx, dump, setDataList, setCurIdx);
   }, []);
-
-  const concatListHandler = () => {
-    const sliceCnt = 2;
-
-    if (curIdx >= dump.length) {
-      alert("더이상 데이터가 없습니다");
-      return;
-    }
-
-    const newItems = dump.slice(curIdx, curIdx + sliceCnt);
-    setDataList((prevDataList) => [...prevDataList, ...newItems]);
-
-    setCurIdx((prevIdx) => prevIdx + sliceCnt);
-  };
 
   return (
     <div className="favorite-page">
-      <div className="big-section-title">회원정보 변경</div>
+      <div className="big-section-title">즐겨찾기 목록</div>
       <FavoriteList list={dataList} />
-      <button onClick={concatListHandler}>더보기</button>
+      <button
+        onClick={() => {
+          concatListHandler(curIdx, dump, setDataList, setCurIdx, 5);
+        }}
+      >
+        더보기
+      </button>
     </div>
   );
 };

@@ -1,0 +1,77 @@
+@use "util.scss" as *;
+
+.review-page {
+  .more-btn {
+    @include rounded-blue;
+  }
+
+  .big-section-title {
+    font-size: 1.5rem;
+    width: 100%;
+    text-align: left;
+    border-bottom: 2px solid #000;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+  }
+
+  .review-list {
+    width: 100%;
+    margin-bottom: 50px;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .review-item {
+    width: 30%;
+    max-height: 20%;
+    border: 2px solid #000;
+    margin: 10px;
+    text-align: left;
+
+    .star-img {
+      width: 100px;
+      margin-bottom: 5px;
+    }
+    .cover-img {
+      width: 100%;
+      height: 200px;
+    }
+
+    .content-container {
+      margin: 15px;
+    }
+
+    .upside {
+      margin-bottom: 5px;
+      .title-text {
+        font-family: "BMJUA";
+        font-size: 2rem;
+        margin-right: 10px;
+      }
+
+      .date-text {
+        color: gray;
+        font-size: 0.9rem;
+      }
+    }
+
+    .like-btn {
+      display: flex;
+      align-items: center;
+      button {
+        background-color: initial;
+        border: none;
+      }
+      img {
+        width: 30px;
+        height: auto;
+      }
+    }
+
+    .content-section {
+      font-family: "NanumSquareNeo";
+      line-height: 1.3;
+      margin-bottom: 10px;
+    }
+  }
+}
