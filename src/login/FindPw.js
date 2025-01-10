@@ -50,6 +50,11 @@ export default function FindPw() {
             placeholder="EMAIL"
             value={userEmail}
             onChange={(e) => setUserEmail(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                findPwHandler();
+              }
+            }}
           />
         </div>
         <button className="find-btn" onClick={findPwHandler}>
