@@ -33,14 +33,6 @@ const FavoriteItem = ({ item }) => {
     setIsFlipped(!isFlipped);
   };
 
-  const setNameHandler = () => {
-    sliceText(item.name, 10, "장소 이름");
-  };
-
-  const setAddressHandler = () => {
-    sliceText(item.address, 20, "장소 주소");
-  };
-
   return (
     <div
       className={`favorite-item ${isFlipped ? "is-flipped" : ""}`}
