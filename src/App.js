@@ -18,6 +18,8 @@ import EditUserInfo from "./mypage/EditUserInfo";
 import FavoritePage from "./mypage/favorite/FavoritePage";
 import ReviewPage from "./mypage/review/ReviewPage";
 import TripListPage from "./mypage/trip/TripListPage";
+import MapTest from "./MapAPI/Maptest";
+import Test1 from "./MapAPI/test1";
 
 const Layout = () => {
   return (
@@ -38,6 +40,7 @@ function App() {
           <Route path="/notice/:page" element={<Notice />} />
           <Route path="/notice/view/:id" element={<NoticeDetail />} />
           <Route path="/notice/:mode/:id" element={<NoticeCreate />} />
+
           <Route element={<Mypage />}>
             <Route path="/mypage/main" element={<MypageMainCardList />} />
             <Route path="/mypage/edit-user-info" element={<EditUserInfo />} />
@@ -48,6 +51,8 @@ function App() {
         </Route>
 
         <Route path="/" element={<MainPage />} />
+        <Route path="/test" element={<MapTest />} />
+        <Route path="/test1" element={<Test1 />} />
         <Route path="/login" element={<Login />} />
         <Route path="/select-register" element={<SelectRegisterWay />} />
         <Route path="/default-register" element={<Register />} />
