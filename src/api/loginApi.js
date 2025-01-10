@@ -23,7 +23,7 @@ export const findId = (obj) => {
 };
 
 export const findPw = (obj) => {
-  return api.post("/api/public/account-exist", JSON.stringify(obj));
+  return api.post("/api/public/account-exist/pw-update", JSON.stringify(obj));
 };
 
 export const adminLogin = (obj) => {
