@@ -90,6 +90,7 @@ const UserInfoEditForm = ({ originData }) => {
       .then((res) => {
         if (res.status === 200) {
           alert("수정 성공");
+          window.location.reload();
         } else {
           alert("수정 실패");
         }
