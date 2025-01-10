@@ -280,7 +280,12 @@ export default function Register() {
       <div className="register-info-wrapper">
         <h1>회원가입</h1>
         <div className="id-wrapper sub-title">
-          <div>아이디</div>
+          <div>
+            아이디{" "}
+            <span>
+              (5글자 이상 20글자이하 영어 소문자, 숫자, _, -로만 조합)
+            </span>
+          </div>
           <input
             type="button"
             value={"중복확인"}
@@ -294,7 +299,13 @@ export default function Register() {
           onChange={(e) => userInfoHandler(e)}
         />
         <br />
-        <div className="sub-title">비밀번호</div>
+        <div className="sub-title">
+          비밀번호{" "}
+          <span>
+            (8글자 이상 20글자이하 영어 대소문자, 숫자, 특수문자로 조합. 각 1개
+            이상 필수 포함)
+          </span>
+        </div>
         <input
           className="info-input"
           name="userPw"
@@ -328,7 +339,12 @@ export default function Register() {
           onChange={(e) => userInfoHandler(e)}
         />
         <br />
-        <div className="sub-title">닉네임</div>
+        <div className="sub-title">
+          닉네임{" "}
+          <span>
+            (2글자 이상 8글자이하 한글, 영어 대소문자, 숫자로만 조합.)
+          </span>
+        </div>
         <input
           className="info-input"
           name="userNickName"
