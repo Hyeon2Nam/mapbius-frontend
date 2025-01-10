@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useRef } from "react";
 import BackImg from "./BackImg";
+import { sliceText } from "../UtileFunc";
 
 const FavoriteItem = ({ item }) => {
   const frontRef = useRef(null);
@@ -32,6 +33,14 @@ const FavoriteItem = ({ item }) => {
     setIsFlipped(!isFlipped);
   };
 
+  const setNameHandler = () => {
+    sliceText(item.name, 10, "장소 이름");
+  };
+
+  const setAddressHandler = () => {
+    sliceText(item.address, 20, "장소 주소");
+  };
+
   return (
     <div
       className={`favorite-item ${isFlipped ? "is-flipped" : ""}`}
@@ -59,8 +68,12 @@ const FavoriteItem = ({ item }) => {
             ></div>
             <div className="main-section">
               <div className="item-wrapper">
-                <span className="item-name">{item.name}</span>
-                <span className="item-address">{item.address}</span>
+                <span className="item-name">
+                  {sliceText(item.name, 8, "장소 이름")}
+                </span>
+                <span className="item-address">
+                  {sliceText(item.address, 20, "장소 이름")}
+                </span>
               </div>
               <img src={process.env.PUBLIC_URL + "/imgs/regionIcon.png"} />
             </div>

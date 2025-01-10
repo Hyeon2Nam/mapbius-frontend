@@ -19,6 +19,8 @@ export const concatListHandler = (
 };
 
 export const sliceText = (str, cnt, repStr) => {
+  console.log("aasdf");
+
   if (!str) return repStr;
 
   if (str && str.length > cnt) {
