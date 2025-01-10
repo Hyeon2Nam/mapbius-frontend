@@ -23,7 +23,8 @@ export default function SelectRegisterWay() {
 
   const handleKakaoLogin = () => {
     if (window.Kakao && window.Kakao.Auth) {
-      const redirectUri = window.location.host + "/kakao-register";
+      const redirectUri = "http://192.168.20.124:3000/kakao-register";
+
       window.Kakao.Auth.authorize({
         redirectUri: redirectUri,
       });
