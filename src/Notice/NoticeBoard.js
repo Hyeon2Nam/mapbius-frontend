@@ -68,7 +68,14 @@ export default function Notice() {
   return (
     <div className="notice-board-container">
       <div className="page-title-wrapper">
-        <div className="page-title">공지사항</div>
+        <div
+          className="page-title"
+          onClick={() => {
+            window.location.reload();
+          }}
+        >
+          공지사항
+        </div>
       </div>
       <div className="notice-list">
         <div className="back-text">NOTICE</div>
@@ -87,6 +94,11 @@ export default function Notice() {
             value={search}
             placeholder="검색어 입력"
             onChange={(e) => setSearch(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                searchNoticeHandler();
+              }
+            }}
           />
           <button onClick={searchNoticeHandler}>
             <img src={process.env.PUBLIC_URL + "/imgs/searchIcon.png"} />

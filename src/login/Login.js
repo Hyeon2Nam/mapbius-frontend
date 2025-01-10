@@ -54,7 +54,7 @@ export default function Login() {
 
   const handleKakaoLogin = () => {
     if (window.Kakao && window.Kakao.Auth) {
-      const redirectUri = "http://localhost:3000/kakao-register";
+      const redirectUri = window.location.host + "/kakao-register";
       window.Kakao.Auth.authorize({
         redirectUri: redirectUri,
       });
@@ -122,6 +122,11 @@ export default function Login() {
             type="password"
             value={userPw}
             onChange={(e) => setUserPw(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                loginHandler();
+              }
+            }}
           />
           <div className="side-link-wrapper">
             <Link to={"/select-register"}>회원가입</Link>

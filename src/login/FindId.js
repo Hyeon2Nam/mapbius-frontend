@@ -42,6 +42,11 @@ export default function FindId() {
           placeholder="이메일"
           value={userEmail}
           onChange={(e) => setUserEmail(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              findIdHandler();
+            }
+          }}
         />
         <button className="find-btn" onClick={findIdHandler}>
           확인
