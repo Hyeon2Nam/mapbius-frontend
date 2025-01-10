@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+
 import './styles.css';
 
 /* global kakao */
@@ -794,7 +795,7 @@ const createClusterer = (markers) => {
   return (
     <div style={{ fontFamily: "'Noto Sans KR', sans-serif" }}>
       <header style={{ textAlign: 'center', padding: '20px', backgroundColor: '#f7f7f7', borderBottom: '1px solid #ddd' }}>
-        <h1 style={{ margin: 0, fontSize: '2rem', color: '#333' }} onClick={""}>Kakao 지도</h1>
+        <h1 style={{ margin: 0, fontSize: '2rem', color: '#333' }}>Kakao 지도</h1>
       </header>
 
       <div style={{ textAlign: "center", marginTop: "20px" }}>
