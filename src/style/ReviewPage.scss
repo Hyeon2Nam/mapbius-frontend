@@ -61,6 +61,7 @@
     .like-btn {
       display: flex;
       align-items: center;
+
       button {
         background-color: initial;
         border: none;
@@ -68,6 +69,7 @@
       img {
         width: 30px;
         height: auto;
+        cursor: pointer;
       }
     }
 
