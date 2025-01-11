@@ -2,11 +2,25 @@ import { useNavigate } from "react-router-dom";
 import "../style/mypageCommon.scss";
 import { useEffect, useState } from "react";
 import { getProfileImg } from "../api/myPageApi";
+import { useSelector } from "react-redux";
+import { selectProfileImg } from "../@modules/mypage";
 
 const MypageUserHeader = () => {
   const nav = useNavigate();
   const [imageUrl, setImageUrl] = useState("");
   const [nickName, setNickName] = useState("");
+  const profileImg = useSelector(selectProfileImg);
+
+  useEffect(() => {
+    if (profileImg) {
+      const objectUrl = URL.createObjectURL(profileImg);
+      setImageUrl(objectUrl);
+
+      return () => {
+        URL.revokeObjectURL(objectUrl);
+      };
+    }
+  }, [profileImg]);
 
   useEffect(() => {
     const fetchImage = async () => {
@@ -22,8 +36,6 @@ const MypageUserHeader = () => {
             alert("다시 로그인해주세요");
             nav("/login");
           }
-
-          console.error("Error fetching profile image:", e);
         });
     };
 

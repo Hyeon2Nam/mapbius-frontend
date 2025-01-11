@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { uploadProfileImg } from "../api/myPageApi";
 import { useNavigate } from "react-router-dom";
 
-const ProfileImageUpload = () => {
+const ProfileImageUpload = ({ onChangeProfileImg }) => {
   const nav = useNavigate();
   const [file, setFile] = useState(null);
 
@@ -16,6 +16,8 @@ const ProfileImageUpload = () => {
       alert("업로드할 파일을 선택하세요!");
       return;
     }
+
+    onChangeProfileImg(file);
 
     const formData = new FormData();
     formData.append("file", file);
