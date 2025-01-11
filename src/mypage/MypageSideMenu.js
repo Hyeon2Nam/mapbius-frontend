@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { leaveAccount } from "../api/myPageApi";
 
@@ -7,10 +7,27 @@ const MypageSideMenu = () => {
   const location = useLocation();
   const [curPage, setCurPage] = useState("/");
   const [openModal, setopenModal] = useState(false);
+  const modalRef = useRef(null);
 
   useEffect(() => {
     setCurPage("/" + location.pathname.split("/")[2]);
   }, [location]);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (modalRef.current && !modalRef.current.contains(event.target)) {
+        setopenModal(false);
+      }
+    };
+
+    if (openModal) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [openModal]);
 
   const sideMenuList = [
     { name: "즐겨찾기 목록", link: "/favorite-list" },
@@ -41,22 +58,18 @@ const MypageSideMenu = () => {
   return (
     <div className="mypage-side-menu">
       <div className="main-menu">
-        {sideMenuList.map((e, i) => {
-          return (
-            <div key={e.name} className={curPage === e.link ? "curpage" : ""}>
-              <Link to={"/mypage" + e.link}>{e.name}</Link>
-            </div>
-          );
-        })}
+        {sideMenuList.map((e, i) => (
+          <div key={e.name} className={curPage === e.link ? "curpage" : ""}>
+            <Link to={"/mypage" + e.link}>{e.name}</Link>
+          </div>
+        ))}
       </div>
       <div className="sub-menu">
-        {sideSmallMenuList.map((e, i) => {
-          return (
-            <div key={e.name} className={curPage === e.link ? "curpage" : ""}>
-              <Link to={"/mypage" + e.link}>{e.name}</Link>
-            </div>
-          );
-        })}
+        {sideSmallMenuList.map((e, i) => (
+          <div key={e.name} className={curPage === e.link ? "curpage" : ""}>
+            <Link to={"/mypage" + e.link}>{e.name}</Link>
+          </div>
+        ))}
         <div
           onClick={() => {
             setopenModal(true);
@@ -66,7 +79,7 @@ const MypageSideMenu = () => {
         </div>
       </div>
       <div className={openModal ? "result-form" : "none"}>
-        <div className="form-wrapper">
+        <div className="form-wrapper" ref={modalRef}>
           <div className="info-container">
             <h1>탈퇴하시겠습니까?</h1>
             <div className="result-btn">
