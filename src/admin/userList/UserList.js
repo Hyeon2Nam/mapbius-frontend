@@ -2,7 +2,7 @@ import UserItem from "./UserItem";
 
 const UserList = ({ list }) => {
   return (
-    <div>
+    <div className="user-list">
       {list.map((item, idx) => (
         <UserItem key={idx} item={item} />
       ))}
