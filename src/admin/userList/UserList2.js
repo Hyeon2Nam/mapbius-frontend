@@ -1,8 +1,8 @@
-import UserItem from "./UserItem";
+import UserItem2 from "./UserItem2";
 
-const UserList = ({ list }) => {
+const UserList2 = ({ list }) => {
   return (
-    <div>
+    <div className="user-list-2">
       <table>
         <thead>
           <tr>
@@ -13,17 +13,17 @@ const UserList = ({ list }) => {
             <th>권한</th>
             <th>활성</th>
           </tr>
-          <tbody>
-            <tr>
-              {list.map((item, idx) => (
-                <UserItem key={idx} item={item} />
-              ))}
-            </tr>
-          </tbody>
         </thead>
+        <tbody>
+          {/* <tr> */}
+          {list.map((item, idx) => (
+            <UserItem2 className="user-item-2" key={idx} item={item} />
+          ))}
+          {/* </tr> */}
+        </tbody>
       </table>
     </div>
   );
 };
 
-export default UserList;
+export default UserList2;
