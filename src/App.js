@@ -18,6 +18,7 @@ import EditUserInfo from "./mypage/EditUserInfo";
 import FavoritePage from "./mypage/favorite/FavoritePage";
 import ReviewPage from "./mypage/review/ReviewPage";
 import TripListPage from "./mypage/trip/TripListPage";
+import UserBoard from "./admin/userList/UserBoard";
 
 const Layout = () => {
   return (
@@ -38,6 +39,8 @@ function App() {
           <Route path="/notice/:page" element={<Notice />} />
           <Route path="/notice/view/:id" element={<NoticeDetail />} />
           <Route path="/notice/:mode/:id" element={<NoticeCreate />} />
+          <Route path="/admin/user-list" element={<UserBoard />} />
+
           <Route element={<Mypage />}>
             <Route path="/mypage/main" element={<MypageMainCardList />} />
             <Route path="/mypage/edit-user-info" element={<EditUserInfo />} />
