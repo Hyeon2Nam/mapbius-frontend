@@ -80,8 +80,6 @@ const KakaoMap = () => {
       const map = new window.kakao.maps.Map(container, options);
       mapRef.current = map; // Store the map instance in the ref 추가
 
-      //console.log("Kakao Map Version:", window.kakao.maps.VERSION); //버전 체크(뺼 기능)
-
       updateCategoryMarkers(map, "coffee");
 
       const markerPosition = new window.kakao.maps.LatLng(36.436988, 126.802021);
@@ -106,7 +104,7 @@ const KakaoMap = () => {
         infowindow.open(map, marker);
       });
 
-      //지도 클릭 이벤트 추가
+      // 지도 클릭 이벤트 추가
       // window.kakao.maps.event.addListener(map, "click", (mouseEvent) => {
       //   const latLng = mouseEvent.latLng; // 클릭한 위치의 좌표
       //   addMarker(latLng); // 클릭한 위치에 마커 추가
@@ -322,7 +320,7 @@ const KakaoMap = () => {
       }
     });
 
-    // 상태에 마커와 인포윈도우 저장
+    // 상태에 마커와 인포윈도우 저장 
     setMarkers((prevMarkers) => [...prevMarkers, { marker, infowindow }]);
 
     // Drawing Toolbox marker 생성
@@ -874,6 +872,7 @@ const createClusterer = (markers) => {
         <button className="button" id="resetBoundsBtn" onClick={resetMapBounds}>맵핑 범위 재설정</button>
         <h2 style={{ fontSize: '1.5rem', color: '#333', marginTop: '20px' }}>현재 위치 표시</h2>
         <button className="button" onClick={showCurrentLocation}>현 위치로 이동 및 마커 추가</button>
+
         <h2 style={{ fontSize: '1.5rem', color: '#333', marginTop: '20px' }}>마커 제어</h2>
         <div>
           <button className="button" onClick={hideMarkers}>모든 마커 숨기기</button>
