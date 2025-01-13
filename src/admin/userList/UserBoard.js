@@ -26,10 +26,10 @@ const UserBoard = () => {
       date: "2024-01-01",
     },
     {
-      id: "12s3",
+      id: "asdfasdf2",
       nickName: "123",
       email: "asdfa@gmail.com",
-      isAdmin: true,
+      isAdmin: false,
       isActive: true,
       img: process.env.PUBLIC_URL + "/imgs/gyeongbokgung.jpg",
       review: 3,
