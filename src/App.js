@@ -39,7 +39,6 @@ function App() {
           <Route path="/notice/:page" element={<Notice />} />
           <Route path="/notice/view/:id" element={<NoticeDetail />} />
           <Route path="/notice/:mode/:id" element={<NoticeCreate />} />
-          <Route path="/admin/user-list" element={<UserBoard />} />
 
           <Route element={<Mypage />}>
             <Route path="/mypage/main" element={<MypageMainCardList />} />
@@ -56,6 +55,7 @@ function App() {
         <Route path="/default-register" element={<Register />} />
         <Route path="/kakao-register" element={<KakaoLogin />} />
         <Route path="/kakao-register/form" element={<KakaoRegisterFrom />} />
+        <Route path="/admin/user-list" element={<UserBoard />} />
       </Routes>
     </div>
   );
