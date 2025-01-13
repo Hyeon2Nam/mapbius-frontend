@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import UserList from "./UserList";
 import "../../style/UserBoard.scss";
-import UserList2 from "./UserList2";
 
 const UserBoard = () => {
   // useEffect(() => {
@@ -63,8 +62,7 @@ const UserBoard = () => {
       </div>
       <div className="main-container">
         <div className="big-section-title">사용자 관리</div>
-        {/* <UserList list={dump} /> */}
-        <UserList2 list={dump} />
+        <UserList list={dump} />
       </div>
     </div>
   );
