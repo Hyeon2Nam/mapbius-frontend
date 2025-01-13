@@ -19,6 +19,7 @@ import FavoritePage from "./mypage/favorite/FavoritePage";
 import ReviewPage from "./mypage/review/ReviewPage";
 import TripListPage from "./mypage/trip/TripListPage";
 import UserBoard from "./admin/userList/UserBoard";
+import TripBoard from "./Trip/TripBoard";
 
 const Layout = () => {
   return (
@@ -39,6 +40,7 @@ function App() {
           <Route path="/notice/:page" element={<Notice />} />
           <Route path="/notice/view/:id" element={<NoticeDetail />} />
           <Route path="/notice/:mode/:id" element={<NoticeCreate />} />
+          <Route path="/trip/:page" element={<TripBoard />} />
 
           <Route element={<Mypage />}>
             <Route path="/mypage/main" element={<MypageMainCardList />} />

@@ -15,6 +15,8 @@ export default function MainPage() {
       <br />
       <Link to={"/mypage/main"}>마이페이지</Link>
       <br />
+      <Link to={"/trip/1"}>여행 루트 검색</Link>
+      <br />
       <Link to={"/admin/user-list"}>관리자 : 유저 관리</Link>
     </div>
   );
