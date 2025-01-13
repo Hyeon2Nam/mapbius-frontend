@@ -5,6 +5,7 @@ import Alert from "@mui/material/Alert";
 import { useNavigate } from "react-router-dom";
 import { editUserData } from "../api/myPageApi";
 import ProfileImageUpload from "./ProfileImageUpload";
+import ProfileContainer from "./ProfileContainer";
 
 const UserInfoEditForm = ({ originData }) => {
   const nav = useNavigate();
@@ -235,7 +236,7 @@ const UserInfoEditForm = ({ originData }) => {
           <tbody>
             <tr>
               <td color="2">
-                <ProfileImageUpload />
+                <ProfileContainer />
               </td>
             </tr>
             <tr>
