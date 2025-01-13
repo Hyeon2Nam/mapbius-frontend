@@ -12,7 +12,6 @@ const UserItem = ({ item }) => {
 
     let obj = {
       id: item.id,
-      role: adminState ? "admin" : "normal",
     };
 
     setUserRight(obj, localStorage.getItem("userToken"))
@@ -33,7 +32,6 @@ const UserItem = ({ item }) => {
 
     let obj = {
       id: item.id,
-      state: activeState ? "activate" : "deactivate ",
     };
 
     setUserActive(obj, localStorage.getItem("userToken"))
