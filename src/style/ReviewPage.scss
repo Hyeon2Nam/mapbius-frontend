@@ -25,7 +25,7 @@
   }
 
   .review-item {
-    width: 30%;
+    width: 288px;
     max-height: 20%;
     border: 2px solid #000;
     margin: 10px;
@@ -33,7 +33,7 @@
 
     .star-img {
       width: 100px;
-      margin-bottom: 5px;
+      margin: 5px 0;
     }
     .cover-img {
       width: 100%;
@@ -48,7 +48,7 @@
       margin-bottom: 5px;
       .title-text {
         font-family: "BMJUA";
-        font-size: 2rem;
+        font-size: 1.8rem;
         margin-right: 10px;
       }
 
@@ -74,8 +74,9 @@
     }
 
     .content-section {
+      height: 188px;
       font-family: "NanumSquareNeo";
-      line-height: 1.3;
+      line-height: 1.5;
       margin-bottom: 10px;
     }
   }

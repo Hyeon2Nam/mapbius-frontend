@@ -8,10 +8,14 @@ const TripItem = ({ item }) => {
         <div className="text-wrapper">
           <div className="title-text">
             <span>{sliceText(item.name, 13, "루트 이름")}</span>
-            <img
-              src={process.env.PUBLIC_URL + "/imgs/passwordIcon.png"}
-              alt=""
-            />
+            {item.range === "private" ? (
+              <img
+                src={process.env.PUBLIC_URL + "/imgs/passwordIcon.png"}
+                alt=""
+              />
+            ) : (
+              ""
+            )}
           </div>
           <span className="desc-text">
             {sliceText(item.description, 60, "루트 이름")}

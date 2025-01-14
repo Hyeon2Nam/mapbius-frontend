@@ -19,12 +19,14 @@ import ReviewPage from "./mypage/review/ReviewPage";
 import TripListPage from "./mypage/trip/TripListPage";
 import UserBoard from "./admin/userList/UserBoard";
 import TripBoard from "./Trip/TripBoard";
+import Footer from "./common/Footer";
 
 const Layout = () => {
   return (
-    <div>
+    <div className="common-layout">
       <Header />
-      <Outlet />
+      <Outlet className="content-section" />
+      <Footer />
     </div>
   );
 };

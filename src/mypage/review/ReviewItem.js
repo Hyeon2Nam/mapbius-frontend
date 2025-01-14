@@ -25,7 +25,7 @@ const ReviewItem = ({ item }) => {
       <div className="content-container">
         <div className="upside">
           <span className="title-text">
-            {sliceText(item.name, 5, "가게이름")}
+            {sliceText(item.name, 6, "가게이름")}
           </span>
           <span className="date-text">{item.date}</span>
         </div>
@@ -35,7 +35,7 @@ const ReviewItem = ({ item }) => {
           alt=""
         />
         <div className="content-section">
-          {sliceText(item.content, 180, "내용이 없습니다.")}
+          {sliceText(item.content, 140, "내용이 없습니다.")}
         </div>
         <div className="like-btn">
           <button onClick={updateLikeCnt}>
