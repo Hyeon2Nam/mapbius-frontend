@@ -2,7 +2,6 @@ import "./App.css";
 import { Outlet, Route, Routes } from "react-router-dom";
 import Login from "./login/Login";
 import Register from "./login/Register";
-import SelectRegisterWay from "./login/SelectRegisterWay";
 import MainPage from "./map/Temp";
 import Notice from "./Notice/NoticeBoard";
 import NoticeDetail from "./Notice/NoticeDetail";
@@ -53,7 +52,6 @@ function App() {
 
         <Route path="/" element={<MainPage />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/select-register" element={<SelectRegisterWay />} />
         <Route path="/default-register" element={<Register />} />
         <Route path="/kakao-register" element={<KakaoLogin />} />
         <Route path="/kakao-register/form" element={<KakaoRegisterFrom />} />
