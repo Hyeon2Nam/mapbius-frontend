@@ -2,7 +2,6 @@ import "./App.css";
 import { Outlet, Route, Routes } from "react-router-dom";
 import Login from "./login/Login";
 import Register from "./login/Register";
-import SelectRegisterWay from "./login/SelectRegisterWay";
 import MainPage from "./map/Temp";
 import Notice from "./Notice/NoticeBoard";
 import NoticeDetail from "./Notice/NoticeDetail";
@@ -20,12 +19,14 @@ import ReviewPage from "./mypage/review/ReviewPage";
 import TripListPage from "./mypage/trip/TripListPage";
 import UserBoard from "./admin/userList/UserBoard";
 import TripBoard from "./Trip/TripBoard";
+import Footer from "./common/Footer";
 
 const Layout = () => {
   return (
-    <div>
+    <div className="common-layout">
       <Header />
-      <Outlet />
+      <Outlet className="content-section" />
+      <Footer />
     </div>
   );
 };
@@ -53,7 +54,6 @@ function App() {
 
         <Route path="/" element={<MainPage />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/select-register" element={<SelectRegisterWay />} />
         <Route path="/default-register" element={<Register />} />
         <Route path="/kakao-register" element={<KakaoLogin />} />
         <Route path="/kakao-register/form" element={<KakaoRegisterFrom />} />

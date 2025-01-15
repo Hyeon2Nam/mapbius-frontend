@@ -17,13 +17,13 @@ const UserItem = ({ item }) => {
     setUserRight(obj, localStorage.getItem("userToken"))
       .then((res) => {
         if (res.status === 200) {
-          console.log("권한 설정 성공");
+          alert("권한 설정 성공");
         } else {
-          console.log("권한 설정 실패");
+          alert("권한 설정 실패");
         }
       })
       .catch((e) => {
-        console.log("권한이 없습니다");
+        alert("권한이 없습니다");
       });
   };
 
@@ -37,13 +37,13 @@ const UserItem = ({ item }) => {
     setUserActive(obj, localStorage.getItem("userToken"))
       .then((res) => {
         if (res.status === 200) {
-          console.log("설정 성공");
+          alert("설정 성공");
         } else {
-          console.log("설정 실패");
+          alert("설정 실패");
         }
       })
       .catch((e) => {
-        console.log("권한이 없습니다");
+        alert("권한이 없습니다");
       });
   };
 
