@@ -2,6 +2,7 @@ import { Outlet } from "react-router-dom";
 import MypageUserHeader from "./MypageUserHeader";
 import MypageSideMenu from "./MypageSideMenu";
 import "../style/mypageCommon.scss";
+import { useRef } from "react";
 
 const Mypage = () => {
   return (

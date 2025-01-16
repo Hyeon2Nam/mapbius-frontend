@@ -17,11 +17,17 @@
     justify-content: space-between;
   }
 
+  .card-item:hover {
+    box-shadow: 0px 0px 20px #c5e1ff;
+    background-color: #c4dbff0e;
+  }
+
   .card-item {
     width: 350px;
     height: 140px;
     border: 1px solid black;
     margin: 0 30px 30px 0;
+    transition: 0.3s;
 
     span {
       text-align: left;

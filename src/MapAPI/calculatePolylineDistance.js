@@ -7,28 +7,28 @@ const KakaoMap = () => {
   const [isdrawing, setIsdrawing] = useState(false);
   const [paths, setPaths] = useState([]);
   const [distances, setDistances] = useState([]);
-  const [mousePosition, setMousePosition] = useState({ lat: 0, lng: 0 });
   const [clickLine, setClickLine] = useState(null);
   const [moveLine, setMoveLine] = useState(null);
 
   useEffect(() => {
-    const script = document.createElement("script");
-    script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=9ecde12cc364a3c6cf0b0aff3d91243f&libraries=services,geometry,places,clusterer,drawing`;
-    script.async = true;
-    script.onload = () => {
-      const kakao = window.kakao;
-      const container = document.getElementById("map");
-      const options = {
-        center: new kakao.maps.LatLng(37.498004414546934, 127.02770621963765),
-        level: 3,
-      };
+    if (!window.kakao || !window.kakao.maps) {
+      console.error("Kakao Maps API is not loaded.");
+      return;
+    }
+
+    const kakao = window.kakao;
+    const container = document.getElementById("map");
+    const options = {
+      center: new kakao.maps.LatLng(37.498004414546934, 127.02770621963765),
+      level: 3,
+    };
       const mapInstance = new kakao.maps.Map(container, options);
       setMap(mapInstance);
 
       // Initialize polylines
       const polyline = new kakao.maps.Polyline({
         map: mapInstance,
-        strokeWeight: 3,
+        strokeWeight: 4,
         strokeColor: "#db4040",
         strokeOpacity: 1,
         strokeStyle: "solid",
@@ -37,14 +37,17 @@ const KakaoMap = () => {
 
       const movePolyline = new kakao.maps.Polyline({
         map: mapInstance,
-        strokeWeight: 3,
+        strokeWeight: 9,
         strokeColor: "#db4040",
         strokeOpacity: 0.5,
         strokeStyle: "solid",
       });
       setMoveLine(movePolyline);
-    };
-    document.head.appendChild(script);
+
+      return () => {
+        polyline.setMap(null);
+        movePolyline.setMap(null);
+      };
   }, []);
 
   const handleClick = (mouseEvent) => {
@@ -165,10 +168,10 @@ const KakaoMap = () => {
         id="map"
         style={{
           width: "100%",
-          height: "450px",
+          height: "1150px",
         }}
       ></div>
-      {paths.map((path, index) => (
+      {/* {paths.map((path, index) => (
         <div
           key={index}
           className="dotOverlay"
@@ -179,7 +182,7 @@ const KakaoMap = () => {
         >
           점 {index + 1}
         </div>
-      ))}
+      ))} */}
       {distances.length > 0 && <DistanceInfo distance={distances[0]} />}
     </div>
   );

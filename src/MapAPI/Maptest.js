@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
-
 import './styles.css';
+import './sidebar.scss';
 
 /* global kakao */
 
@@ -71,7 +71,6 @@ const KakaoMap = () => {
     if (window.kakao) {
       const container = document.getElementById('map'); // 지도 컨테이너 엘리먼트를 찾기
       const options = { // 지도 옵션 설정
-        // center: new window.kakao.maps.LatLng(36.43698897735751, 126.80202130837696), // 충도대 위치 중심 좌표
         center: new window.kakao.maps.LatLng(37.497400850714165, 127.02723103671623), // 강남역 위치 중심 좌표
         level: 5, // 확대 레벨
       };
@@ -114,11 +113,14 @@ const KakaoMap = () => {
       // ★★★★ 스카이뷰 , 일반 맵 유형 지정
       const mapTypeControl = new window.kakao.maps.MapTypeControl();
       // ★ 기존의 지도 위에 새롭게 설정
-      map.addControl(mapTypeControl, window.kakao.maps.ControlPosition.TOPRIGHT);
+      map.addControl(mapTypeControl, window.kakao.maps.ControlPosition.TOPLEFT);
 
       // 줌 컨트롤 추가
       const zoomControl = new window.kakao.maps.ZoomControl();
-      map.addControl(zoomControl, window.kakao.maps.ControlPosition.RIGHT);
+      map.addControl(zoomControl, window.kakao.maps.ControlPosition.LEFT);
+
+
+
 
       // 커스텀 오버레이 생성
       const overlayPosition = new kakao.maps.LatLng(37.49887, 127.026581);
@@ -326,6 +328,7 @@ const KakaoMap = () => {
     // Drawing Toolbox marker 생성
     const toolbox1 = new kakao.maps.drawing.Toolbox({ drawingManager: manager1 });
     map.addControl(toolbox1.getElement(), kakao.maps.ControlPosition.RIGHT);
+
 
 
     const customMarkerImageSrc = 'https://cdn-icons-png.flaticon.com/512/684/684908.png'; // 커스텀 마커 이미지 URL
@@ -792,36 +795,18 @@ const createClusterer = (markers) => {
 
   return (
     <div style={{ fontFamily: "'Noto Sans KR', sans-serif" }}>
-      <header style={{ textAlign: 'center', padding: '20px', backgroundColor: '#f7f7f7', borderBottom: '1px solid #ddd' }}>
-        <h1 style={{ margin: 0, fontSize: '2rem', color: '#333' }}>Kakao 지도</h1>
-      </header>
 
-      <div style={{ textAlign: "center", marginTop: "20px" }}>
+       <div class="sidebar">
         <input
-          type="text"
+          type="text" 
           placeholder="장소 검색"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          style={{
-            width: "300px",
-            padding: "10px",
-            border: "1px solid #ddd",
-            borderRadius: "5px",
-            marginRight: "10px",
-          }}
-        />
+          />
         <button className="button" onClick={handleSearch}>검색</button>
       </div>
 
-      <div id="map" style={{
-        margin: "20px auto",
-        width: '95%',
-        height: '500px',
-        boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
-        borderRadius: '10px',
-        overflow: 'hidden',
-      }}></div>
-  
+    <div id="map"></div>
       <div className="category" style={{
         textAlign: 'center',
         marginTop: '20px',

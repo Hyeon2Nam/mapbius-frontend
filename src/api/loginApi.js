@@ -1,7 +1,5 @@
 import api from "./axiosSetting";
 
-// lem0000@naver.com
-
 export const tryLogin = (obj) => {
   return api.post("/api/public/login", JSON.stringify(obj));
 };
