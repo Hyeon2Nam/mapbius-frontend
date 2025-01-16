@@ -20,6 +20,7 @@ import TripListPage from "./mypage/trip/TripListPage";
 import UserBoard from "./admin/userList/UserBoard";
 import TripBoard from "./Trip/TripBoard";
 import Footer from "./common/Footer";
+import TempMap from "./map/TempMap";
 
 const Layout = () => {
   return (
@@ -58,6 +59,7 @@ function App() {
         <Route path="/kakao-register" element={<KakaoLogin />} />
         <Route path="/kakao-register/form" element={<KakaoRegisterFrom />} />
         <Route path="/admin/user-list" element={<UserBoard />} />
+        <Route path="/temp/test" element={<TempMap />} />
       </Routes>
     </div>
   );

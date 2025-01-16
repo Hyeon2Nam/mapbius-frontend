@@ -2,7 +2,7 @@ import ReviewList from "./ReviewList.js";
 import Rating from "@mui/material/Rating";
 import { useState } from "react";
 
-const PlaceInfo = ({ place }) => {
+const RegionInfo = ({ place }) => {
   const [value, setValue] = useState(3);
 
   return (
@@ -61,4 +61,4 @@ const PlaceInfo = ({ place }) => {
   );
 };
 
-export default PlaceInfo;
+export default RegionInfo;
