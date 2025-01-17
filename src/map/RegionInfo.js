@@ -67,9 +67,7 @@ const RegionInfo = ({ region }) => {
           setPopulation(totalPopulation);
         }
       })
-      .catch((e) => {
-        console.log(e);
-      });
+      .catch((e) => {});
   };
 
   const getAreaCodeHandler = async () => {
@@ -88,9 +86,7 @@ const RegionInfo = ({ region }) => {
           areaCode = fr[0].areaCode;
         }
       })
-      .catch((e) => {
-        console.log(e);
-      });
+      .catch((e) => {});
 
     if (areaCode > 0) {
       getTourInfo(areaCode);
@@ -108,9 +104,7 @@ const RegionInfo = ({ region }) => {
           setProductList(res.data.item);
         }
       })
-      .catch((e) => {
-        console.log(e);
-      });
+      .catch((e) => {});
   };
 
   const getFestival = () => {
@@ -121,13 +115,10 @@ const RegionInfo = ({ region }) => {
     getRegionFes(obj)
       .then((res) => {
         if (res.status === 200) {
-          console.log(res.data.items.item);
           setFestivalList(res.data.items.item);
         }
       })
-      .catch((e) => {
-        console.log(e);
-      });
+      .catch((e) => {});
   };
 
   const getNews = () => {
@@ -141,9 +132,7 @@ const RegionInfo = ({ region }) => {
           setNewsList(res.data.slice(0, 10));
         }
       })
-      .catch((e) => {
-        console.log(e);
-      });
+      .catch((e) => {});
   };
 
   const getBackImg = () => {
@@ -157,9 +146,7 @@ const RegionInfo = ({ region }) => {
           setBackImg(res.data[0].thumbnail);
         }
       })
-      .catch((e) => {
-        console.log(e);
-      });
+      .catch((e) => {});
   };
 
   useEffect(() => {
