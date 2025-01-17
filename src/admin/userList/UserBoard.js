@@ -65,8 +65,8 @@ const UserBoard = () => {
       isAdmin: false,
       isActive: true,
       img: "https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyNDA5MTVfNDAg%2FMDAxNzI2MzUyNDU5MzAy.ILqNGao2La29DZrdiKorvKZIyzW46S4FwjVKuKvcYHQg.tywwY5k79fOP0GGx8klfOdFqVpO8K2RDhRModwPseSgg.JPEG%2F15aceb5eee4e67f81a155bed0f6d09ad.jpg&type=a340",
-      review: 0,
-      avg: 0.0,
+      review: 1,
+      avg: 5.0,
       date: "2024-12-28",
     },
     {
