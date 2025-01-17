@@ -6,6 +6,7 @@ import "../../style/TripListPage.scss";
 const TripListPage = () => {
   const [curIdx, setCurIdx] = useState(0);
   const [dataList, setDataList] = useState([]);
+
   const dump = [
     {
       img: "https://img.siksinhot.com/place/1695358551647068.jpg?w=560&h=448&c=Y",
@@ -13,7 +14,7 @@ const TripListPage = () => {
       range: "public",
       description: "청양 맛집 리스트 입니다~",
       date: "2025-01-14",
-      like: 20,
+      like: 2,
       nickname: "asdf222",
       profileImg:
         "https://img.khan.co.kr/news/2024/03/23/news-p.v1.20240323.c159a4cab6f64473adf462d873e01e43_P1.jpg",
@@ -33,8 +34,8 @@ const TripListPage = () => {
       name: "홍대 놀거리 추천 루트",
       range: "public",
       description: "홍대에 왔으면 여길 가야ㅏ지...",
-      date: "2022-12-12",
-      like: 20,
+      date: "2025-01-09",
+      like: 5,
       nickname: "가나디",
       profileImg:
         "https://image1.marpple.co/files/u_4652883/2024/8/original/71961d882ef2c32ae9e1ba8f8fce453a4b7e214f1.png?q=80&w=360&f=webp",
@@ -44,9 +45,9 @@ const TripListPage = () => {
       name: "용한 타로 가게",
       range: "public",
       description: "사기아니고 이상한 사람아니고 진짜 찐으로 용한 사람 모음",
-      date: "2022-12-12",
-      like: 20,
-      nickname: "asdf222",
+      date: "2025-01-05",
+      like: 1,
+      nickname: "QQ",
       profileImg:
         "https://img1.daumcdn.net/thumb/R1280x0.fjpg/?fname=http://t1.daumcdn.net/brunch/service/user/cnoC/image/8TfGt4Oov4V2TPYaEpXzR1bLTZ0",
     },
