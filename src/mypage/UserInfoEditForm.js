@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { editUserData } from "../api/myPageApi";
 import ProfileImageUpload from "./ProfileImageUpload";
 import ProfileContainer from "./ProfileContainer";
-import { setDateText } from "./UtileFunc";
+import { setDateText, setDateTextKor } from "./UtileFunc";
 
 const UserInfoEditForm = ({ originData }) => {
   const nav = useNavigate();
@@ -202,15 +202,6 @@ const UserInfoEditForm = ({ originData }) => {
     return false;
   };
 
-  // const userBirthFormat = () => {
-  //   const date = new Date(userInfo.birthDate);
-  //   const year = date.getFullYear();
-  //   const month = (date.getMonth() + 1).toString().padStart(2, "0");
-  //   const day = date.getDate().toString().padStart(2, "0");
-
-  //   return `${year}년 ${month}월 ${day}일`;
-  // };
-
   return (
     <div className="user-info-edit-from">
       <div>
@@ -249,7 +240,6 @@ const UserInfoEditForm = ({ originData }) => {
                 />
               </td>
             </tr>
-
             {kakaoReg === false && (
               <>
                 <tr>
@@ -311,7 +301,7 @@ const UserInfoEditForm = ({ originData }) => {
             </tr>
             <tr>
               <td className="sub-title">생년월일</td>
-              <td>{setDateText(userInfo.birthDate)}</td>
+              <td>{setDateTextKor(userInfo.birthDate)}</td>
             </tr>
           </tbody>
         </table>

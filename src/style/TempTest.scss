@@ -90,6 +90,7 @@ $img-size: 60px;
       }
 
       .date-text {
+        margin: 6px 0;
         font-size: 12px;
       }
 
@@ -98,6 +99,10 @@ $img-size: 60px;
           text-decoration: underline;
         }
       }
+    }
+
+    .trip .trip-item {
+      width: 310px;
     }
 
     .product-list {
@@ -121,7 +126,9 @@ $img-size: 60px;
 
       .festival img {
         width: 120px;
+        box-shadow: 5px 5px 5px #7c7c7c;
         height: 150px;
+        margin-right: 20px;
       }
 
       .product {
@@ -130,7 +137,9 @@ $img-size: 60px;
         }
 
         img {
+          box-shadow: 5px 5px 5px #7c7c7c;
           width: 200px;
+          margin-right: 20px;
           height: 120px;
         }
       }
@@ -140,11 +149,6 @@ $img-size: 60px;
         display: flex;
         flex-direction: column;
         margin: 0 5%;
-
-        img {
-          box-shadow: 5px 5px 5px #7c7c7c;
-          margin-right: 20px;
-        }
 
         .list-item {
           display: flex;

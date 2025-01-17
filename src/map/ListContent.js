@@ -1,5 +1,6 @@
 import { useState } from "react";
 import ItemContent from "./ItemContent";
+import TripItem from "./../mypage/trip/TripItem";
 
 const ListContent = ({ list, divCnt, category }) => {
   const [startIndex, setStartIndex] = useState(0);
@@ -28,9 +29,13 @@ const ListContent = ({ list, divCnt, category }) => {
         {"<"}
       </button>
       <div className={"item-wrapper " + category}>
-        {itemsToDisplay.map((item, index) => (
-          <ItemContent key={index} item={item} category={category} />
-        ))}
+        {itemsToDisplay.map((item, index) =>
+          category !== "trip" ? (
+            <ItemContent key={index} item={item} category={category} />
+          ) : (
+            <TripItem key={index} item={item} />
+          )
+        )}
       </div>
       <button
         className="next-btn"

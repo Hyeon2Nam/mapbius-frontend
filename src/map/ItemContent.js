@@ -1,4 +1,4 @@
-import { sliceText } from "../mypage/UtileFunc";
+import { sliceText, setDateText } from "../mypage/UtileFunc";
 
 const ItemContent = ({ item, category }) => {
   return (
@@ -20,15 +20,23 @@ const ItemContent = ({ item, category }) => {
           <div
             className="title-text"
             dangerouslySetInnerHTML={{
-              __html: sliceText(item.title, 30, "기사제목"),
+              __html: sliceText(
+                item.title.replace("<b>", "").replace("</b>", ""),
+                30,
+                "기사제목"
+              ),
             }}
           ></div>
+          <div className="date-text">{setDateText(item.pubDate)}</div>
           <span
             dangerouslySetInnerHTML={{
-              __html: sliceText(item.description, 50, "기사내용"),
+              __html: sliceText(
+                item.description.replace("<b>", "").replace("</b>", ""),
+                50,
+                "기사내용"
+              ),
             }}
           ></span>
-          <div className="date-text">{item.pubDate}</div>
         </a>
       )}
       {category === "trip" && (

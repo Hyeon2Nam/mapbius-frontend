@@ -11,7 +11,39 @@ const RegionInfo = ({ region }) => {
   const [population, setPopulation] = useState(0);
   const [productList, setProductList] = useState(null);
   const [newsList, setNewsList] = useState(null);
-  const [tripRouteList, setTripRouteList] = useState(null);
+  const [tripRouteList, setTripRouteList] = useState([
+    {
+      img: process.env.PUBLIC_URL + "/imgs/gyeongbokgung.jpg",
+      name: "청양 맞집 루트",
+      range: "public",
+      description: "청양 맛집 리스트 입니다~",
+      date: "2022-12-12",
+      like: 20,
+      nickname: "asdf222",
+      profileImg: process.env.PUBLIC_URL + "/imgs/gyeongbokgung.jpg",
+    },
+    {
+      img: process.env.PUBLIC_URL + "/imgs/gyeongbokgung.jpg",
+      name: "청양 맞집 루트청양 맞집 루트청양 맞집 루트청양 맞집 루트청양 맞집 루트청양 맞집 루트",
+      range: "public",
+      description:
+        "청양 맛집 리스트 입니다~청양 맛집 리스트 입니다청양 맛집 리스트 입니다청양 맛집 리스트 입니다청양 맛집 리스트 입니다청양 맛집 리스트 입니다청양 맛집 리스트 입니다청양 맛집 리스트 입니다청양 맛집 리스트 입니다",
+      date: "2022-12-12",
+      like: 20,
+      nickname: "asdf222",
+      profileImg: process.env.PUBLIC_URL + "/imgs/gyeongbokgung.jpg",
+    },
+    {
+      img: process.env.PUBLIC_URL + "/imgs/gyeongbokgung.jpg",
+      name: "청양 맞집 루트",
+      range: "public",
+      description: "청양 맛집 리스트 입니다~",
+      date: "2022-12-12",
+      like: 20,
+      nickname: "asdf222",
+      profileImg: process.env.PUBLIC_URL + "/imgs/gyeongbokgung.jpg",
+    },
+  ]);
   const [festivalList, setFestivalList] = useState(null);
 
   const getPopulation = () => {
@@ -87,7 +119,6 @@ const RegionInfo = ({ region }) => {
       .then((res) => {
         if (res.status === 200) {
           setNewsList(res.data.slice(0, 10));
-          console.log(res.data.slice(0, 10));
         }
       })
       .catch((e) => {
