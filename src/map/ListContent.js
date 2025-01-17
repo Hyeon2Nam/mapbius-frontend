@@ -26,7 +26,7 @@ const ListContent = ({ list, divCnt, category }) => {
         onClick={handlePrev}
         disabled={startIndex === 0}
       >
-        {"<"}
+        <img src={process.env.PUBLIC_URL + "/imgs/prevIcon.png"} alt="" />
       </button>
       <div className={"item-wrapper " + category}>
         {itemsToDisplay.map((item, index) =>
@@ -42,7 +42,7 @@ const ListContent = ({ list, divCnt, category }) => {
         onClick={handleNext}
         disabled={startIndex + divCnt >= list.length}
       >
-        {">"}
+        <img src={process.env.PUBLIC_URL + "/imgs/nextIcon.png"} alt="" />
       </button>
     </div>
   );

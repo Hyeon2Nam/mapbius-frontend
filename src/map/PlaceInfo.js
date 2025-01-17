@@ -4,6 +4,7 @@ import { useState } from "react";
 
 const PlaceInfo = ({ place }) => {
   const [value, setValue] = useState(3);
+  const [isBookmark, setIsBookmark] = useState(false);
 
   return (
     <>
@@ -40,6 +41,17 @@ const PlaceInfo = ({ place }) => {
             </span>
           </div>
         </div>
+      </div>
+      <div
+        className="bookmark-bar"
+        onClick={() => {
+          setIsBookmark(!isBookmark);
+        }}
+      >
+        <img
+          src={process.env.PUBLIC_URL + "/imgs/bookmark" + isBookmark + ".png"}
+          alt=""
+        />
       </div>
       <ReviewList list={place.reviewList} />
       <div className="input-section">

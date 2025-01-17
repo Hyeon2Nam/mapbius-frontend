@@ -225,6 +225,7 @@ const UserInfoEditForm = ({ originData }) => {
         <table>
           <tbody>
             <tr>
+              <td className="sub-title">프로필 이미지</td>
               <td color="2">
                 <ProfileContainer />
               </td>

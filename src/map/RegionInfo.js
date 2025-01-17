@@ -10,41 +10,33 @@ import {
 import ListContent from "./ListContent";
 
 const RegionInfo = ({ region }) => {
+  const [isBookmark, setIsBookmark] = useState(false);
   const [backImg, setBackImg] = useState("");
   const [population, setPopulation] = useState(0);
   const [productList, setProductList] = useState(null);
   const [newsList, setNewsList] = useState(null);
   const [tripRouteList, setTripRouteList] = useState([
     {
-      img: process.env.PUBLIC_URL + "/imgs/gyeongbokgung.jpg",
-      name: "청양 맞집 루트",
+      img: "https://img.siksinhot.com/place/1695358551647068.jpg?w=560&h=448&c=Y",
+      name: "청양 맛집 루트",
       range: "public",
       description: "청양 맛집 리스트 입니다~",
-      date: "2022-12-12",
-      like: 20,
+      date: "2025-01-14",
+      like: 2,
       nickname: "asdf222",
-      profileImg: process.env.PUBLIC_URL + "/imgs/gyeongbokgung.jpg",
+      profileImg:
+        "https://img.khan.co.kr/news/2024/03/23/news-p.v1.20240323.c159a4cab6f64473adf462d873e01e43_P1.jpg",
     },
     {
-      img: process.env.PUBLIC_URL + "/imgs/gyeongbokgung.jpg",
-      name: "청양 맞집 루트청양 맞집 루트청양 맞집 루트청양 맞집 루트청양 맞집 루트청양 맞집 루트",
+      profileImg:
+        "https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyNDA5MTVfNDAg%2FMDAxNzI2MzUyNDU5MzAy.ILqNGao2La29DZrdiKorvKZIyzW46S4FwjVKuKvcYHQg.tywwY5k79fOP0GGx8klfOdFqVpO8K2RDhRModwPseSgg.JPEG%2F15aceb5eee4e67f81a155bed0f6d09ad.jpg&type=a340",
+      nickname: "기니",
+      name: "8월 가볼만한 국내여행지",
+      description: "바다가 끝내줍니다!",
+      date: "2024-12-28",
+      like: 2,
+      img: "https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyNDA4MDZfMjI5%2FMDAxNzIyOTQ2NjM1MDIz.Aw5RWmb4c02WDHZ4r-WUQfRqc8Ww0KnwcEiOUxj1IZwg.kOd_EFFapko24Yo3Djb-0FlzeUSIi7Azm2LJ1qMzTl4g.JPEG%2FDSC06592.jpg&type=a340",
       range: "public",
-      description:
-        "청양 맛집 리스트 입니다~청양 맛집 리스트 입니다청양 맛집 리스트 입니다청양 맛집 리스트 입니다청양 맛집 리스트 입니다청양 맛집 리스트 입니다청양 맛집 리스트 입니다청양 맛집 리스트 입니다청양 맛집 리스트 입니다",
-      date: "2022-12-12",
-      like: 20,
-      nickname: "asdf222",
-      profileImg: process.env.PUBLIC_URL + "/imgs/gyeongbokgung.jpg",
-    },
-    {
-      img: process.env.PUBLIC_URL + "/imgs/gyeongbokgung.jpg",
-      name: "청양 맞집 루트",
-      range: "public",
-      description: "청양 맛집 리스트 입니다~",
-      date: "2022-12-12",
-      like: 20,
-      nickname: "asdf222",
-      profileImg: process.env.PUBLIC_URL + "/imgs/gyeongbokgung.jpg",
     },
   ]);
   const [festivalList, setFestivalList] = useState(null);
@@ -67,9 +59,7 @@ const RegionInfo = ({ region }) => {
           setPopulation(totalPopulation);
         }
       })
-      .catch((e) => {
-        console.log(e);
-      });
+      .catch((e) => {});
   };
 
   const getAreaCodeHandler = async () => {
@@ -88,9 +78,7 @@ const RegionInfo = ({ region }) => {
           areaCode = fr[0].areaCode;
         }
       })
-      .catch((e) => {
-        console.log(e);
-      });
+      .catch((e) => {});
 
     if (areaCode > 0) {
       getTourInfo(areaCode);
@@ -108,9 +96,7 @@ const RegionInfo = ({ region }) => {
           setProductList(res.data.item);
         }
       })
-      .catch((e) => {
-        console.log(e);
-      });
+      .catch((e) => {});
   };
 
   const getFestival = () => {
@@ -121,13 +107,10 @@ const RegionInfo = ({ region }) => {
     getRegionFes(obj)
       .then((res) => {
         if (res.status === 200) {
-          console.log(res.data.items.item);
           setFestivalList(res.data.items.item);
         }
       })
-      .catch((e) => {
-        console.log(e);
-      });
+      .catch((e) => {});
   };
 
   const getNews = () => {
@@ -141,9 +124,7 @@ const RegionInfo = ({ region }) => {
           setNewsList(res.data.slice(0, 10));
         }
       })
-      .catch((e) => {
-        console.log(e);
-      });
+      .catch((e) => {});
   };
 
   const getBackImg = () => {
@@ -157,9 +138,7 @@ const RegionInfo = ({ region }) => {
           setBackImg(res.data[0].thumbnail);
         }
       })
-      .catch((e) => {
-        console.log(e);
-      });
+      .catch((e) => {});
   };
 
   useEffect(() => {
@@ -188,6 +167,17 @@ const RegionInfo = ({ region }) => {
           <span className="place-name">{region.name}</span>
           <span>인구 수 {population}명</span>
         </div>
+      </div>
+      <div
+        className="bookmark-bar"
+        onClick={() => {
+          setIsBookmark(!isBookmark);
+        }}
+      >
+        <img
+          src={process.env.PUBLIC_URL + "/imgs/bookmark" + isBookmark + ".png"}
+          alt=""
+        />
       </div>
       <div className="content-list">
         {festivalList && (
