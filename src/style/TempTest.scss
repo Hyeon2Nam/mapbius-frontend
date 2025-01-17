@@ -124,11 +124,29 @@ $img-size: 60px;
         }
       }
 
-      .festival img {
-        width: 120px;
-        box-shadow: 5px 5px 5px #7c7c7c;
-        height: 150px;
-        margin-right: 20px;
+      .festival {
+        text-align: left;
+
+        .info-wrapper {
+          .title-text {
+            font-family: "Paperlogy-8ExtraBold";
+            font-size: 20px;
+          }
+
+          .info-text {
+            font-family: "NanumSquareNeo";
+          }
+
+          display: flex;
+          flex-direction: column;
+        }
+
+        img {
+          width: 120px;
+          box-shadow: 5px 5px 5px #7c7c7c;
+          height: 150px;
+          margin-right: 20px;
+        }
       }
 
       .product {

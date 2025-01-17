@@ -5,8 +5,16 @@ const ItemContent = ({ item, category }) => {
     <div className="list-item">
       {category === "festival" && (
         <>
-          <img src={item.imgUrl} alt="" />
-          {item.cntntsSj}
+          <img src={item.firstimage} alt="" />
+          <div className="info-wrapper">
+            <div className="title-text">{item.title}</div>
+            <div className="info-text">{item.addr1 + item.addr2}</div>
+            <div className="info-text">
+              연락처 {"("}
+              {item.tel}
+              {")"}
+            </div>
+          </div>
         </>
       )}
       {category === "product" && (

@@ -19,3 +19,11 @@ export const getRegionProduct = (obj) => {
 export const getRegionNews = (obj) => {
   return api.get("/api/public/naver/search", { params: obj });
 };
+
+export const getRegionImg = (obj) => {
+  return api.get("/api/public/naver/image-search", { params: obj });
+};
+
+export const getRegionFes = (obj) => {
+  return api.get("/api/public/kr-data/festival-info", { params: obj });
+};
