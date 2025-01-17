@@ -119,6 +119,10 @@ $img-size: 60px;
         height: 150px;
         width: 10%;
 
+        img {
+          width: 15px;
+        }
+
         &:hover {
           background-color: #e4e4e4;
         }
