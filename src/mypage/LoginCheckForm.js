@@ -23,6 +23,11 @@ const LoginCheckForm = ({ getUserInfoHandler }) => {
             onChange={(e) => {
               setPw(e.target.value);
             }}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                getUserInfoHandler(pw);
+              }
+            }}
           />
         </div>
       </div>
