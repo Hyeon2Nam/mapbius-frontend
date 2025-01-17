@@ -84,7 +84,7 @@ const UserItem = ({ item }) => {
         </div>
         <div>{item.email}</div>
         <div>
-          후기 {item.review} {"(평균 "}
+          후기 {item.review} {"( 평균 별점 "}
           {item.avg}
           {")"}
         </div>
