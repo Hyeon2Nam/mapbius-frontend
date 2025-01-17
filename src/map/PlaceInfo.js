@@ -7,7 +7,7 @@ const PlaceInfo = ({ place }) => {
 
   return (
     <>
-      <div className="head-section">
+      <div className="head-section place">
         <img
           className="back-img"
           src="https://d12zq4w4guyljn.cloudfront.net/750_750_20240306021828565_photo_f4b171bf1359.jpg"

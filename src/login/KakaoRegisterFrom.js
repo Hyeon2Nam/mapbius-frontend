@@ -4,6 +4,7 @@ import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import { idDuplicateCheck, tryKakaoRegister } from "../api/loginApi";
 import { Link, useNavigate } from "react-router-dom";
+import { getTodayDateText } from "../mypage/UtileFunc";
 
 const KakaoRegisterFrom = () => {
   const nav = useNavigate();
@@ -24,18 +25,6 @@ const KakaoRegisterFrom = () => {
     "& .MuiAlert-icon": {
       fontSize: "30px",
     },
-  };
-
-  const maxDate = () => {
-    const today = new Date();
-
-    const year = today.getFullYear();
-    const month = (today.getMonth() + 1).toString().padStart(2, "0");
-    const day = today.getDate().toString().padStart(2, "0");
-
-    const dateString = year + "-" + month + "-" + day;
-
-    return dateString;
   };
 
   const userInfoHandler = (e) => {
@@ -160,7 +149,7 @@ const KakaoRegisterFrom = () => {
             name="date"
             value={userInfo.date}
             onChange={(e) => userInfoHandler(e)}
-            max={maxDate()}
+            max={getTodayDateText()}
           />
           <select
             name="gender"

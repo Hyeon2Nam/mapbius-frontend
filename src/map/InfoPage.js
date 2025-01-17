@@ -7,7 +7,7 @@ const InfoPage = ({ data, type, setIsShow }) => {
       {type === "place" ? (
         <PlaceInfo place={data} />
       ) : (
-        <RegionInfo place={data} />
+        <RegionInfo region={data} />
       )}
       <button className="up-btn" onClick={() => setIsShow(false)}>
         <img src={process.env.PUBLIC_URL + "/imgs/upArrow.png"} alt="" />
