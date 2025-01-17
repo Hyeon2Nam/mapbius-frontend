@@ -8,6 +8,7 @@ import {
   tryRegister,
 } from "../api/loginApi";
 import { Link, useNavigate } from "react-router-dom";
+import { getTodayDateText } from "../mypage/UtileFunc";
 
 export default function Register() {
   const nav = useNavigate();
@@ -42,17 +43,17 @@ export default function Register() {
     isDuplicated: false,
   });
 
-  const maxDate = () => {
-    const today = new Date();
+  // const maxDate = () => {
+  //   const today = new Date();
 
-    const year = today.getFullYear();
-    const month = (today.getMonth() + 1).toString().padStart(2, "0");
-    const day = today.getDate().toString().padStart(2, "0");
+  //   const year = today.getFullYear();
+  //   const month = (today.getMonth() + 1).toString().padStart(2, "0");
+  //   const day = today.getDate().toString().padStart(2, "0");
 
-    const dateString = year + "-" + month + "-" + day;
+  //   const dateString = year + "-" + month + "-" + day;
 
-    return dateString;
-  };
+  //   return dateString;
+  // };
 
   const userInfoHandler = (e) => {
     const { name, value } = e.target;
@@ -359,7 +360,7 @@ export default function Register() {
             name="date"
             value={userInfo.date}
             onChange={(e) => userInfoHandler(e)}
-            max={maxDate()}
+            max={getTodayDateText()}
           />
           <select
             name="gender"

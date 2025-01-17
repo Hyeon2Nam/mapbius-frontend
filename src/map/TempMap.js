@@ -71,6 +71,11 @@ export default function TempMap() {
     ],
   };
 
+  const regionDump = {
+    category: "충청남도",
+    name: "청양",
+  };
+
   return (
     <div className="temp-test">
       <div className="map-section">
@@ -78,7 +83,8 @@ export default function TempMap() {
       </div>
       {isShow ? (
         <div className={isShow ? "spot-section" : "none"}>
-          <InfoPage data={dump} type={"place"} setIsShow={setIsShow} />
+          {/* <InfoPage data={dump} type={"place"} setIsShow={setIsShow} /> */}
+          <InfoPage data={regionDump} type={"region"} setIsShow={setIsShow} />
         </div>
       ) : (
         <div className="down-btn">

@@ -43,6 +43,118 @@ $img-size: 60px;
     }
   }
 
+  .content-list {
+    width: 95%;
+    height: calc(100% - 210px);
+    padding: 20px;
+    margin: 0 auto;
+    overflow-x: hidden;
+    overflow-y: scroll;
+
+    .category {
+      margin: 10px 0 30px 0;
+      border-bottom: 1px solid #b1b1b1;
+      padding-bottom: 20px;
+    }
+
+    .category-section {
+      display: flex;
+      justify-content: left;
+      align-items: center;
+
+      img {
+        width: 40px;
+        height: 40px;
+        margin-right: 10px;
+      }
+
+      span {
+        font-size: 1.5rem;
+      }
+    }
+
+    .news {
+      a {
+        @include linkTextDecorate;
+        color: #000;
+        text-align: left;
+      }
+
+      .title-text {
+        font-size: 20px;
+      }
+
+      span,
+      .date-text {
+        font-family: "NanumSquareNeo";
+      }
+
+      .date-text {
+        font-size: 12px;
+      }
+
+      :hover {
+        a {
+          text-decoration: underline;
+        }
+      }
+    }
+
+    .product-list {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 20px;
+
+      .prev-btn,
+      .next-btn {
+        border: none;
+        background-color: initial;
+        height: 150px;
+        width: 10%;
+
+        &:hover {
+          background-color: #e4e4e4;
+        }
+      }
+
+      .festival img {
+        width: 120px;
+        height: 150px;
+      }
+
+      .product {
+        .list-item {
+          justify-content: space-evenly;
+        }
+
+        img {
+          width: 200px;
+          height: 120px;
+        }
+      }
+
+      .item-wrapper {
+        width: 80%;
+        display: flex;
+        flex-direction: column;
+        margin: 0 5%;
+
+        img {
+          box-shadow: 5px 5px 5px #7c7c7c;
+          margin-right: 20px;
+        }
+
+        .list-item {
+          display: flex;
+          align-items: center;
+          margin-bottom: 30px;
+        }
+      }
+    }
+  }
+
   .spot-section {
     width: 20%;
     height: 100%;
@@ -75,7 +187,7 @@ $img-size: 60px;
     .review-item {
       border-bottom: 1px solid #8f8f8f;
       margin: 10px;
-      padding: 10px 5px 30px 5px;
+      padding: 10px 20px 30px 20px;
 
       .content-section {
         font-family: "NanumSquareNeo";
@@ -189,8 +301,7 @@ $img-size: 60px;
           width: 15%;
           border: none;
           border-radius: 5px;
-          background-color: #071871;
-          color: #fff;
+          background-color: #e5e0ff;
         }
       }
     }
@@ -202,9 +313,24 @@ $img-size: 60px;
       height: calc(100% - 450px);
     }
 
+    .place {
+      height: 300px;
+
+      .place-name {
+        font-size: 1.5rem;
+      }
+    }
+
+    .region {
+      height: 150px;
+
+      .place-name {
+        font-size: 2.5rem;
+      }
+    }
+
     .head-section {
       position: relative;
-      height: 300px;
 
       .back-img {
         width: 100%;
@@ -235,10 +361,6 @@ $img-size: 60px;
 
         :nth-child(1n) {
           margin: 3px;
-        }
-
-        .place-name {
-          font-size: 1.5rem;
         }
 
         img {
