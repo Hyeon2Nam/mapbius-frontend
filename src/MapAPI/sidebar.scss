@@ -1,6 +1,6 @@
 $borderRadius: 4px;
 $spacer: 1rem;
-$primary: #406ff3;
+$primary: #e5e0ff;
 $text: #6a778e;
 $linkHeight: $spacer * 3.5;
 $timing: 250ms;
@@ -21,20 +21,21 @@ $transition: $timing ease all;
 }
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@600&display=swap');
 body{
-  background: #eaeef6;
+  background: #fff;
   font-family: 'Open Sans', sans-serif;
 }
 
 .navbar{
   $ref: &;
   position: fixed;
-  top: $spacer;
-  left: $spacer;
+  //top: $spacer;
+  //left: $spacer;
   background: #fff;
   border-radius: $borderRadius;
   padding: $spacer 0;
   box-shadow: 0 0 40px rgba(0,0,0,0.03);
-  height: calc(100vh - #{$spacer*4});
+  height: calc(100vh - #{$spacer*2});
+  z-index: 10000;
   &__link{
     position:relative;
     display: flex;
@@ -140,14 +141,15 @@ body{
 .navbar1{
   $ref: &;
   position: fixed;
-  top: $spacer;
-  left: calc($spacer * 6 + $spacer + 1px);
+  //top: $spacer;
+  left: calc($spacer * 5 + $spacer + 1px);
   background: #e5e0ff;
   border-radius: $borderRadius;
   padding: $spacer 0;
   box-shadow: 0 0 40px rgba(0,0,0,0.03);
-  height: calc(100vh - #{$spacer*4});
-  width: $spacer*22;
+  height: calc(100vh - #{$spacer*2});
+  width: $spacer*24;
+  z-index: 10000;
 
   .sidebar {
     display: flex;

@@ -14,6 +14,10 @@ const KakaoMap = () => {
         { id: 4, name: "축제갈비", address: "충남 청양군 청양읍 중앙로열길 18", rating: 4.0, reviews: 19 },
         { id: 5, name: "고향회관", address: "충남 청양군 청양읍 칠갑산로7길 6", rating: 3.0, reviews: 14 },
         { id: 6, name: "둘순네 부대찌개", address: "충남 청양군 청양읍 중앙로 76", rating: 1.0, reviews: 1 },
+        { id: 7, name: "둘순네 부대찌개", address: "충남 청양군 청양읍 중앙로 76", rating: 1.0, reviews: 1 },
+        { id: 8, name: "둘순네 부대찌개", address: "충남 청양군 청양읍 중앙로 76", rating: 1.0, reviews: 1 },
+        { id: 9, name: "둘순네 부대찌개", address: "충남 청양군 청양읍 중앙로 76", rating: 1.0, reviews: 1 },
+        { id: 10, name: "둘순네 부대찌개", address: "충남 청양군 청양읍 중앙로 76", rating: 1.0, reviews: 1 },
       ]);
 
       const handleSearch = (e) => {
