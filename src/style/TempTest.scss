@@ -351,6 +351,16 @@ $img-size: 60px;
       }
     }
 
+    .bookmark-bar {
+      position: absolute;
+      top: 1%;
+      left: 2%;
+
+      img {
+        width: 30px;
+      }
+    }
+
     .head-section {
       position: relative;
 
@@ -368,7 +378,7 @@ $img-size: 60px;
       }
 
       .text-section {
-        width: 85%;
+        width: 80%;
         height: 80%;
         border-radius: 20px;
         background-color: rgb(255 255 255 / 77%);

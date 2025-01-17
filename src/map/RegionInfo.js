@@ -10,6 +10,7 @@ import {
 import ListContent from "./ListContent";
 
 const RegionInfo = ({ region }) => {
+  const [isBookmark, setIsBookmark] = useState(false);
   const [backImg, setBackImg] = useState("");
   const [population, setPopulation] = useState(0);
   const [productList, setProductList] = useState(null);
@@ -175,6 +176,17 @@ const RegionInfo = ({ region }) => {
           <span className="place-name">{region.name}</span>
           <span>인구 수 {population}명</span>
         </div>
+      </div>
+      <div
+        className="bookmark-bar"
+        onClick={() => {
+          setIsBookmark(!isBookmark);
+        }}
+      >
+        <img
+          src={process.env.PUBLIC_URL + "/imgs/bookmark" + isBookmark + ".png"}
+          alt=""
+        />
       </div>
       <div className="content-list">
         {festivalList && (
