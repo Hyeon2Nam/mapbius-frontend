@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import {
+  getRegionFes,
+  getRegionImg,
   getRegionName,
   getRegionNews,
   getRegionPopulation,
@@ -8,6 +10,7 @@ import {
 import ListContent from "./ListContent";
 
 const RegionInfo = ({ region }) => {
+  const [backImg, setBackImg] = useState("");
   const [population, setPopulation] = useState(0);
   const [productList, setProductList] = useState(null);
   const [newsList, setNewsList] = useState(null);
@@ -110,6 +113,23 @@ const RegionInfo = ({ region }) => {
       });
   };
 
+  const getFestival = () => {
+    let obj = {
+      region: region.name,
+    };
+
+    getRegionFes(obj)
+      .then((res) => {
+        if (res.status === 200) {
+          console.log(res.data.items.item);
+          setFestivalList(res.data.items.item);
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
   const getNews = () => {
     let obj = {
       query: region.name,
@@ -126,8 +146,26 @@ const RegionInfo = ({ region }) => {
       });
   };
 
+  const getBackImg = () => {
+    let obj = {
+      query: region.name + "풍경",
+    };
+
+    getRegionImg(obj)
+      .then((res) => {
+        if (res.status === 200) {
+          setBackImg(res.data[0].thumbnail);
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
   useEffect(() => {
     if (region) {
+      getBackImg();
+      getFestival();
       getPopulation();
       getAreaCodeHandler();
       getNews();
@@ -139,7 +177,11 @@ const RegionInfo = ({ region }) => {
       <div className="head-section region">
         <img
           className="back-img"
-          src="https://d12zq4w4guyljn.cloudfront.net/750_750_20240306021828565_photo_f4b171bf1359.jpg"
+          src={
+            backImg
+              ? backImg
+              : "https://d12zq4w4guyljn.cloudfront.net/750_750_20240306021828565_photo_f4b171bf1359.jpg"
+          }
           alt=""
         />
         <div className="text-section">
@@ -148,7 +190,7 @@ const RegionInfo = ({ region }) => {
         </div>
       </div>
       <div className="content-list">
-        {productList && (
+        {festivalList && (
           <div className="category">
             <div className="category-section">
               <img
@@ -157,7 +199,7 @@ const RegionInfo = ({ region }) => {
               />
               <span>축제</span>
             </div>
-            <ListContent list={productList} divCnt={2} category={"festival"} />
+            <ListContent list={festivalList} divCnt={2} category={"festival"} />
           </div>
         )}
         {productList && (
