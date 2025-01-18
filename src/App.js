@@ -21,6 +21,7 @@ import UserBoard from "./admin/userList/UserBoard";
 import TripBoard from "./Trip/TripBoard";
 import Footer from "./common/Footer";
 import TempMap from "./map/TempMap";
+import ChatPage from "./map/ChatPage";
 
 const Layout = () => {
   return (
@@ -43,6 +44,7 @@ function App() {
           <Route path="/notice/view/:id" element={<NoticeDetail />} />
           <Route path="/notice/:mode/:id" element={<NoticeCreate />} />
           <Route path="/trip/:page" element={<TripBoard />} />
+          <Route path="/temp/chat" element={<ChatPage />} />
 
           <Route element={<Mypage />}>
             <Route path="/mypage/main" element={<MypageMainCardList />} />

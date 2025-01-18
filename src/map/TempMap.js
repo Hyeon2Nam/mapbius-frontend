@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "../style/TempTest.scss";
 import InfoPage from "./InfoPage";
+import ChatPage from "./ChatPage";
 
 export default function TempMap() {
   const [isShow, setIsShow] = useState(true);
@@ -77,6 +78,7 @@ export default function TempMap() {
 
   return (
     <div className="temp-test">
+      <ChatPage />
       <div className="map-section">
         <img src={process.env.PUBLIC_URL + "/imgs/gyeongbokgung.jpg"} alt="" />
       </div>
