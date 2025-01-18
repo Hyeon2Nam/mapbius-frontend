@@ -7,7 +7,7 @@ $img-size: 35px;
 
   .main-container {
     width: 80%;
-    height: 100vh;
+    height: 90vh;
     padding: 2%;
   }
 
@@ -107,6 +107,9 @@ $img-size: 35px;
   }
 
   .user-list {
+    height: 90%;
+    overflow: auto;
+    // overflow-y: hidden;
     margin-top: 10px;
     display: flex;
     flex-wrap: wrap;

@@ -4,8 +4,10 @@ import { setUserActive, setUserRight } from "../../api/adminApi";
 
 const UserItem = ({ item }) => {
   const [modalOpen, setModalOpen] = useState(false);
-  const [adminState, setAdminState] = useState(item.isAdmin);
-  const [activeState, setactiveState] = useState(item.isActive);
+  const [adminState, setAdminState] = useState(item.role === "admin");
+  const [activeState, setactiveState] = useState(
+    item.account_status === "activate"
+  );
 
   const adminHandler = () => {
     setAdminState(!adminState);
@@ -52,9 +54,17 @@ const UserItem = ({ item }) => {
       <div className="info-container">
         <div className="info-wrapper">
           <div className="id-wrapper">
-            <img className="profile-img" src={item.img} alt="" />
+            <img
+              className="profile-img"
+              src={
+                item.profile_image
+                  ? item.profile_image
+                  : process.env.PUBLIC_URL + "/imgs/gyeongbokgung.jpg"
+              }
+              alt=""
+            />
             <div>
-              {item.nickName}
+              {item.nick_name}
               {" ("}
               {sliceText(item.id, 8, "ID")}
               {")"}
@@ -84,11 +94,11 @@ const UserItem = ({ item }) => {
         </div>
         <div>{item.email}</div>
         <div>
-          후기 {item.review} {"( 평균 별점 "}
-          {item.avg}
+          후기 {item.review_count} {"( 평균 별점 "}
+          {item.avg_rating}
           {")"}
         </div>
-        <div>마지막 접속일 {item.date}</div>
+        <div>마지막 접속일 {item.birth_date}</div>
         <div className="auth-wrapper">
           <div>{adminState ? "관리자" : "일반유저"}</div>
           <div>{activeState ? "활성화" : "비활성화"}</div>
