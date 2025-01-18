@@ -2,14 +2,18 @@ import { useEffect, useState } from "react";
 import UserList from "./UserList";
 import "../../style/UserBoard.scss";
 import { Link } from "react-router-dom";
+import { getAllUserList } from "../../api/adminApi";
 
 const UserBoard = () => {
   const [search, setSearch] = useState("");
   const [curpage, setCurpage] = useState(1);
+  const [userList, setUserList] = useState([]);
 
   useEffect(() => {
     if (localStorage.getItem("people1") !== "partsOfGun") {
       window.location = "/";
+    } else {
+      getItemList();
     }
   }, []);
 
@@ -94,18 +98,16 @@ const UserBoard = () => {
   ];
 
   const getItemList = async () => {
-    // await getItemWithPage({
-    //   curpage: curpage,
-    //   keyword: search,
-    //   type: searchType,
-    // })
-    //   .then((res) => {
-    //     if (res.status === 200) {
-    //       setNoticeList(res.data.objData.items);
-    //       setMaxpage(res.data.objData.maxpage);
-    //     }
-    //   })
-    //   .catch((e) => {});
+    getAllUserList(localStorage.getItem("userToken"))
+      .then((res) => {
+        if (res.status === 200) {
+          setUserList(res.data.objData);
+        }
+      })
+      .catch((e) => {
+        alert("다시 로그인 해주세요요");
+        window.location = "/";
+      });
   };
 
   const searchNoticeHandler = () => {
@@ -147,7 +149,7 @@ const UserBoard = () => {
             </div>
           </div>
         </div>
-        <UserList list={dump} />
+        <UserList list={userList} />
       </div>
     </div>
   );

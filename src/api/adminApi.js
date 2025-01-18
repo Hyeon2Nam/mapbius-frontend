@@ -15,3 +15,11 @@ export const setUserActive = (obj, token) => {
     },
   });
 };
+
+export const getAllUserList = (token) => {
+  return api.get("/api/private/admin/info/user", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
