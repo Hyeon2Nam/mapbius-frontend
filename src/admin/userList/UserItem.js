@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { sliceText } from "../../mypage/UtileFunc";
+import { setDateText, sliceText } from "../../mypage/UtileFunc";
 import { setUserActive, setUserRight } from "../../api/adminApi";
 
 const UserItem = ({ item }) => {
@@ -98,7 +98,7 @@ const UserItem = ({ item }) => {
           {item.avg_rating}
           {")"}
         </div>
-        <div>마지막 접속일 {item.birth_date}</div>
+        <div>마지막 접속일 {setDateText(item.created_at)}</div>
         <div className="auth-wrapper">
           <div>{adminState ? "관리자" : "일반유저"}</div>
           <div>{activeState ? "활성화" : "비활성화"}</div>
