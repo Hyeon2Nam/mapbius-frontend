@@ -142,7 +142,7 @@ const RegionInfo = ({ region }) => {
   };
 
   useEffect(() => {
-    if (region) {
+    if (region && region.name) {
       getBackImg();
       getFestival();
       getPopulation();

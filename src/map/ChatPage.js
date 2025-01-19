@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { Box, TextField, Button, Typography, Divider } from "@mui/material";
-import "../style/ChatPage.scss";
 import { chatChatGpt } from "../api/mapApi";
 
 const ChatPage = () => {
@@ -47,7 +46,7 @@ const ChatPage = () => {
   };
 
   return (
-    <div className="chat-gpt-page">
+    <>
       <div className="header-box">
         <div>AI 맞춤 추천 챗봇</div>
       </div>
@@ -146,7 +145,7 @@ const ChatPage = () => {
           </Button>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

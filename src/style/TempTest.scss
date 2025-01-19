@@ -1,20 +1,14 @@
 @use "util.scss" as *;
 $img-size: 60px;
 
-.temp-test {
-  width: 100%;
-  //   height: 100%;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.kakao-map-page {
+  // width: 100%;
+  // //   height: 100%;
+  // height: 100vh;
+  // display: flex;
+  // justify-content: center;
+  // align-items: center;
   font-family: "Paperlogy-8ExtraBold";
-
-  .map-section {
-    width: 80%;
-    height: 100%;
-    background-color: aquamarine;
-  }
 
   .none {
     display: none;
@@ -23,10 +17,12 @@ $img-size: 60px;
   .down-btn {
     position: absolute;
     top: 0%;
-    right: 5%;
-    width: 70px;
-    height: 70px;
+    right: 7%;
+    width: 50px;
+    height: 35px;
     transition: 0.2s;
+    z-index: 1;
+    background: #e5e0ff;
 
     button {
       background-color: initial;
@@ -182,12 +178,17 @@ $img-size: 60px;
   }
 
   .spot-section {
+    font-family: "Paperlogy-8ExtraBold";
+
     width: 20%;
     height: 100%;
     min-width: 450px;
-    // overflow-y: scroll;
     overflow: hidden;
-    position: relative;
+    position: absolute;
+    z-index: 10000;
+    top: 0%;
+    right: 0%;
+    background: white;
 
     .up-btn {
       width: 100%;

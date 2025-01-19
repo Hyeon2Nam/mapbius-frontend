@@ -46,10 +46,8 @@ function App() {
           <Route path="/notice/view/:id" element={<NoticeDetail />} />
           <Route path="/notice/:mode/:id" element={<NoticeCreate />} />
 
-
           <Route path="/trip/:page" element={<TripBoard />} />
           <Route path="/temp/chat" element={<ChatPage />} />
-
 
           <Route element={<Mypage />}>
             <Route path="/mypage/main" element={<MypageMainCardList />} />
@@ -60,7 +58,7 @@ function App() {
           </Route>
         </Route>
 
-        <Route path="/" element={<MainPage />} />
+        <Route path="/" element={<MapTest />} />
         <Route path="/test" element={<MapTest />} />
         <Route path="/Distance" element={<Distance />} />
         <Route path="/login" element={<Login />} />
