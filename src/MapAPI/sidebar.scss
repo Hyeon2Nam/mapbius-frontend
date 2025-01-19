@@ -19,25 +19,27 @@ $transition: $timing ease all;
     }
   }
 }
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@600&display=swap');
-body{
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@600&display=swap");
+body {
   background: #fff;
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
 }
 
-.navbar{
-  $ref: &;
+.navbar {
   position: fixed;
-  //top: $spacer;
-  //left: $spacer;
   background: #fff;
-  border-radius: $borderRadius;
-  padding: $spacer 0;
-  box-shadow: 0 0 40px rgba(0,0,0,0.03);
-  height: calc(100vh - #{$spacer*2});
+  border-radius: 4px;
+  padding: 1rem 0;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.03);
+  height: calc(100vh - 2rem);
   z-index: 10000;
-  &__link{
-    position:relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+
+  &__link {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -46,53 +48,52 @@ body{
     color: $text;
     transition: $transition;
 
-    span{
+    span {
       position: absolute;
       left: 100%;
-      transform: translate(-($spacer*3));
+      transform: translate(-($spacer * 3));
       margin-left: 1rem;
       opacity: 0;
       pointer-events: none;
       color: $primary;
       background: #fff;
-      padding: $spacer *0.75;
+      padding: $spacer * 0.75;
       transition: $transition;
       border-radius: $borderRadius * 1.75;
     }
-    &:hover{
+    &:hover {
       color: #fff;
     }
-     .navbar:not(:hover) &:focus
-    &:hover{
-      span{
+    .navbar:not(:hover) &:focus &:hover {
+      span {
         opacity: 1;
         transform: translate(0);
       }
     }
   }
-  
+
   &__icon {
     width: 90px;
     height: 50px;
     margin-right: 8px;
     vertical-align: middle;
 
-    img{
+    img {
       width: 38px;
       height: 38px;
     }
-}
-  &__menu{
+  }
+  &__menu {
     position: relative;
     display: flex;
     flex-direction: column;
-    margin-bottom: 275px;
+    // margin-bottom: 225px;
   }
-  &__item{
+  &__item {
     margin-bottom: 3rem;
-    &:last-child{
-      &:before{
-        content: '';
+    &:last-child {
+      &:before {
+        content: "";
         position: absolute;
         opacity: 0;
         z-index: -1;
@@ -103,10 +104,9 @@ body{
         background: $primary;
         border-radius: $borderRadius * 1.75;
         transition: $timing cubic-bezier(1, 0.2, 0.1, 1.2) all;
-        
       }
     }
-    
+
     @for $i from 1 to 12 {
       &:first-child:nth-last-child(#{$i}),
       &:first-child:nth-last-child(#{$i}) ~ li {
@@ -137,12 +137,11 @@ body{
   }
 }
 
-
 .navbar1.collapsed {
   transform: translateX(-130%); // 접힌 상태
 }
 
-.navbar1{
+.navbar1 {
   $ref: &;
   position: fixed;
   //top: $spacer;
@@ -150,9 +149,9 @@ body{
   background: #e5e0ff;
   border-radius: $borderRadius;
   padding: $spacer 0;
-  box-shadow: 0 0 40px rgba(0,0,0,0.03);
-  height: calc(100vh - #{$spacer*2});
-  width: $spacer*24;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.03);
+  height: calc(100vh - #{$spacer * 2});
+  width: $spacer * 24;
   z-index: 10000;
 
   .sidebar {
@@ -160,69 +159,68 @@ body{
     gap: $spacer * 0.5;
     align-items: center;
 
-  &__link{
-    position:relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: $linkHeight;
-    width: $spacer * 22;
-    color: $text;
-    transition: $transition;
-
-    &__input {
-      flex: 1;
-      padding: $spacer * 0.5;
-      border-radius: $borderRadius;
-      border: 1px solid $text;
-    }
-
-    &__button {
-      padding: $spacer * 0.5 $spacer;
-      border: none;
-      background: $primary;
-      color: white;
-      border-radius: $borderRadius;
-      cursor: pointer;
+    &__link {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: $linkHeight;
+      width: $spacer * 22;
+      color: $text;
       transition: $transition;
 
-      &:hover {
-        background: darken($primary, 10%);
+      &__input {
+        flex: 1;
+        padding: $spacer * 0.5;
+        border-radius: $borderRadius;
+        border: 1px solid $text;
+      }
+
+      &__button {
+        padding: $spacer * 0.5 $spacer;
+        border: none;
+        background: $primary;
+        color: white;
+        border-radius: $borderRadius;
+        cursor: pointer;
+        transition: $transition;
+
+        &:hover {
+          background: darken($primary, 10%);
+        }
       }
     }
-  }
 
-    span{
+    span {
       position: absolute;
       left: 100%;
-      transform: translate(-($spacer*3));
+      transform: translate(-($spacer * 3));
       margin-left: 1rem;
       opacity: 0;
       pointer-events: none;
       color: $primary;
       background: #fff;
-      padding: $spacer *0.75;
+      padding: $spacer * 0.75;
       transition: $transition;
       border-radius: $borderRadius * 1.75;
     }
-    &:hover{
+    &:hover {
       color: #fff;
     }
-     .navbar1:not(:hover) &:focus
-    &:hover{
-      span{
+    .navbar1:not(:hover) &:focus &:hover {
+      span {
         opacity: 1;
         transform: translate(0);
       }
     }
   }
-  &__menu{
+  &__menu {
     position: relative;
   }
-  &__item{
-    &:last-child{
-      &:before{
-        content: '';
+  &__item {
+    &:last-child {
+      &:before {
+        content: "";
         position: absolute;
         opacity: 0;
         z-index: -1;
@@ -233,12 +231,10 @@ body{
         background: $primary;
         border-radius: $borderRadius * 1.75;
         transition: $timing cubic-bezier(1, 0.2, 0.1, 1.2) all;
-        
       }
     }
   }
 }
-
 
 .results {
   max-height: 1070px;
@@ -252,7 +248,7 @@ body{
   }
 
   &::-webkit-scrollbar-thumb {
-    background-color: #1A1F00; // #888 기존색상 스크롤바 색상
+    background-color: #1a1f00; // #888 기존색상 스크롤바 색상
     border-radius: 4px; // 스크롤바 둥글게
     &:hover {
       background-color: #555; // 호버 시 색상 변경

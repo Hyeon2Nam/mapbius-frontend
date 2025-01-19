@@ -5,10 +5,11 @@
 // }
 
 .chat-gpt-page {
+  z-index: 1;
   position: absolute;
   // 위치 옮기기
   bottom: 0;
-  left: 20%;
+  margin-left: 500px;
   box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.15);
 
   .header-box {

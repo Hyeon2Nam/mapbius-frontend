@@ -85,6 +85,9 @@ export default function Login() {
           } else if (e.status === 423) {
             setErrMsg("비활성화된 계정입니다.");
             setOpen(true);
+          } else if (e.status === 500) {
+            setErrMsg("존재하지 않는 아이디입니다.");
+            setOpen(true);
           }
         });
     } else {
