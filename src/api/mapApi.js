@@ -27,3 +27,29 @@ export const plusHeartCnt = (obj, token) => {
     },
   });
 };
+
+export const setBookmark = (obj, token) => {
+  console.log(obj, token);
+
+  return api.post("/api/private/account/favorite/enroll", JSON.stringify(obj), {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
+export const getBookmarkList = (obj, token) => {
+  return api.post("/api/private/account/favorite/mylist", JSON.stringify(obj), {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
+export const checkBookmarkState = (obj, token) => {
+  return api.post("/api/private/account/favorite/check", JSON.stringify(obj), {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};

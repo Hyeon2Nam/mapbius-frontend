@@ -4,7 +4,12 @@ import { useEffect, useState } from "react";
 import { getRegionImg } from "../api/regionApi.js";
 import { getProfileImg } from "../api/myPageApi.js";
 import { getTodayDateText } from "../mypage/UtileFunc.js";
-import { addReviewItem, getReviewList } from "./../api/mapApi";
+import {
+  addReviewItem,
+  checkBookmarkState,
+  getReviewList,
+  setBookmark,
+} from "./../api/mapApi";
 
 const PlaceInfo = ({ place }) => {
   const [value, setValue] = useState(3);
@@ -96,9 +101,54 @@ const PlaceInfo = ({ place }) => {
       .catch((e) => {});
   };
 
+  const bookmarkhandler = () => {
+    let obj = {
+      type: "장소",
+      locationCode: place.id,
+      locationName: place.name,
+      locationAddress: place.address,
+    };
+
+    setIsBookmark(!isBookmark);
+
+    setBookmark(obj, localStorage.getItem("userToken"))
+      .then((res) => {
+        if (res.status === 200) {
+          setIsBookmark(true);
+          alert(res.data.message);
+        } else if (res.status === 201) {
+          setIsBookmark(false);
+          alert(res.data.message);
+        }
+      })
+      .catch((e) => {
+        if (e.status === 403) {
+          alert("로그인 해주세요");
+          window.location = "/login";
+        } else alert("오류 발생");
+      });
+  };
+
+  const checkBookmarkHandler = () => {
+    let obj = {
+      locationCode: place.id,
+    };
+
+    checkBookmarkState(obj, localStorage.getItem("userToken"))
+      .then((res) => {
+        if (res.status === 200) {
+          setIsBookmark(true);
+        } else if (res.status === 201) {
+          setIsBookmark(false);
+        }
+      })
+      .catch((e) => {});
+  };
+
   useEffect(() => {
     setBackImgHandler();
     getReviewListHandler();
+    checkBookmarkHandler();
   }, [place]);
 
   useEffect(() => {
@@ -128,7 +178,7 @@ const PlaceInfo = ({ place }) => {
                   src={
                     process.env.PUBLIC_URL +
                     "/imgs/starRate" +
-                    place.rating +
+                    Math.floor(place.rating) +
                     ".png"
                   }
                   alt=""
@@ -150,6 +200,7 @@ const PlaceInfo = ({ place }) => {
         className="bookmark-bar"
         onClick={() => {
           setIsBookmark(!isBookmark);
+          bookmarkhandler();
         }}
       >
         <img

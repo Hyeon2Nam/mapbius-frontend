@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import concatListHandler from "../UtileFunc";
 import TripList from "./TripLIst";
 import "../../style/TripListPage.scss";
+import { getBookmarkList } from "../../api/mapApi";
 
 const TripListPage = () => {
   const [curIdx, setCurIdx] = useState(0);
