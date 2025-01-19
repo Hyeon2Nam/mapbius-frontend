@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useRef } from "react";
 import BackImg from "./BackImg";
 import { sliceText } from "../UtileFunc";
+import { getRegionImg } from "../../api/regionApi";
 
 const FavoriteItem = ({ item }) => {
   const frontRef = useRef(null);
@@ -9,6 +10,23 @@ const FavoriteItem = ({ item }) => {
   const [afterMake, setAfterMake] = useState(false);
   const [setAbsolute, setSetAbsolute] = useState(false);
   const [isFlipped, setIsFlipped] = useState(false);
+  const [backImg, setBackImg] = useState("");
+
+  const setBackImgHandler = () => {
+    let obj = {
+      query: item.location_name,
+    };
+
+    getRegionImg(obj)
+      .then((res) => {
+        if (res.status === 200) {
+          setBackImg(res.data[0].thumbnail);
+        }
+      })
+      .catch((e) => {
+        setBackImg(process.env.PUBLIC_URL + "/imgs/gyeongbokgung.jpg");
+      });
+  };
 
   useEffect(() => {
     const updateDimensions = () => {
@@ -23,6 +41,7 @@ const FavoriteItem = ({ item }) => {
 
     updateDimensions();
     window.addEventListener("resize", updateDimensions);
+    setBackImgHandler();
 
     return () => {
       window.removeEventListener("resize", updateDimensions);
@@ -84,7 +103,14 @@ const FavoriteItem = ({ item }) => {
             className={`flip-back ${setAbsolute ? "absolute" : ""}`}
             style={{ dimensions }}
           >
-            <BackImg img={item.img} dimensions={dimensions} />
+            <BackImg
+              img={
+                backImg
+                  ? backImg
+                  : process.env.PUBLIC_URL + "/imgs/regionIcon.png"
+              }
+              dimensions={dimensions}
+            />
           </div>
         )}
       </div>
