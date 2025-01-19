@@ -15,8 +15,6 @@ const FavoritePage = () => {
     getUserBookmarkList(localStorage.getItem("userToken"))
       .then((res) => {
         if (res.status === 200) {
-          console.log(res.data);
-
           setBookmarkList(res.data.objData);
         }
       })
