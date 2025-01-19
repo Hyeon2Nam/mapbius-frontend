@@ -39,39 +39,6 @@ const KakaoMap = () => {
   const imageSize = new kakao.maps.Size(22, 26); // 마커 기본 크기
   const spriteSize = new kakao.maps.Size(36, 98); // 스프라이트 이미지 크기
 
-  const coffeePositions = [
-    { lat: 37.499590490909185, lng: 127.0263723554437 },
-    { lat: 37.499427948430814, lng: 127.02794423197847 },
-    { lat: 37.498553760499505, lng: 127.02882598822454 },
-    { lat: 37.497625593121384, lng: 127.02935713582038 },
-    { lat: 37.49646391248451, lng: 127.02675574250912 },
-    { lat: 37.49629291770947, lng: 127.02587362608637 },
-    { lat: 37.49754540521486, lng: 127.02546694890695 },
-  ];
-  const coffeeOrigin = { x: 10, y: 0 };
-
-  const storePositions = [
-    { lat: 37.497535461505684, lng: 127.02948149502778 },
-    { lat: 37.49671536281186, lng: 127.03020491448352 },
-    { lat: 37.496201943633714, lng: 127.02959405469642 },
-    { lat: 37.49640072567703, lng: 127.02726459882308 },
-    { lat: 37.49640098874988, lng: 127.02609983175294 },
-    { lat: 37.49932849491523, lng: 127.02935780247945 },
-    { lat: 37.49996818951873, lng: 127.02943721562295 },
-  ];
-  const storeOrigin = { x: 10, y: 36 };
-
-  const carparkPositions = [
-    { lat: 37.49966168796031, lng: 127.03007039430118 },
-    { lat: 37.499463762912974, lng: 127.0288828824399 },
-    { lat: 37.49896834100913, lng: 127.02833986892401 },
-    { lat: 37.49893267508434, lng: 127.02673400572665 },
-    { lat: 37.49872543597439, lng: 127.02676785815386 },
-    { lat: 37.49813096097184, lng: 127.02591949495914 },
-    { lat: 37.497680616783086, lng: 127.02518427952202 },
-  ];
-  const carparkOrigin = { x: 10, y: 72 };
-
   // 지도, 장소정보 더미 데이터
   const [isChatShow, setIsChatShow] = useState(false);
   const [isInfoShow, setIsInfoShow] = useState(true);
@@ -625,38 +592,6 @@ const KakaoMap = () => {
         marker.setMap(null);
       }
     });
-    setMarkers([]);
-
-    // 선택된 카테고리별 마커 추가
-    const positions =
-      category === "coffee"
-        ? coffeePositions
-        : category === "store"
-        ? storePositions
-        : carparkPositions;
-
-    const spriteOrigin =
-      category === "coffee"
-        ? coffeeOrigin
-        : category === "store"
-        ? storeOrigin
-        : carparkOrigin;
-
-    const newMarkers = positions.map((pos) => {
-      const markerImage = new kakao.maps.MarkerImage(
-        markerImageSrc,
-        imageSize,
-        { spriteSize, spriteOrigin }
-      );
-      const marker = new kakao.maps.Marker({
-        position: new kakao.maps.LatLng(pos.lat, pos.lng),
-        image: markerImage,
-      });
-      marker.setMap(map);
-      return marker;
-    });
-
-    setMarkers(newMarkers); // 새로운 마커 상태 저장
   };
 
   const clustererRef = useRef(null); // 클러스터러 참조
