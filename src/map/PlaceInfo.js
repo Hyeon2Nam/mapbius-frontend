@@ -43,7 +43,10 @@ const PlaceInfo = ({ place }) => {
 
     addReviewItem(obj, localStorage.getItem("userToken"))
       .then((res) => {})
-      .catch((e) => {});
+      .catch((e) => {
+        alert("리뷰 작성 오류. 다시 로그인 해주세요");
+        window.location = "/login";
+      });
   };
 
   const setBackImgHandler = () => {

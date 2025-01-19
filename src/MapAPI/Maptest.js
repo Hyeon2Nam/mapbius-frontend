@@ -601,31 +601,6 @@ const KakaoMap = () => {
 
   const clustererRef = useRef(null); // 클러스터러 참조
 
-  const getReviewDatahandler = (id, cate) => {
-    let obj = {
-      phoneNumber: id,
-    };
-
-    let rData = {
-      avgRating: 0,
-      reviewCount: 0,
-    };
-
-    getRateAndCnt(obj)
-      .then((res) => {
-        console.log(res);
-
-        if (res.status === 200) {
-          rData = res.data.objData;
-          // rData.avgRating = res.data.objData.avgRating;
-          // rData.reviewCount = res.data.objData.reviewCount;
-        }
-      })
-      .catch((e) => {});
-
-    return rData;
-  };
-
   const handleSearch = () => {
     const map = mapRef.current;
     if (!map || !searchQuery) {
@@ -644,23 +619,53 @@ const KakaoMap = () => {
         //map.setCenter(firstPlace);
 
         setFilteredResults(
-          data.map((place) => ({
-            id: place.id,
-            name: place.place_name,
-            address: place.road_address_name || place.address_name,
-            purl: place.place_url,
-            //cgc: place.category_group_code,
-            phone: place.phone,
-            rating: 0, // Kakao API에는 리뷰 점수가 없으
-            reviews: 0, // Kakao API에는 리뷰 수가 없으
-          }))
+          await Promise.all(
+            data.map(async (place) => {
+              return await setPlaceDataHandler(place); // 비동기 처리 후 반환된 값
+            })
+          )
         );
+        // setFilteredResults(
+        //   data.map((place) => ({
+        //     id: place.id,
+        //     name: place.place_name,
+        //     address: place.road_address_name || place.address_name,
+        //     purl: place.place_url,
+        //     //cgc: place.category_group_code,
+        //     phone: place.phone,
+        //     rating: 0, // Kakao API에는 리뷰 점수가 없으
+        //     reviews: 0, // Kakao API에는 리뷰 수가 없으
+        //   }))
+        // );
       } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
         setFilteredResults([]);
       } else {
         console.error("검색 중 오류가 발생했습니다.");
       }
     });
+  };
+
+  const setPlaceDataHandler = async (place) => {
+    let resData = {
+      id: place.id,
+      name: place.place_name,
+      address: place.road_address_name || place.address_name,
+      purl: place.place_url,
+      //cgc: place.category_group_code,
+      phone: place.phone,
+      rating: 0, // Kakao API에는 리뷰 점수가 없으
+      reviews: 0, // Kakao API에는 리뷰 수가 없으
+    };
+
+    await getRateAndCnt({ phoneNumber: place.id })
+      .then((res) => {
+        if (res.status === 200) {
+          resData.rating = res.data.objData.avgRating;
+          resData.reviews = res.data.objData.reviewCount;
+        }
+      })
+      .catch((e) => {});
+    return resData;
   };
 
   const displaySearchMarkers = (data) => {
