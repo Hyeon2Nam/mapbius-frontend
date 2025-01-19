@@ -4,7 +4,12 @@ import { useEffect, useState } from "react";
 import { getRegionImg } from "../api/regionApi.js";
 import { getProfileImg } from "../api/myPageApi.js";
 import { getTodayDateText } from "../mypage/UtileFunc.js";
-import { addReviewItem, getReviewList, setBookmark } from "./../api/mapApi";
+import {
+  addReviewItem,
+  checkBookmarkState,
+  getReviewList,
+  setBookmark,
+} from "./../api/mapApi";
 
 const PlaceInfo = ({ place }) => {
   const [value, setValue] = useState(3);
@@ -124,9 +129,26 @@ const PlaceInfo = ({ place }) => {
       });
   };
 
+  const checkBookmarkHandler = () => {
+    let obj = {
+      locationCode: place.id,
+    };
+
+    checkBookmarkState(obj, localStorage.getItem("userToken"))
+      .then((res) => {
+        if (res.status === 200) {
+          setIsBookmark(true);
+        } else if (res.status === 201) {
+          setIsBookmark(false);
+        }
+      })
+      .catch((e) => {});
+  };
+
   useEffect(() => {
     setBackImgHandler();
     getReviewListHandler();
+    checkBookmarkHandler();
   }, [place]);
 
   useEffect(() => {

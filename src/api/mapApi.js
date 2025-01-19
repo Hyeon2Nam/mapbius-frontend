@@ -45,3 +45,11 @@ export const getBookmarkList = (obj, token) => {
     },
   });
 };
+
+export const checkBookmarkState = (obj, token) => {
+  return api.post("/api/private/account/favorite/check", JSON.stringify(obj), {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
