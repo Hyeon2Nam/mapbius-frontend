@@ -9,6 +9,7 @@ import ChatPage from "../map/ChatPage";
 import "../style/TempTest.scss";
 import "../style/ChatPage.scss";
 import CampaignOutlinedIcon from "@mui/icons-material/CampaignOutlined";
+import { Link } from "react-router-dom";
 
 /* global kakao */
 
@@ -36,8 +37,8 @@ const KakaoMap = () => {
   const markerImageSrc =
     "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/category.png";
 
-  const imageSize = new kakao.maps.Size(22, 26); // 마커 기본 크기
-  const spriteSize = new kakao.maps.Size(36, 98); // 스프라이트 이미지 크기
+  // const imageSize = new kakao.maps.Size(22, 26); // 마커 기본 크기
+  // const spriteSize = new kakao.maps.Size(36, 98); // 스프라이트 이미지 크기
 
   // 지도, 장소정보 더미 데이터
   const [isChatShow, setIsChatShow] = useState(false);
@@ -111,14 +112,6 @@ const KakaoMap = () => {
   const regionDump = {
     category: "충청남도",
     name: "청양",
-  };
-
-  const toggleNavbar = () => {
-    setNavbarCollapsed(!navbarCollapsed);
-    // setNavbarCollapsed((prevState) => !prevState); // navbar 상태 토글
-    // setIcon((prevState) =>
-    //   prevState === "chevrons-left" ? "chevrons-right" : "chevrons-left"
-    // ); // 아이콘 변경
   };
 
   useEffect(() => {
@@ -855,30 +848,37 @@ const KakaoMap = () => {
     >
       <div className="container">
         <nav className="navbar">
+          <img
+            src={process.env.PUBLIC_URL + "imgs/logolog.png"}
+            style={{
+              marginBottom: "50px",
+            }}
+            alt=""
+          />
           <ul className="navbar__menu">
             <li className="navbar__item">
-              <a href="#" className="navbar__link">
-                <i data-feather="home"></i>
-                <span>Home</span>
-              </a>
-            </li>
-            <li className="navbar__item">
-              <a href="#" className="navbar__link navbar__icon">
+              <Link to={"/notice/1"} className="navbar__link navbar__icon">
                 <CampaignOutlinedIcon fontSize="large" />
                 <span>공지사항</span>
-              </a>
+              </Link>
             </li>
             <li className="navbar__item">
-              <a href="#" className="navbar__link">
+              <Link to={"/admin/user-list"} className="navbar__link">
                 <i data-feather="settings"></i>
                 <span>Settings</span>
-              </a>
+              </Link>
             </li>
           </ul>
 
           <ul className="navbar__menu">
             <li className="navbar__item">
-              <a href="#" className="navbar__link" onClick={toggleNavbar}>
+              <a
+                href="#"
+                className="navbar__link"
+                onClick={() => {
+                  setNavbarCollapsed(!navbarCollapsed);
+                }}
+              >
                 <i data-feather="search"></i>
                 <span>search</span>
               </a>
@@ -898,22 +898,22 @@ const KakaoMap = () => {
               </a>
             </li>
             <li className="navbar__item">
-              <a href="#" className="navbar__link">
+              <Link to={"/Distance"} className="navbar__link">
                 <i data-feather="map"></i>
                 <span>map</span>
-              </a>
+              </Link>
             </li>
             <li className="navbar__item">
-              <a href="#" className="navbar__link">
+              <Link to={"/mypage/main"} className="navbar__link">
                 <i data-feather="user"></i>
                 <span>user</span>
-              </a>
+              </Link>
             </li>
             <li className="navbar__item">
-              <a href="#" className="navbar__link">
+              <Link to={"/login"} className="navbar__link">
                 <i data-feather="log-in"></i>
                 <span>log-in</span>
-              </a>
+              </Link>
             </li>
           </ul>
         </nav>
