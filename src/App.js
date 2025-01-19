@@ -17,6 +17,8 @@ import EditUserInfo from "./mypage/EditUserInfo";
 import FavoritePage from "./mypage/favorite/FavoritePage";
 import ReviewPage from "./mypage/review/ReviewPage";
 import TripListPage from "./mypage/trip/TripListPage";
+import MapTest from "./MapAPI/Maptest";
+import Distance from "./MapAPI/calculatePolylineDistance";
 import UserBoard from "./admin/userList/UserBoard";
 import TripBoard from "./Trip/TripBoard";
 import Footer from "./common/Footer";
@@ -43,8 +45,11 @@ function App() {
           <Route path="/notice/:page" element={<Notice />} />
           <Route path="/notice/view/:id" element={<NoticeDetail />} />
           <Route path="/notice/:mode/:id" element={<NoticeCreate />} />
+
+
           <Route path="/trip/:page" element={<TripBoard />} />
           <Route path="/temp/chat" element={<ChatPage />} />
+
 
           <Route element={<Mypage />}>
             <Route path="/mypage/main" element={<MypageMainCardList />} />
@@ -56,11 +61,14 @@ function App() {
         </Route>
 
         <Route path="/" element={<MainPage />} />
+        <Route path="/test" element={<MapTest />} />
+        <Route path="/Distance" element={<Distance />} />
         <Route path="/login" element={<Login />} />
         <Route path="/default-register" element={<Register />} />
         <Route path="/kakao-register" element={<KakaoLogin />} />
         <Route path="/kakao-register/form" element={<KakaoRegisterFrom />} />
         <Route path="/admin/user-list" element={<UserBoard />} />
+        {/* <Route path="/Sidebar" element={<Sidebar />} /> */}
         <Route path="/temp/test" element={<TempMap />} />
       </Routes>
     </div>

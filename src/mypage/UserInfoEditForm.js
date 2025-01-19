@@ -58,8 +58,7 @@ const UserInfoEditForm = ({ originData }) => {
 
   const kakaoLinkHandler = () => {
     if (window.Kakao && window.Kakao.Auth) {
-      const redirectUri = "http://192.168.20.124:3000/kakao-register";
-
+      const redirectUri = "http://localhost:3000/kakao-register";
       window.Kakao.Auth.authorize({
         redirectUri: redirectUri,
       });
