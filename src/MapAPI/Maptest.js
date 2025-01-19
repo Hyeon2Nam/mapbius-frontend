@@ -856,28 +856,28 @@ const KakaoMap = () => {
     >
       <div className="container">
         <nav className="navbar">
-          <img
-            src={process.env.PUBLIC_URL + "imgs/logolog.png"}
-            style={{
-              marginBottom: "50px",
-            }}
-            alt=""
-          />
           <ul className="navbar__menu">
+            <li>
+              <img
+                src={process.env.PUBLIC_URL + "imgs/logolog.png"}
+                style={{
+                  marginBottom: "50px",
+                }}
+                alt=""
+              />
+            </li>
             <li className="navbar__item">
               <Link to={"/notice/1"} className="navbar__link navbar__icon">
                 <CampaignOutlinedIcon fontSize="large" />
                 <span>공지사항</span>
               </Link>
             </li>
-            {userState === "admin" && (
-              <li className="navbar__item">
-                <Link to={"/admin/user-list"} className="navbar__link">
-                  <i data-feather="settings"></i>
-                  <span>Settings</span>
-                </Link>
-              </li>
-            )}
+            <li className={userState === "admin" ? "navbar__item " : "none"}>
+              <Link to={"/admin/user-list"} className="navbar__link">
+                <i data-feather="settings"></i>
+                <span>Settings</span>
+              </Link>
+            </li>
           </ul>
 
           <ul className="navbar__menu">
