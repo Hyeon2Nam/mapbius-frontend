@@ -43,6 +43,8 @@ const KakaoMap = () => {
   // 지도, 장소정보 더미 데이터
   const [isChatShow, setIsChatShow] = useState(false);
   const [isInfoShow, setIsInfoShow] = useState(true);
+  const [placeData, setPlaceData] = useState({});
+  const [spotType, setSpotType] = useState("region");
 
   const dump = {
     name: "스미카츠 압구정 본점",
@@ -974,6 +976,11 @@ const KakaoMap = () => {
                 {filteredResults.length > 0 ? (
                   filteredResults.map((place) => (
                     <div
+                      onClick={() => {
+                        setIsInfoShow(true);
+                        setPlaceData(place);
+                        setSpotType("place");
+                      }}
                       key={place.id}
                       style={{
                         border: "1px solid #ccc",
@@ -988,14 +995,6 @@ const KakaoMap = () => {
                       <p style={{ margin: "0 0 5px" }}>
                         전화번호: {place.phone || "정보 없음"}
                       </p>
-                      <a
-                        style={{ margin: "0 0 5px" }}
-                        href={place.purl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        상세보기
-                      </a>
                       <p style={{ margin: 0 }}>
                         ⭐ {place.rating} (후기 {place.reviews})
                       </p>
@@ -1128,12 +1127,11 @@ const KakaoMap = () => {
       </div>
       {isInfoShow ? (
         <div className={isInfoShow ? "spot-section" : "none"}>
-          <InfoPage data={dump} type={"place"} setIsInfoShow={setIsInfoShow} />
-          {/* <InfoPage
-            data={regionDump}
-            type={"region"}
+          <InfoPage
+            data={placeData}
+            type={spotType}
             setIsInfoShow={setIsInfoShow}
-          /> */}
+          />
         </div>
       ) : (
         <div className="down-btn">

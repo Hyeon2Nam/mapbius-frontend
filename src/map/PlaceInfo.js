@@ -23,22 +23,31 @@ const PlaceInfo = ({ place }) => {
               src={process.env.PUBLIC_URL + "/imgs/callIcon.png"}
               alt=""
             />
-            <span>{place.call}</span>
+            <span>{place.phone ? place.phone : "전화 정보 없음"}</span>
           </div>
           <div>
-            <img
-              className="rating-img"
-              src={
-                process.env.PUBLIC_URL + "/imgs/starRate" + place.rate + ".png"
-              }
-              alt=""
-            />
-            <span>
-              {place.avg}
-              {" (후기"}
-              {place.reviewCnt}
-              {")"}
-            </span>
+            {place.rating > 0 ? (
+              <>
+                <img
+                  className="rating-img"
+                  src={
+                    process.env.PUBLIC_URL +
+                    "/imgs/starRate" +
+                    place.rating +
+                    ".png"
+                  }
+                  alt=""
+                />
+                <span>
+                  {place.rating}
+                  {" (후기 "}
+                  {place.reviews}
+                  {")"}
+                </span>
+              </>
+            ) : (
+              <span>후기 정보 없음</span>
+            )}
           </div>
         </div>
       </div>
