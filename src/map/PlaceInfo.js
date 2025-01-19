@@ -76,7 +76,9 @@ const PlaceInfo = ({ place }) => {
         if (res.status === 200) {
           setReviewData({
             ...reviewData,
-            profileImage: res.data.fileUrl,
+            profileImage: res.data.fileUrl
+              ? res.data.fileUrl
+              : process.env.PUBLIC_URL + "/imgs/gyeongbokgung.jpg",
             userNm: res.data.userNm,
           });
           setisLogin(true);
