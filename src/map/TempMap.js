@@ -4,7 +4,7 @@ import InfoPage from "./InfoPage";
 import ChatPage from "./ChatPage";
 
 export default function TempMap() {
-  const [isShow, setIsShow] = useState(true);
+  const [isInfoShow, setIsInfoShow] = useState(true);
 
   const dump = {
     name: "스미카츠 압구정 본점",
@@ -82,16 +82,20 @@ export default function TempMap() {
       <div className="map-section">
         <img src={process.env.PUBLIC_URL + "/imgs/gyeongbokgung.jpg"} alt="" />
       </div>
-      {isShow ? (
-        <div className={isShow ? "spot-section" : "none"}>
-          <InfoPage data={dump} type={"place"} setIsShow={setIsShow} />
-          {/* <InfoPage data={regionDump} type={"region"} setIsShow={setIsShow} /> */}
+      {isInfoShow ? (
+        <div className={isInfoShow ? "spot-section" : "none"}>
+          {/* <InfoPage data={dump} type={"place"} setIsInfoShow={setIsInfoShow} /> */}
+          <InfoPage
+            data={regionDump}
+            type={"region"}
+            setIsInfoShow={setIsInfoShow}
+          />
         </div>
       ) : (
         <div className="down-btn">
           <button
             onClick={() => {
-              setIsShow(true);
+              setIsInfoShow(true);
             }}
           >
             <img src={process.env.PUBLIC_URL + "/imgs/downArrow.png"} alt="" />

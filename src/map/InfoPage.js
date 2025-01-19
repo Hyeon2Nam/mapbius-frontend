@@ -1,7 +1,7 @@
 import PlaceInfo from "./PlaceInfo.js";
 import RegionInfo from "./RegionInfo.js";
 
-const InfoPage = ({ data, type, setIsShow }) => {
+const InfoPage = ({ data, type, setIsInfoShow }) => {
   return (
     <>
       {type === "place" ? (
@@ -9,7 +9,7 @@ const InfoPage = ({ data, type, setIsShow }) => {
       ) : (
         <RegionInfo region={data} />
       )}
-      <button className="up-btn" onClick={() => setIsShow(false)}>
+      <button className="up-btn" onClick={() => setIsInfoShow(false)}>
         <img src={process.env.PUBLIC_URL + "/imgs/upArrow.png"} alt="" />
       </button>
     </>
