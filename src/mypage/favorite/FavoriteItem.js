@@ -61,10 +61,10 @@ const FavoriteItem = ({ item }) => {
             <div className="main-section">
               <div className="item-wrapper">
                 <span className="item-name">
-                  {sliceText(item.name, 8, "장소 이름")}
+                  {sliceText(item.location_name, 8, "장소 이름")}
                 </span>
                 <span className="item-address">
-                  {sliceText(item.address, 20, "장소 이름")}
+                  {sliceText(item.location_address, 20, "장소 이름")}
                 </span>
               </div>
               <img src={process.env.PUBLIC_URL + "/imgs/regionIcon.png"} />

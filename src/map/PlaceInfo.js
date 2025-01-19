@@ -100,6 +100,8 @@ const PlaceInfo = ({ place }) => {
     let obj = {
       type: "장소",
       locationCode: place.id,
+      locationName: place.name,
+      locationAddress: place.address,
     };
 
     setIsBookmark(!isBookmark);

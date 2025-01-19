@@ -56,3 +56,11 @@ export const getProfileImg = (token) => {
     },
   });
 };
+
+export const getUserBookmarkList = (token) => {
+  return api.post("/api/private/account/favorite/mylist", "", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
