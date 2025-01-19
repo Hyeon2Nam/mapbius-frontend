@@ -19,3 +19,11 @@ export const getReviewList = (obj) => {
 export const getRateAndCnt = (obj) => {
   return api.post("/api/public/reviews/get", JSON.stringify(obj));
 };
+
+export const plusHeartCnt = (obj, token) => {
+  return api.post("/api/private/reviews/heart", JSON.stringify(obj), {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};

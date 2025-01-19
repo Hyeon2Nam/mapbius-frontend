@@ -89,7 +89,6 @@ const PlaceInfo = ({ place }) => {
 
     getReviewList(obj)
       .then((res) => {
-        console.log(res);
         if (res.status === 200) {
           setReviewList(res.data.objData);
         }

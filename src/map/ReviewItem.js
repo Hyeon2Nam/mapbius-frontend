@@ -1,6 +1,41 @@
+import { useState } from "react";
 import { getTodayDateText } from "../mypage/UtileFunc";
+import { plusHeartCnt } from "../api/mapApi";
 
 const ReviewItem = ({ item }) => {
+  const [likeCnt, setLikeCnt] = useState(item.heartCount ? item.heartCount : 0);
+
+  const heartClickHandler = () => {
+    let obj = {
+      reviewId: item.reviewId,
+    };
+
+    if (item.userId === localStorage.getItem("loginUser")) {
+      alert("본인이 작성한 후기는 추천을 누를 수 없습니다.");
+      return;
+    }
+
+    setLikeCnt(likeCnt + 1);
+
+    plusHeartCnt(obj, localStorage.getItem("userToken"))
+      .then((res) => {
+        if (res.status === 201) {
+          alert(res.data.message);
+          setLikeCnt(likeCnt - 1);
+        } else if (res.status === 202) {
+          alert(res.data.message);
+        } else if (res.status === 200) {
+          alert(res.data.message);
+        }
+      })
+      .catch((e) => {
+        if (e.status === 403) {
+          alert("로그인해주세요");
+          window.location = "/login";
+        }
+      });
+  };
+
   return (
     <div className="review-item">
       <div className="head-section">
@@ -14,10 +49,10 @@ const ReviewItem = ({ item }) => {
           </div>
         </div>
         <div className="like-btn">
-          <button>
+          <button onClick={heartClickHandler}>
             <img src={process.env.PUBLIC_URL + "/imgs/heartIcon.png"} />
           </button>
-          <span>{0}</span>
+          <span>{likeCnt}</span>
         </div>
       </div>
       <div className="content-section">
