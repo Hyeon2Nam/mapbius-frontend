@@ -18,8 +18,6 @@ export default function MainPage() {
       <Link to={"/admin/user-list"}>관리자 : 유저 관리</Link>
       <br />
       <Link to={"/temp/test"}>장소 정보 컴포넌트 테스트</Link>
-      <br />
-      <Link to={"/temp/chat"}>채팅 페이지</Link>
     </div>
   );
 }
