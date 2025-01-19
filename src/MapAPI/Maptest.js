@@ -114,6 +114,14 @@ const KakaoMap = () => {
     name: "청양",
   };
 
+  // 사용자 로그인 상태
+  const [userState, setUserState] = useState("none");
+
+  useEffect(() => {
+    if (localStorage.getItem("people1") === "partsOfGun") setUserState("admin");
+    else if (localStorage.getItem("loginUser")) setUserState("login");
+  }, []);
+
   useEffect(() => {
     const feather = require("feather-icons");
     feather.replace();
@@ -862,12 +870,14 @@ const KakaoMap = () => {
                 <span>공지사항</span>
               </Link>
             </li>
-            <li className="navbar__item">
-              <Link to={"/admin/user-list"} className="navbar__link">
-                <i data-feather="settings"></i>
-                <span>Settings</span>
-              </Link>
-            </li>
+            {userState === "admin" && (
+              <li className="navbar__item">
+                <Link to={"/admin/user-list"} className="navbar__link">
+                  <i data-feather="settings"></i>
+                  <span>Settings</span>
+                </Link>
+              </li>
+            )}
           </ul>
 
           <ul className="navbar__menu">
@@ -903,18 +913,22 @@ const KakaoMap = () => {
                 <span>map</span>
               </Link>
             </li>
-            <li className="navbar__item">
-              <Link to={"/mypage/main"} className="navbar__link">
-                <i data-feather="user"></i>
-                <span>user</span>
-              </Link>
-            </li>
-            <li className="navbar__item">
-              <Link to={"/login"} className="navbar__link">
-                <i data-feather="log-in"></i>
-                <span>log-in</span>
-              </Link>
-            </li>
+
+            {userState === "none" ? (
+              <li className="navbar__item">
+                <Link to={"/login"} className="navbar__link">
+                  <i data-feather="user"></i>
+                  <span>log-in</span>
+                </Link>
+              </li>
+            ) : (
+              <li className="navbar__item">
+                <Link to={"/mypage/main"} className="navbar__link">
+                  <i data-feather="user"></i>
+                  <span>user</span>
+                </Link>
+              </li>
+            )}
           </ul>
         </nav>
 
