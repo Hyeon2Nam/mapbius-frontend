@@ -8,6 +8,7 @@ import InfoPage from "../map/InfoPage";
 import ChatPage from "../map/ChatPage";
 import "../style/TempTest.scss";
 import "../style/ChatPage.scss";
+import CampaignOutlinedIcon from "@mui/icons-material/CampaignOutlined";
 
 /* global kakao */
 
@@ -146,10 +147,11 @@ const KakaoMap = () => {
   };
 
   const toggleNavbar = () => {
-    setNavbarCollapsed((prevState) => !prevState); // navbar 상태 토글
-    setIcon((prevState) =>
-      prevState === "chevrons-left" ? "chevrons-right" : "chevrons-left"
-    ); // 아이콘 변경
+    setNavbarCollapsed(!navbarCollapsed);
+    // setNavbarCollapsed((prevState) => !prevState); // navbar 상태 토글
+    // setIcon((prevState) =>
+    //   prevState === "chevrons-left" ? "chevrons-right" : "chevrons-left"
+    // ); // 아이콘 변경
   };
 
   useEffect(() => {
@@ -927,7 +929,7 @@ const KakaoMap = () => {
             </li>
             <li className="navbar__item">
               <a href="#" className="navbar__link navbar__icon">
-                <img src={noticeImage} alt="공지사항" />
+                <CampaignOutlinedIcon fontSize="large" />
                 <span>공지사항</span>
               </a>
             </li>
@@ -942,8 +944,8 @@ const KakaoMap = () => {
           <ul className="navbar__menu">
             <li className="navbar__item">
               <a href="#" className="navbar__link" onClick={toggleNavbar}>
-                <i data-feather={icon}></i>
-                <span>{icon}</span>
+                <i data-feather="search"></i>
+                <span>search</span>
               </a>
             </li>
           </ul>
@@ -998,6 +1000,11 @@ const KakaoMap = () => {
                     padding: "10px",
                     borderRadius: "5px",
                     border: "1px solid #ccc",
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      handleSearch();
+                    }
                   }}
                 />
                 <i></i>
@@ -1054,32 +1061,6 @@ const KakaoMap = () => {
         </nav>
 
         <div id="map"></div>
-        <div
-          className="category"
-          style={{
-            textAlign: "center",
-            marginTop: "20px",
-            backgroundColor: "#f7f7f7",
-            padding: "10px",
-            borderRadius: "8px",
-            boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.1)",
-          }}
-        >
-          <ul>
-            <li id="coffeeMenu" onClick={() => handleCategoryChange("coffee")}>
-              <span className="ico_comm ico_coffee"></span> 커피숍
-            </li>
-            <li id="storeMenu" onClick={() => handleCategoryChange("store")}>
-              <span className="ico_comm ico_store"></span> 편의점
-            </li>
-            <li
-              id="carparkMenu"
-              onClick={() => handleCategoryChange("carpark")}
-            >
-              <span className="ico_comm ico_carpark"></span> 주차장
-            </li>
-          </ul>
-        </div>
 
         <div style={{ textAlign: "center", marginTop: "20px" }}>
           <button className="button" onClick={toggleOverlayVisibility}>
