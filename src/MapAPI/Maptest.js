@@ -10,6 +10,7 @@ import "../style/TempTest.scss";
 import "../style/ChatPage.scss";
 import CampaignOutlinedIcon from "@mui/icons-material/CampaignOutlined";
 import { Link } from "react-router-dom";
+import { getRateAndCnt } from "../api/mapApi";
 
 /* global kakao */
 
@@ -44,6 +45,7 @@ const KakaoMap = () => {
   const [isChatShow, setIsChatShow] = useState(false);
   const [isInfoShow, setIsInfoShow] = useState(true);
   const [placeData, setPlaceData] = useState({});
+  const [regionData, setRegionData] = useState({});
   const [spotType, setSpotType] = useState("region");
 
   const dump = {
@@ -599,6 +601,31 @@ const KakaoMap = () => {
 
   const clustererRef = useRef(null); // 클러스터러 참조
 
+  const getReviewDatahandler = (id, cate) => {
+    let obj = {
+      phoneNumber: id,
+    };
+
+    let rData = {
+      avgRating: 0,
+      reviewCount: 0,
+    };
+
+    getRateAndCnt(obj)
+      .then((res) => {
+        console.log(res);
+
+        if (res.status === 200) {
+          rData = res.data.objData;
+          // rData.avgRating = res.data.objData.avgRating;
+          // rData.reviewCount = res.data.objData.reviewCount;
+        }
+      })
+      .catch((e) => {});
+
+    return rData;
+  };
+
   const handleSearch = () => {
     const map = mapRef.current;
     if (!map || !searchQuery) {
@@ -608,7 +635,7 @@ const KakaoMap = () => {
 
     const places = new kakao.maps.services.Places();
 
-    places.keywordSearch(searchQuery, (data, status) => {
+    places.keywordSearch(searchQuery, async (data, status) => {
       if (status === kakao.maps.services.Status.OK) {
         displaySearchMarkers(data); // 검색 결과 마커 표시
 
@@ -1128,7 +1155,7 @@ const KakaoMap = () => {
       {isInfoShow ? (
         <div className={isInfoShow ? "spot-section" : "none"}>
           <InfoPage
-            data={placeData}
+            data={spotType === "place" ? placeData : regionData}
             type={spotType}
             setIsInfoShow={setIsInfoShow}
           />

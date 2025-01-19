@@ -3,3 +3,19 @@ import api from "./axiosSetting";
 export const chatChatGpt = (obj) => {
   return api.post("/api/public/chatgpt", JSON.stringify(obj));
 };
+
+export const addReviewItem = (obj, token) => {
+  return api.post("/api/private/reviews/enroll", JSON.stringify(obj), {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
+export const getReviewList = (obj) => {
+  return api.post("/api/public/reviews/select-list", JSON.stringify(obj));
+};
+
+export const getRateAndCnt = (obj) => {
+  return api.post("/api/public/reviews/get", JSON.stringify(obj));
+};
