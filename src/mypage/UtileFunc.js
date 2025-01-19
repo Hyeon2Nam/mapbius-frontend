@@ -28,6 +28,9 @@ export const sliceText = (str, cnt, repStr) => {
 
 export const setDateText = (t) => {
   const date = new Date(t);
+
+  if (isNaN(date)) return "날짜 정보가 없습니다";
+
   const year = date.getFullYear();
   const month = (date.getMonth() + 1).toString().padStart(2, "0");
   const day = date.getDate().toString().padStart(2, "0");
