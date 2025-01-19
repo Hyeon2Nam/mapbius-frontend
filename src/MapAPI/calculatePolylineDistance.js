@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import "./styles.css";
 
 /* global kakao */
 
@@ -147,19 +148,27 @@ const KakaoMap = () => {
   }, [map, isdrawing, paths]);
 
   const savePathData = () => {
-    localStorage.setItem("savedPaths", JSON.stringify(paths));
-    alert("경로가 저장되었습니다.");
+    const pathData = {
+      paths,
+      distances,
+    };
+    localStorage.setItem("savedPathData", JSON.stringify(pathData));
+    alert("경로와 거리가 저장되었습니다.");
   };
-
+  
   const loadPathData = () => {
-    const savedPaths = JSON.parse(localStorage.getItem("savedPaths"));
-    if (savedPaths) {
+    const savedData = JSON.parse(localStorage.getItem("savedPathData"));
+    if (savedData) {
+      const { paths: savedPaths, distances: savedDistances } = savedData;
+  
       setPaths(savedPaths);
+      setDistances(savedDistances);
+  
       const kakao = window.kakao;
       clickLine.setPath(savedPaths.map((p) => new kakao.maps.LatLng(p.lat, p.lng)));
-      alert("경로가 불러와졌습니다.");
+      alert("경로와 거리를 불러왔습니다.");
     } else {
-      alert("저장된 경로가 없습니다.");
+      alert("저장된 경로와 거리가 없습니다.");
     }
   };
 
@@ -205,8 +214,8 @@ const KakaoMap = () => {
           height: "1150px",
         }}></div>
         
-      <button onClick={savePathData}>경로 저장</button>
-      <button onClick={loadPathData}>경로 불러오기</button>
+      <button className="button" onClick={savePathData}>경로 저장</button>
+      <button className="button" onClick={loadPathData}>경로 불러오기</button>
       {distances.length > 0 && <DistanceInfo distance={distances[0]} />}
     </div>
   );

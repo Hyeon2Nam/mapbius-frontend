@@ -25,6 +25,7 @@ import TripBoard from "./Trip/TripBoard";
 import Footer from "./common/Footer";
 import TempMap from "./map/TempMap";
 import ChatPage from "./map/ChatPage";
+import Travel from "./MapAPI/travel"
 
 const Layout = () => {
   return (
@@ -69,6 +70,7 @@ function App() {
         <Route path="/admin/user-list" element={<UserBoard />} />
         <Route path="/Sidebar" element={<Sidebar />} />
         <Route path="/temp/test" element={<TempMap />} />
+        <Route path="/travel" element={<Travel/>}/>
       </Routes>
     </div>
   );

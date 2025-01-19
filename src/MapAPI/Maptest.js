@@ -193,7 +193,7 @@ const KakaoMap = () => {
             });
             map.addControl(
               toolbox.getElement(),
-              kakao.maps.ControlPosition.TOPRIGHT
+              kakao.maps.ControlPosition.TOP
             );
 
             // Drawing Manager 설정 및 초기화
@@ -310,7 +310,7 @@ const KakaoMap = () => {
             const toolbox1 = new kakao.maps.drawing.Toolbox({
               drawingManager: manager1,
             });
-            map.addControl(toolbox1.getElement(), kakao.maps.ControlPosition.RIGHT);
+            map.addControl(toolbox1.getElement(), kakao.maps.ControlPosition.TOP);
 
             const customMarkerImageSrc =
               "https://cdn-icons-png.flaticon.com/512/684/684908.png"; // 커스텀 마커 이미지 URL
@@ -342,7 +342,7 @@ const KakaoMap = () => {
             const toolbox2 = new kakao.maps.drawing.Toolbox({
               drawingManager: manager2,
             });
-            map.addControl(toolbox2.getElement(), kakao.maps.ControlPosition.RIGHT);
+            map.addControl(toolbox2.getElement(), kakao.maps.ControlPosition.TOP);
 
             // Toolbox 요소를 생성한 후 DOM을 가져와 스타일 변경
             const toolboxElement = toolbox2.getElement();
@@ -864,7 +864,7 @@ const KakaoMap = () => {
               </a>
             </li>
             <li className="navbar__item">
-              <Link to={"/Distance"} className="navbar__link">
+              <Link to={"/travel"} className="navbar__link">
                 <i data-feather="map"></i>
                 <span>map</span>
               </Link>
