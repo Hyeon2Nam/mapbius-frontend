@@ -12,8 +12,6 @@ const MypageUserHeader = () => {
   const profileImg = useSelector(selectProfileImg);
 
   useEffect(() => {
-    console.log(profileImg);
-
     if (profileImg) {
       const objectUrl = URL.createObjectURL(profileImg);
       setImageUrl(objectUrl);

@@ -2,88 +2,32 @@ import { useEffect, useState } from "react";
 import UserList from "./UserList";
 import "../../style/UserBoard.scss";
 import { Link } from "react-router-dom";
+import { getAllUserList } from "../../api/adminApi";
 
 const UserBoard = () => {
   const [search, setSearch] = useState("");
   const [curpage, setCurpage] = useState(1);
+  const [userList, setUserList] = useState([]);
 
-  // useEffect(() => {
-  //   if (localStorage.getItem("people") !== "partsOfGun") {
-  //     window.location = "/";
-  //   }
-  // }, []);
-
-  const dump = [
-    {
-      id: "23ssssss1k3k545k7k8k",
-      nickName: "1ddddd23",
-      email: "asdfa@gmail.com",
-      isAdmin: false,
-      isActive: true,
-      img: process.env.PUBLIC_URL + "/imgs/gyeongbokgung.jpg",
-      review: 1,
-      avg: 3.0,
-      date: "2024-01-01",
-    },
-    {
-      id: "asdfasdf2",
-      nickName: "123",
-      email: "asdfa@gmail.com",
-      isAdmin: false,
-      isActive: true,
-      img: process.env.PUBLIC_URL + "/imgs/gyeongbokgung.jpg",
-      review: 3,
-      avg: 2.0,
-      date: "2024-01-11",
-    },
-    {
-      id: "123",
-      nickName: "123",
-      email: "asdfa@gmail.com",
-      isAdmin: false,
-      isActive: false,
-      img: process.env.PUBLIC_URL + "/imgs/gyeongbokgung.jpg",
-      review: 5,
-      avg: 3.5,
-      date: "2024-01-05",
-    },
-    {
-      id: "123",
-      nickName: "123",
-      email: "asdfa@gmail.com",
-      isAdmin: true,
-      isActive: false,
-      img: process.env.PUBLIC_URL + "/imgs/gyeongbokgung.jpg",
-      review: 56,
-      avg: 2,
-      date: "2024-12-23",
-    },
-    {
-      id: "123",
-      nickName: "123",
-      email: "asdfa@gmail.com",
-      isAdmin: false,
-      isActive: true,
-      img: process.env.PUBLIC_URL + "/imgs/gyeongbokgung.jpg",
-      review: 0,
-      avg: 0.0,
-      date: "2024-01-07",
-    },
-  ];
+  useEffect(() => {
+    if (localStorage.getItem("people1") !== "partsOfGun") {
+      window.location = "/";
+    } else {
+      getItemList();
+    }
+  }, []);
 
   const getItemList = async () => {
-    // await getItemWithPage({
-    //   curpage: curpage,
-    //   keyword: search,
-    //   type: searchType,
-    // })
-    //   .then((res) => {
-    //     if (res.status === 200) {
-    //       setNoticeList(res.data.objData.items);
-    //       setMaxpage(res.data.objData.maxpage);
-    //     }
-    //   })
-    //   .catch((e) => {});
+    getAllUserList(localStorage.getItem("userToken"))
+      .then((res) => {
+        if (res.status === 200) {
+          setUserList(res.data.objData);
+        }
+      })
+      .catch((e) => {
+        alert("다시 로그인 해주세요");
+        window.location = "/";
+      });
   };
 
   const searchNoticeHandler = () => {
@@ -125,7 +69,7 @@ const UserBoard = () => {
             </div>
           </div>
         </div>
-        <UserList list={dump} />
+        <UserList list={userList} />
       </div>
     </div>
   );

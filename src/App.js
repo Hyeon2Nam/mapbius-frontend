@@ -2,7 +2,6 @@ import "./App.css";
 import { Outlet, Route, Routes } from "react-router-dom";
 import Login from "./login/Login";
 import Register from "./login/Register";
-import SelectRegisterWay from "./login/SelectRegisterWay";
 import MainPage from "./map/Temp";
 import Notice from "./Notice/NoticeBoard";
 import NoticeDetail from "./Notice/NoticeDetail";
@@ -22,13 +21,16 @@ import MapTest from "./MapAPI/Maptest";
 import Distance from "./MapAPI/calculatePolylineDistance";
 import UserBoard from "./admin/userList/UserBoard";
 import TripBoard from "./Trip/TripBoard";
-import Sidebar from "./MapAPI/sidebar1";
+import Footer from "./common/Footer";
+import TempMap from "./map/TempMap";
+import ChatPage from "./map/ChatPage";
 
 const Layout = () => {
   return (
-    <div>
+    <div className="common-layout">
       <Header />
-      <Outlet />
+      <Outlet className="content-section" />
+      <Footer />
     </div>
   );
 };
@@ -46,6 +48,7 @@ function App() {
 
 
           <Route path="/trip/:page" element={<TripBoard />} />
+          <Route path="/temp/chat" element={<ChatPage />} />
 
 
           <Route element={<Mypage />}>
@@ -61,12 +64,12 @@ function App() {
         <Route path="/test" element={<MapTest />} />
         <Route path="/Distance" element={<Distance />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/select-register" element={<SelectRegisterWay />} />
         <Route path="/default-register" element={<Register />} />
         <Route path="/kakao-register" element={<KakaoLogin />} />
         <Route path="/kakao-register/form" element={<KakaoRegisterFrom />} />
         <Route path="/admin/user-list" element={<UserBoard />} />
-        <Route path="/Sidebar" element={<Sidebar />} />
+        {/* <Route path="/Sidebar" element={<Sidebar />} /> */}
+        <Route path="/temp/test" element={<TempMap />} />
       </Routes>
     </div>
   );

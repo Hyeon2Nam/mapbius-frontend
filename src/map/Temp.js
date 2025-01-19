@@ -15,8 +15,6 @@ export default function MainPage() {
       <br/>
       <Link to={"/login"}>Login</Link>
       <br />
-      <Link to={"/select-register"}>register</Link>
-      <br />
       <Link to={"/notice/1"}>공지사항</Link>
       <br />
       <Link to={"/mypage/main"}>마이페이지</Link>
@@ -24,6 +22,8 @@ export default function MainPage() {
       <Link to={"/trip/1"}>여행 루트 검색</Link>
       <br />
       <Link to={"/admin/user-list"}>관리자 : 유저 관리</Link>
+      <br />
+      <Link to={"/temp/test"}>장소 정보 컴포넌트 테스트</Link>
     </div>
   );
 }

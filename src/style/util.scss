@@ -2,6 +2,7 @@ $main-color: #294be7;
 $btn-blue: #3e61ff;
 $btn-yellow: #ffde59;
 $kakao-brown: #81583b;
+$map-theme: #e5e0ff;
 
 $breakpoint-mobile: 335px;
 $breakpoint-tablet: 758px;
@@ -53,6 +54,14 @@ $breakpoint-large-desktop: 2048px;
   src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts-20-12@1.0/SDSamliphopangche_Basic.woff")
     format("woff");
   font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Paperlogy-8ExtraBold";
+  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-8ExtraBold.woff2")
+    format("woff2");
+  font-weight: 800;
   font-style: normal;
 }
 

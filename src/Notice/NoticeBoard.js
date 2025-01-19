@@ -116,7 +116,12 @@ export default function Notice() {
             </button>
           )}
         </div>
-        <PageNation pages={pages} curpage={curpage} maxpage={maxpage} />
+        <PageNation
+          pages={pages}
+          curpage={curpage}
+          maxpage={maxpage}
+          category={"notice"}
+        />
       </div>
     </div>
   );
