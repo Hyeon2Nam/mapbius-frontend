@@ -7,7 +7,7 @@ export const concatListHandler = (
 ) => {
   if (!dump) return;
 
-  if (curIdx >= dump.length) {
+  if (curIdx > dump.length) {
     alert("더이상 데이터가 없습니다");
     return;
   }
