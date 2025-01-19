@@ -1,9 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./sidebar.scss";
-import noticeImage from "./img/notice.png";
 import weather from "./img/weather.png";
 import "./styles.css";
-import "./sidebar.scss";
 import InfoPage from "../map/InfoPage";
 import ChatPage from "../map/ChatPage";
 import "../style/TempTest.scss";
@@ -29,10 +27,31 @@ const KakaoMap = () => {
   const [drawingManager, setDrawingManager] = useState(null);
   const [drawnData, setDrawnData] = useState(null);
 
+  const [regionInfo, setRegionInfo] = useState("현재 위치의 정보를 불러옵니다...");
+
   const [navbarCollapsed, setNavbarCollapsed] = useState(false); // navbar1 상태
   const [icon, setIcon] = useState("chevrons-left"); // 아이콘 상태
 
   const [filteredResults, setFilteredResults] = useState([]); // 바로 필터링된 결과 저장
+
+  // 카카오맵 주소 검색 API 호출 함수
+  const fetchRegionInfo = (lat, lng, setRegionInfo) => {
+    const geocoder = new kakao.maps.services.Geocoder();
+    const coord = new kakao.maps.LatLng(lat, lng);
+
+    geocoder.coord2Address(coord.getLng(), coord.getLat(), (result, status) => {
+      if (status === kakao.maps.services.Status.OK) {
+        if (result.length > 0) {
+          const address = result[0].address;
+          const region = `${address.region_1depth_name} > ${address.region_2depth_name} > ${address.region_3depth_name}`;
+          setRegionInfo(region);
+        }
+      } else {
+        console.error("주소를 가져오는 데 실패했습니다:", status);
+        setRegionInfo("정보를 가져오지 못했습니다.");
+      }
+    });
+  };
 
   //카테고리용 이미지
   const markerImageSrc =
@@ -91,6 +110,9 @@ const KakaoMap = () => {
             // 지도 생성
             const map = new window.kakao.maps.Map(container, options);
             mapRef.current = map; // Store the map instance in the ref 추가
+
+            // 현재 위치 기반 행정구역 정보 가져오기
+            fetchRegionInfo(lat, lng, setRegionInfo);
 
             updateCategoryMarkers(map, "coffee");
 
@@ -376,6 +398,8 @@ const KakaoMap = () => {
             map.addControl(customControl);
 
           });
+        } else {
+          setRegionInfo("현재 위치를 가져올 수 없습니다.");
         }
       }
     },

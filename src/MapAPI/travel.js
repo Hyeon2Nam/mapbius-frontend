@@ -1,19 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import KakaoMap from "./calculatePolylineDistance";
 import ProfileImageUpload from "./ProfileImageUpload";
 
 const MainPage = () => {
+const [route, setRoute] = useState({
+  paths:"",
+  distances:0
+})
+
   return (
     <div>
       <main>
         {/* Kakao Map Section */}
         <section>
-          <KakaoMap />
+          <KakaoMap setRoute={setRoute} />
         </section>
         {/* Profile Image Upload Section */}
         <section>
-          <h2>프로필 이미지 및 여행 정보 업로드</h2>
-          <ProfileImageUpload />
+          <ProfileImageUpload route={route} />
         </section>
       </main>
     </div>

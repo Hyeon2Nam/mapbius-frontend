@@ -3,13 +3,16 @@ import "./styles.css";
 
 /* global kakao */
 
-const KakaoMap = () => {
+const KakaoMap = ({setRoute}) => {
   const [map, setMap] = useState(null);
   const [isdrawing, setIsdrawing] = useState(false);
   const [paths, setPaths] = useState([]);
   const [distances, setDistances] = useState([]);
   const [clickLine, setClickLine] = useState(null);
   const [moveLine, setMoveLine] = useState(null);
+  const [savedRoutes, setSavedRoutes] = useState([]);
+  const [routeName, setRouteName] = useState("");
+  const [selectedRoute, setSelectedRoute] = useState(null);
 
   useEffect(() => {
     if (!window.kakao || !window.kakao.maps) {
@@ -83,7 +86,7 @@ const KakaoMap = () => {
       const newPaths = [...prev, { lat: latLng.getLat(), lng: latLng.getLng() }];
       clickLine.setPath(newPaths.map((p) => new kakao.maps.LatLng(p.lat, p.lng)));
 
-      // 점이 정확히 2개일 때만 거리 계산
+    // 점이 정확히 2개일 때만 거리 계산
     if (newPaths.length >= 2) {
       const lineDistance = Math.round(clickLine.getLength());
       setDistances([lineDistance]); // 기존 거리를 초기화하고 새 거리만 추가
@@ -99,8 +102,6 @@ const KakaoMap = () => {
 
   const handleMouseMove = (mouseEvent) => {
     const latLng = mouseEvent.latLng;
-
-    //setMousePosition({ lat: latLng.getLat(), lng: latLng.getLng() });
 
     if (isdrawing && paths.length > 0) {
       const kakao = window.kakao;
@@ -148,27 +149,46 @@ const KakaoMap = () => {
   }, [map, isdrawing, paths]);
 
   const savePathData = () => {
+    if (!routeName) {
+      alert("경로 이름을 입력하세요.");
+      return;
+    }
+
     const pathData = {
+      name: routeName,
       paths,
       distances,
     };
-    localStorage.setItem("savedPathData", JSON.stringify(pathData));
-    alert("경로와 거리가 저장되었습니다.");
+
+    setSavedRoutes((prev) => [...prev, pathData]);
+    setRouteName("");
+    setRoute(pathData)
+
+    // 폴리라인 초기화
+    setPaths([]);
+    setDistances([]);
+    if (clickLine) clickLine.setPath([]);
+    if (moveLine) moveLine.setPath([]);
+
+    alert(`경로 '${routeName}'이(가) 저장되었습니다.`);
   };
   
   const loadPathData = () => {
-    const savedData = JSON.parse(localStorage.getItem("savedPathData"));
-    if (savedData) {
-      const { paths: savedPaths, distances: savedDistances } = savedData;
-  
+    if (!selectedRoute) {
+      alert("불러올 경로를 선택하세요.");
+      return;
+    }
+
+    const route = savedRoutes.find((r) => r.name === selectedRoute);
+    if (route) {
+      const { paths: savedPaths, distances: savedDistances } = route;
+
       setPaths(savedPaths);
       setDistances(savedDistances);
-  
+
       const kakao = window.kakao;
       clickLine.setPath(savedPaths.map((p) => new kakao.maps.LatLng(p.lat, p.lng)));
-      alert("경로와 거리를 불러왔습니다.");
-    } else {
-      alert("저장된 경로와 거리가 없습니다.");
+      alert(`경로 '${selectedRoute}'이(가) 불러와졌습니다.`);
     }
   };
 
@@ -213,9 +233,36 @@ const KakaoMap = () => {
           width: "100%",
           height: "1150px",
         }}></div>
-        
-      <button className="button" onClick={savePathData}>경로 저장</button>
-      <button className="button" onClick={loadPathData}>경로 불러오기</button>
+
+      <input
+        type="text"
+        className="distance-input"
+        placeholder="경로 이름"
+        value={routeName}
+        onChange={(e) => setRouteName(e.target.value)}
+      />
+      <button className="distance-button" onClick={savePathData}>
+        경로 저장
+      </button>
+
+      <button className="distance-button" onClick={loadPathData}>
+        경로 불러오기
+      </button>
+
+      <select
+        className="distance-select"
+        value={selectedRoute || ""}
+        onChange={(e) => setSelectedRoute(e.target.value)}>
+        <option value="" disabled>
+          저장된 경로 선택
+        </option>
+        {savedRoutes.map((route, index) => (
+          <option key={index} value={route.name}>
+            {route.name}
+          </option>
+        ))}
+      </select>
+
       {distances.length > 0 && <DistanceInfo distance={distances[0]} />}
     </div>
   );
