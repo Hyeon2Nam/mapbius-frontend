@@ -146,6 +146,23 @@ const KakaoMap = () => {
     };
   }, [map, isdrawing, paths]);
 
+  const savePathData = () => {
+    localStorage.setItem("savedPaths", JSON.stringify(paths));
+    alert("경로가 저장되었습니다.");
+  };
+
+  const loadPathData = () => {
+    const savedPaths = JSON.parse(localStorage.getItem("savedPaths"));
+    if (savedPaths) {
+      setPaths(savedPaths);
+      const kakao = window.kakao;
+      clickLine.setPath(savedPaths.map((p) => new kakao.maps.LatLng(p.lat, p.lng)));
+      alert("경로가 불러와졌습니다.");
+    } else {
+      alert("저장된 경로가 없습니다.");
+    }
+  };
+
   const DistanceInfo = ({ distance }) => {
     const walkTime = Math.floor(distance / 67);
     const bicycleTime = Math.floor(distance / 227);
@@ -186,8 +203,10 @@ const KakaoMap = () => {
         style={{
           width: "100%",
           height: "1150px",
-        }}>
-      </div>
+        }}></div>
+        
+      <button onClick={savePathData}>경로 저장</button>
+      <button onClick={loadPathData}>경로 불러오기</button>
       {distances.length > 0 && <DistanceInfo distance={distances[0]} />}
     </div>
   );

@@ -28,7 +28,7 @@ const KakaoMap = () => {
 
     const toggleNavbar = () => {
         setNavbarCollapsed(!navbarCollapsed); 
-        setIcon(navbarCollapsed ? "chevrons-left" : "chevrons-right");
+        setIcon(navbarCollapsed ? "search" : "search");
     };
 
     useEffect(() => {
@@ -53,7 +53,7 @@ const KakaoMap = () => {
 
                 <ul className="navbar__menu">
                     <li className="navbar__item">
-                        <a href="#" className="navbar__link" onClick={toggleNavbar}><i data-feather={icon}></i><span>{icon}</span></a>
+                        <a href="#" className="navbar__link" onClick={toggleNavbar}><i data-feather="search"></i><span>{icon}</span></a>
                     </li>
                 </ul>
 

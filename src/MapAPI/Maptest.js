@@ -94,296 +94,293 @@ const KakaoMap = () => {
           (position) => {
             const lat = position.coords.latitude;
             const lng = position.coords.longitude;
+
+            const options = { // 지도 옵션 설정
+              center: new window.kakao.maps.LatLng(lat, lng), // 강남역 위치 중심 좌표
+              level: 5, // 확대 레벨
+            };
+
+            // 지도 생성
+            const map = new window.kakao.maps.Map(container, options);
+            mapRef.current = map; // Store the map instance in the ref 추가
+
+            updateCategoryMarkers(map, "coffee");
+
+            // ★★★★ 스카이뷰 , 일반 맵 유형 지정
+            const mapTypeControl = new window.kakao.maps.MapTypeControl();
+            // ★ 기존의 지도 위에 새롭게 설정
+            map.addControl(mapTypeControl, window.kakao.maps.ControlPosition.TOPLEFT);
+
+            // 줌 컨트롤 추가
+            const zoomControl = new window.kakao.maps.ZoomControl();
+            map.addControl(zoomControl, window.kakao.maps.ControlPosition.LEFT);
+
+
+            // 커스텀 오버레이 생성
+            const overlayPosition = new kakao.maps.LatLng(37.49887, 127.026581);
+            const overlayContent = document.createElement("div");
+            overlayContent.innerHTML = `
+              <div class="overlaybox">
+                <div class="boxtitle">금주 영화순위</div>
+                <div class="first">
+                  <div class="triangle text special-number">1</div>
+                  <div class="movietitle text">드래곤 길들이기2</div>
+                </div>
+                <ul>
+                  <li>
+                    <span class="number">2</span>
+                    <span class="title">명량</span>
+                    <span class="arrow up"></span>
+                    <span class="count">2</span><br/>
+                  </li>
+                  <li>
+                    <span class="number">3</span>
+                    <span class="title">해적(바다로 간 산적)</span>
+                    <span class="arrow up"></span>
+                    <span class="count">6</span><br/>
+                  </li>
+                  <li>
+                    <span class="number">4</span>
+                    <span class="title">해무</span>
+                    <span class="arrow up"></span>
+                    <span class="count">3</span><br/>
+                  </li>
+                  <li>
+                    <span class="number">5</span>
+                    <span class="title">안녕, 헤이즐</span>
+                    <span class="arrow down"></span>
+                    <span class="count">1</span><br/>
+                  </li>
+                </ul>
+              </div>`;
+
+            const overlay = new kakao.maps.CustomOverlay({
+              position: overlayPosition,
+              content: overlayContent,
+              xAnchor: 0.3,
+              yAnchor: 0.91,
+              map: map,
+            });
+
+            setCustomOverlay(overlay);
+
+            // Drawing Manager 설정 및 초기화
+            const drawingOptions = {
+              map,
+              drawingMode: [
+                kakao.maps.drawing.OverlayType.RECTANGLE,
+                kakao.maps.drawing.OverlayType.POLYGON,
+                kakao.maps.drawing.OverlayType.CIRCLE,
+                kakao.maps.drawing.OverlayType.POLYLINE,
+              ],
+              guideTooltip: ['draw', 'drag', 'edit'],
+              rectangleOptions: {
+                draggable: true,
+                removable: true,
+                editable: true,
+              },
+              circleOptions: {
+                draggable: true,
+                removable: true,
+                editable: true,
+              },
+              polygonOptions: {
+                draggable: true,
+                removable: true,
+                editable: true,
+              },
+              polylineOptions: {
+                draggable: true,
+                removable: true,
+                editable: true,
+              },
+            };
+
+            const manager = new kakao.maps.drawing.DrawingManager(drawingOptions);
+            setDrawingManager(manager);
+
+            // Drawing Toolbox 생성
+            const toolbox = new kakao.maps.drawing.Toolbox({ drawingManager: manager });
+            map.addControl(toolbox.getElement(), kakao.maps.ControlPosition.TOP);
+
+            // Drawing Manager 설정 및 초기화
+            const drawingOptions1 = {
+              map,
+              drawingMode: [
+                kakao.maps.drawing.OverlayType.MARKER,
+              ],
+              guideTooltip: ['draw', 'drag', 'edit'],
+              markerOptions: {
+                draggable: true,
+                removable: true,
+              },
+            };
+
+            const manager1 = new kakao.maps.drawing.DrawingManager(drawingOptions1);
+            setDrawingManager(manager1);
+
+            // 마커가 생성될 때 이벤트 리스너 추가
+              kakao.maps.event.addListener(manager1, 'drawend', function (data) {
+              if (data.overlayType === kakao.maps.drawing.OverlayType.MARKER) {
+                const marker = data.target; // 생성된 마커
+
+                // 인포윈도우 생성
+                const infowindowContent = `
+                  <div class="wra">
+                      <div class="info">
+                        <div class="title"> 카카오 스페이스닷원
+                          <div class="close" title="닫기"></div>
+                        </div>
+                        <div class="body">
+                          <div class="img">
+                            <img src="//t1.daumcdn.net/thumb/C84x76/?fname=http://t1.daumcdn.net/cfile/2170353A51B82DE005" width="73" height="70" alt="클릭한 위치" />
+                          </div>
+                          <div class="desc">
+                            <div class="ellipsis">
+                              제주특별자치도 제주시 첨단로 242
+                            </div>
+                            <div class="jibun ellipsis">
+                              (우) 63309 (지번) 영평동 2181
+                            </div>
+                            <div>
+                              <a href="https://www.kakaocorp.com/main" target="_blank" class="link" rel="noreferrer">홈페이지</a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                `;
+
+                const infowindow = new kakao.maps.InfoWindow({
+                  content: infowindowContent,
+                });
+
+                let isFixed = false; //인포윈도우 고정 상태 플래그
+
+                // 닫기 버튼 클릭 이벤트 추가
+                document.addEventListener('click', (event) => {
+                  if (event.target.classList.contains('close')) {
+                    infowindow.close(); // 인포윈도우 닫기
+                    isFixed = false;
+                  }
+                });
+
+                // 마커 클릭 이벤트 추가
+                kakao.maps.event.addListener(marker, 'click', function() {
+                  if (isFixed) {
+                    infowindow.close();
+                    isFixed = false; // 고정 해제
+                  } else {
+                    infowindow.open(map, marker);
+                    isFixed = true; // 고정 상태로 설정
+                  }
+                });
+
+                // 마커에 마우스 오버/아웃 이벤트 추가
+                kakao.maps.event.addListener(marker, 'mouseover', function() {
+                  if (!isFixed) {
+                    infowindow.open(map, marker); // 고정 상태가 아닌 경우에만 열기
+                  }
+                });
+
+                kakao.maps.event.addListener(marker, 'mouseout', function() {
+                  if (!isFixed) {
+                    infowindow.close(); // 고정 상태가 아닌 경우에만 닫기
+                  }
+                });
+
+                // 마커 이동(드래그) 이벤트 추가
+                kakao.maps.event.addListener(marker, 'dragend', function() {
+                  if (!isFixed) {
+                    infowindow.close(); // 마커를 드래그하면 고정 상태가 아닌 경우에만 닫기
+                  }
+                  infowindow.close(); // 마커 
+                });
+
+                // 마커 삭제 버튼 클릭 시 인포윈도우 닫기
+                kakao.maps.event.addListener(marker, 'rightclick', function() {
+                  infowindow.close(); // 마커 삭제 전에 인포윈도우 닫기
+                  marker.setMap(null); // 마커 삭제
+                });
+
+                // 커스텀 닫기 버튼 이벤트 추가
+                setTimeout(() => {
+                  const closeButton = document.querySelector('.infowindow .close');
+                  if (closeButton) {
+                    closeButton.addEventListener('click', () => {
+                      infowindow.close();
+                      isFixed = false; // 고정 해제
+                    });
+                  }
+                }, 100);
+              }
+            });
+
+            // Drawing Toolbox marker 생성
+            const toolbox1 = new kakao.maps.drawing.Toolbox({ drawingManager: manager1 });
+            map.addControl(toolbox1.getElement(), kakao.maps.ControlPosition.TOP);
+
+            const customMarkerImageSrc = 'https://cdn-icons-png.flaticon.com/512/684/684908.png'; // 커스텀 마커 이미지 URL
+            const customMarkerImageSize = new kakao.maps.Size(24, 34); // 커스텀 마커 이미지 크기
+            const customMarkerImageOption = { offset: new kakao.maps.Point(12, 35) }; // 이미지 좌표 기준점
+
+            const customMarkerImage = new kakao.maps.MarkerImage(
+              customMarkerImageSrc,
+              customMarkerImageSize,
+              customMarkerImageOption
+            );
+
+            const drawingOptions2 = {
+              map,
+              drawingMode: [
+                kakao.maps.drawing.OverlayType.MARKER,
+              ],
+              guideTooltip: ['draw', 'drag', 'edit'],
+              markerOptions: {
+                draggable: true,
+                removable: true,
+                image: customMarkerImage,
+              },
+            };
+
+            const manager2 = new kakao.maps.drawing.DrawingManager(drawingOptions2);
+            setDrawingManager(manager2);
+
+            const toolbox2 = new kakao.maps.drawing.Toolbox({ drawingManager: manager2 });
+            map.addControl(toolbox2.getElement(), kakao.maps.ControlPosition.TOPLEFT);
+
+            // Toolbox 요소를 생성한 후 DOM을 가져와 스타일 변경
+            const toolboxElement = toolbox2.getElement();
+            toolboxElement.style.display = 'none';
+
+            // 커스텀 Toolbox 버튼 생성
+            const customToolboxButton = document.createElement('button');
+            customToolboxButton.style.backgroundImage = "url('https://cdn-icons-png.flaticon.com/512/684/684908.png')";
+            customToolboxButton.style.backgroundSize = "contain";
+            customToolboxButton.style.position = 'absolute'; // 버튼의 위치를 절대 위치로 설정
+            customToolboxButton.style.top = '-10px'; // 기존 버튼 위로 배치
+            customToolboxButton.style.right = '10px'; // 우측 정렬
+            customToolboxButton.style.width = "35px";
+            customToolboxButton.style.height = "35px";
+            customToolboxButton.style.borderRadius = "5px";
+            customToolboxButton.style.border = "none"
+            customToolboxButton.style.cursor = "pointer";
+
+            // 버튼 클릭 시 DrawingManager 활성화
+            customToolboxButton.addEventListener('click', () => {
+              manager2.select(kakao.maps.drawing.OverlayType.MARKER);
+            });
+
+            // 컨트롤 생성
+            const customControl = document.createElement('div');
+            customControl.appendChild(customToolboxButton);
+            customControl.style.margin = '10px'; // 필요하면 스타일 추가
+
+            // 지도에 추가
+            map.addControl(customControl);
           }
         )
       }
-
-      const options = { // 지도 옵션 설정
-        center: new window.kakao.maps.LatLng(37.497400850714165, 127.02723103671623), // 강남역 위치 중심 좌표
-        level: 5, // 확대 레벨
-      };
-
-      // 지도 생성
-      const map = new window.kakao.maps.Map(container, options);
-      mapRef.current = map; // Store the map instance in the ref 추가
-
-      updateCategoryMarkers(map, "coffee");
-
-      // ★★★★ 스카이뷰 , 일반 맵 유형 지정
-      const mapTypeControl = new window.kakao.maps.MapTypeControl();
-      // ★ 기존의 지도 위에 새롭게 설정
-      map.addControl(mapTypeControl, window.kakao.maps.ControlPosition.TOPLEFT);
-
-      // 줌 컨트롤 추가
-      const zoomControl = new window.kakao.maps.ZoomControl();
-      map.addControl(zoomControl, window.kakao.maps.ControlPosition.LEFT);
-
-
-      // 커스텀 오버레이 생성
-      const overlayPosition = new kakao.maps.LatLng(37.49887, 127.026581);
-      const overlayContent = document.createElement("div");
-      overlayContent.innerHTML = `
-        <div class="overlaybox">
-          <div class="boxtitle">금주 영화순위</div>
-          <div class="first">
-            <div class="triangle text special-number">1</div>
-            <div class="movietitle text">드래곤 길들이기2</div>
-          </div>
-          <ul>
-            <li>
-              <span class="number">2</span>
-              <span class="title">명량</span>
-              <span class="arrow up"></span>
-              <span class="count">2</span><br/>
-            </li>
-            <li>
-              <span class="number">3</span>
-              <span class="title">해적(바다로 간 산적)</span>
-              <span class="arrow up"></span>
-              <span class="count">6</span><br/>
-            </li>
-            <li>
-              <span class="number">4</span>
-              <span class="title">해무</span>
-              <span class="arrow up"></span>
-              <span class="count">3</span><br/>
-            </li>
-            <li>
-              <span class="number">5</span>
-              <span class="title">안녕, 헤이즐</span>
-              <span class="arrow down"></span>
-              <span class="count">1</span><br/>
-            </li>
-          </ul>
-        </div>`;
-
-    const overlay = new kakao.maps.CustomOverlay({
-      position: overlayPosition,
-      content: overlayContent,
-      xAnchor: 0.3,
-      yAnchor: 0.91,
-      map: map,
-    });
-
-    setCustomOverlay(overlay);
-
-    // Drawing Manager 설정 및 초기화
-    const drawingOptions = {
-      map,
-      drawingMode: [
-        kakao.maps.drawing.OverlayType.RECTANGLE,
-        kakao.maps.drawing.OverlayType.POLYGON,
-        kakao.maps.drawing.OverlayType.CIRCLE,
-        kakao.maps.drawing.OverlayType.POLYLINE,
-      ],
-      guideTooltip: ['draw', 'drag', 'edit'],
-      rectangleOptions: {
-        draggable: true,
-        removable: true,
-        editable: true,
-      },
-      circleOptions: {
-        draggable: true,
-        removable: true,
-        editable: true,
-      },
-      polygonOptions: {
-        draggable: true,
-        removable: true,
-        editable: true,
-      },
-      polylineOptions: {
-        draggable: true,
-        removable: true,
-        editable: true,
-      },
-    };
-
-    const manager = new kakao.maps.drawing.DrawingManager(drawingOptions);
-    setDrawingManager(manager);
-
-    // Drawing Toolbox 생성
-    const toolbox = new kakao.maps.drawing.Toolbox({ drawingManager: manager });
-    map.addControl(toolbox.getElement(), kakao.maps.ControlPosition.TOPRIGHT);
-
-    // Drawing Manager 설정 및 초기화
-    const drawingOptions1 = {
-      map,
-      drawingMode: [
-        kakao.maps.drawing.OverlayType.MARKER,
-      ],
-      guideTooltip: ['draw', 'drag', 'edit'],
-      markerOptions: {
-        draggable: true,
-        removable: true,
-      },
-    };
-
-    const manager1 = new kakao.maps.drawing.DrawingManager(drawingOptions1);
-    setDrawingManager(manager1);
-
-    // 마커가 생성될 때 이벤트 리스너 추가
-      kakao.maps.event.addListener(manager1, 'drawend', function (data) {
-      if (data.overlayType === kakao.maps.drawing.OverlayType.MARKER) {
-        const marker = data.target; // 생성된 마커
-
-        // 인포윈도우 생성
-        const infowindowContent = `
-          <div class="wra">
-              <div class="info">
-                <div class="title"> 카카오 스페이스닷원
-                  <div class="close" title="닫기"></div>
-                </div>
-                <div class="body">
-                  <div class="img">
-                    <img src="//t1.daumcdn.net/thumb/C84x76/?fname=http://t1.daumcdn.net/cfile/2170353A51B82DE005" width="73" height="70" alt="클릭한 위치" />
-                  </div>
-                  <div class="desc">
-                    <div class="ellipsis">
-                      제주특별자치도 제주시 첨단로 242
-                    </div>
-                    <div class="jibun ellipsis">
-                      (우) 63309 (지번) 영평동 2181
-                    </div>
-                    <div>
-                      <a href="https://www.kakaocorp.com/main" target="_blank" class="link" rel="noreferrer">홈페이지</a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-        `;
-
-        const infowindow = new kakao.maps.InfoWindow({
-          content: infowindowContent,
-        });
-
-        let isFixed = false; //인포윈도우 고정 상태 플래그
-
-        // 닫기 버튼 클릭 이벤트 추가
-        document.addEventListener('click', (event) => {
-          if (event.target.classList.contains('close')) {
-            infowindow.close(); // 인포윈도우 닫기
-            isFixed = false;
-          }
-        });
-
-        // 마커 클릭 이벤트 추가
-        kakao.maps.event.addListener(marker, 'click', function() {
-          if (isFixed) {
-            infowindow.close();
-            isFixed = false; // 고정 해제
-          } else {
-            infowindow.open(map, marker);
-            isFixed = true; // 고정 상태로 설정
-          }
-        });
-
-        // 마커에 마우스 오버/아웃 이벤트 추가
-        kakao.maps.event.addListener(marker, 'mouseover', function() {
-          if (!isFixed) {
-            infowindow.open(map, marker); // 고정 상태가 아닌 경우에만 열기
-          }
-        });
-
-        kakao.maps.event.addListener(marker, 'mouseout', function() {
-          if (!isFixed) {
-            infowindow.close(); // 고정 상태가 아닌 경우에만 닫기
-          }
-        });
-
-        // 마커 이동(드래그) 이벤트 추가
-        kakao.maps.event.addListener(marker, 'dragend', function() {
-          if (!isFixed) {
-            infowindow.close(); // 마커를 드래그하면 고정 상태가 아닌 경우에만 닫기
-          }
-          infowindow.close(); // 마커 
-        });
-
-        // 마커 삭제 버튼 클릭 시 인포윈도우 닫기
-        kakao.maps.event.addListener(marker, 'rightclick', function() {
-          infowindow.close(); // 마커 삭제 전에 인포윈도우 닫기
-          marker.setMap(null); // 마커 삭제
-        });
-
-        // 커스텀 닫기 버튼 이벤트 추가
-        setTimeout(() => {
-          const closeButton = document.querySelector('.infowindow .close');
-          if (closeButton) {
-            closeButton.addEventListener('click', () => {
-              infowindow.close();
-              isFixed = false; // 고정 해제
-            });
-          }
-        }, 100);
-      }
-    });
-
-    // Drawing Toolbox marker 생성
-    const toolbox1 = new kakao.maps.drawing.Toolbox({ drawingManager: manager1 });
-    map.addControl(toolbox1.getElement(), kakao.maps.ControlPosition.RIGHT);
-
-
-
-    const customMarkerImageSrc = 'https://cdn-icons-png.flaticon.com/512/684/684908.png'; // 커스텀 마커 이미지 URL
-    const customMarkerImageSize = new kakao.maps.Size(24, 34); // 커스텀 마커 이미지 크기
-    const customMarkerImageOption = { offset: new kakao.maps.Point(12, 35) }; // 이미지 좌표 기준점
-
-    const customMarkerImage = new kakao.maps.MarkerImage(
-      customMarkerImageSrc,
-      customMarkerImageSize,
-      customMarkerImageOption
-    );
-
-    const drawingOptions2 = {
-      map,
-      drawingMode: [
-        kakao.maps.drawing.OverlayType.MARKER,
-      ],
-      guideTooltip: ['draw', 'drag', 'edit'],
-      markerOptions: {
-        draggable: true,
-        removable: true,
-        image: customMarkerImage,
-      },
-    };
-
-    const manager2 = new kakao.maps.drawing.DrawingManager(drawingOptions2);
-    setDrawingManager(manager2);
-
-    const toolbox2 = new kakao.maps.drawing.Toolbox({ drawingManager: manager2 });
-    map.addControl(toolbox2.getElement(), kakao.maps.ControlPosition.RIGHT);
-
-    // Toolbox 요소를 생성한 후 DOM을 가져와 스타일 변경
-    const toolboxElement = toolbox2.getElement();
-    toolboxElement.style.display = 'none';
-
-    // 커스텀 Toolbox 버튼 생성
-    const customToolboxButton = document.createElement('button');
-    customToolboxButton.style.backgroundImage = "url('https://cdn-icons-png.flaticon.com/512/684/684908.png')";
-    customToolboxButton.style.backgroundSize = "contain";
-    customToolboxButton.style.position = 'absolute'; // 버튼의 위치를 절대 위치로 설정
-    customToolboxButton.style.top = '-10px'; // 기존 버튼 위로 배치
-    customToolboxButton.style.right = '10px'; // 우측 정렬
-    customToolboxButton.style.width = "35px";
-    customToolboxButton.style.height = "35px";
-    customToolboxButton.style.borderRadius = "5px";
-    customToolboxButton.style.border = "none"
-    customToolboxButton.style.cursor = "pointer";
-
-    // 버튼 클릭 시 DrawingManager 활성화
-    customToolboxButton.addEventListener('click', () => {
-      manager2.select(kakao.maps.drawing.OverlayType.MARKER);
-    });
-
-    // 컨트롤 생성
-    const customControl = document.createElement('div');
-    customControl.appendChild(customToolboxButton);
-    customControl.style.margin = '10px'; // 필요하면 스타일 추가
-
-    // 지도에 추가
-    map.addControl(customControl);
-
     }
   }, [], [selectedCategory]); // 컴포넌트가 마운트될 때 한 번만 실행
 
@@ -582,6 +579,10 @@ const handleSearch = () => {
       displaySearchMarkers(data); // 검색 결과 마커 표시
 
       const firstPlace = data[0];
+      if (firstPlace) {
+        const firstPlacePosition = new kakao.maps.LatLng(firstPlace.y, firstPlace.x);
+        map.setCenter(firstPlacePosition);
+      }
 
       //map.setCenter(firstPlace);
 
@@ -593,8 +594,8 @@ const handleSearch = () => {
           purl: place.place_url,
           //cgc: place.category_group_code,
           phone: place.phone,
-          rating: 0, // Kakao API에는 리뷰 점수가 없으
-          reviews: 0, // Kakao API에는 리뷰 수가 없으
+          rating: 0, // Kakao API에는 리뷰 점수 지원 x
+          reviews: 0, // Kakao API에는 리뷰 수 지원 x
         }))
       );
 

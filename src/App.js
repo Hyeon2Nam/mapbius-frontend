@@ -18,6 +18,7 @@ import FavoritePage from "./mypage/favorite/FavoritePage";
 import ReviewPage from "./mypage/review/ReviewPage";
 import TripListPage from "./mypage/trip/TripListPage";
 import MapTest from "./MapAPI/Maptest";
+import Sidebar from "./MapAPI/sidebar1";
 import Distance from "./MapAPI/calculatePolylineDistance";
 import UserBoard from "./admin/userList/UserBoard";
 import TripBoard from "./Trip/TripBoard";
@@ -68,7 +69,7 @@ function App() {
         <Route path="/kakao-register" element={<KakaoLogin />} />
         <Route path="/kakao-register/form" element={<KakaoRegisterFrom />} />
         <Route path="/admin/user-list" element={<UserBoard />} />
-        {/* <Route path="/Sidebar" element={<Sidebar />} /> */}
+        <Route path="/Sidebar" element={<Sidebar />} />
         <Route path="/temp/test" element={<TempMap />} />
       </Routes>
     </div>
