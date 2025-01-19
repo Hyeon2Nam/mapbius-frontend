@@ -40,7 +40,17 @@ const ReviewItem = ({ item }) => {
     <div className="review-item">
       <div className="head-section">
         <div className="profile-section">
-          <img src={item.profileImage} alt="" />
+          <img
+            src={
+              item.profileImage
+                ? item.profileImage
+                : process.env.PUBLIC_URL + "/imgs/gyeongbokgung.jpg"
+            }
+            alt=""
+            onError={(e) => {
+              e.target.src = process.env.PUBLIC_URL + "/imgs/gyeongbokgung.jpg";
+            }}
+          />
           <div>
             <div>{item.userNm}</div>
             <div>
