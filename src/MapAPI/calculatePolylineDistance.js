@@ -18,36 +18,53 @@ const KakaoMap = () => {
 
     const kakao = window.kakao;
     const container = document.getElementById("map");
-    const options = {
-      center: new kakao.maps.LatLng(37.498004414546934, 127.02770621963765),
-      level: 3,
-    };
-      const mapInstance = new kakao.maps.Map(container, options);
-      setMap(mapInstance);
 
-      // Initialize polylines
-      const polyline = new kakao.maps.Polyline({
-        map: mapInstance,
-        strokeWeight: 4,
-        strokeColor: "#db4040",
-        strokeOpacity: 1,
-        strokeStyle: "solid",
-      });
-      setClickLine(polyline);
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const lat = position.coords.latitude;
+          const lng = position.coords.longitude;
 
-      const movePolyline = new kakao.maps.Polyline({
-        map: mapInstance,
-        strokeWeight: 9,
-        strokeColor: "#db4040",
-        strokeOpacity: 0.5,
-        strokeStyle: "solid",
-      });
-      setMoveLine(movePolyline);
+          const options = {
+            center: new kakao.maps.LatLng(lat, lng),
+            level: 5,
+          };
 
-      return () => {
-        polyline.setMap(null);
-        movePolyline.setMap(null);
-      };
+          const mapInstance = new kakao.maps.Map(container, options);
+          setMap(mapInstance);
+
+          // Initialize polylines
+          const polyline = new kakao.maps.Polyline({
+            map: mapInstance,
+            strokeWeight: 4,
+            strokeColor: "#db4040",
+            strokeOpacity: 1,
+            strokeStyle: "solid",
+          });
+          setClickLine(polyline);
+
+          const movePolyline = new kakao.maps.Polyline({
+            map: mapInstance,
+            strokeWeight: 9,
+            strokeColor: "#db4040",
+            strokeOpacity: 0.5,
+            strokeStyle: "solid",
+          });
+          setMoveLine(movePolyline);
+
+          return () => {
+            polyline.setMap(null);
+            movePolyline.setMap(null);
+          };
+        },
+        (error) => {
+          console.error("Geolocation error:", error);
+          alert("현재 위치를 가져올 수 없습니다.");
+        }
+      );
+    } else {
+      alert("Geolocation을 지원하지 않는 브라우저입니다.");
+    }
   }, []);
 
   const handleClick = (mouseEvent) => {
@@ -169,20 +186,8 @@ const KakaoMap = () => {
         style={{
           width: "100%",
           height: "1150px",
-        }}
-      ></div>
-      {/* {paths.map((path, index) => (
-        <div
-          key={index}
-          className="dotOverlay"
-          style={{
-            position: "absolute",
-            transform: `translate(${path.lat}px, ${path.lng}px)`,
-          }}
-        >
-          점 {index + 1}
-        </div>
-      ))} */}
+        }}>
+      </div>
       {distances.length > 0 && <DistanceInfo distance={distances[0]} />}
     </div>
   );

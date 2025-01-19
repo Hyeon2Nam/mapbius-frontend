@@ -22,14 +22,10 @@ const KakaoMap = () => {
   const [drawingManager, setDrawingManager] = useState(null);
   const [drawnData, setDrawnData] = useState(null);
 
-  const [results, setResults] = useState([
-    { id: 1, name: "행복한쭈꾸미와갑오징어", address: "충남 청양군 청양읍 문화예술로 180", rating: 5.0, reviews: 47 },
-    { id: 2, name: "진영분식", address: "충남 청양군 청양읍 문화예술로 180", rating: 4.0, reviews: 9 },
-    { id: 3, name: "한가네어죽", address: "충남 청양군 청양읍 중앙로열길 18", rating: 4.0, reviews: 11 },
-    { id: 4, name: "축제갈비", address: "충남 청양군 청양읍 중앙로열길 18", rating: 4.0, reviews: 19 },
-    { id: 5, name: "고향회관", address: "충남 청양군 청양읍 칠갑산로7길 6", rating: 3.0, reviews: 14 },
-    { id: 6, name: "둘순네 부대찌개", address: "충남 청양군 청양읍 중앙로 76", rating: 1.0, reviews: 1 },
-  ]);
+  const [navbarCollapsed, setNavbarCollapsed] = useState(false); // navbar1 상태
+  const [icon, setIcon] = useState("chevrons-left"); // 아이콘 상태
+
+  const [filteredResults, setFilteredResults] = useState([]); // 바로 필터링된 결과 저장
 
   //카테고리용 이미지
   const markerImageSrc =
@@ -72,14 +68,15 @@ const KakaoMap = () => {
   const carparkOrigin = { x: 10, y: 72 };
 
 
-  const filteredResults = results.filter((place) =>
-    place.name.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const toggleNavbar = () => {
+    setNavbarCollapsed((prevState) => !prevState); // navbar 상태 토글
+    setIcon((prevState) => (prevState === "chevrons-left" ? "chevrons-right" : "chevrons-left")); // 아이콘 변경
+  };
 
   useEffect(() => {
     const feather = require('feather-icons');
     feather.replace();
-}, []);
+}, [icon]);
 
   
   useEffect(() => {
@@ -91,6 +88,16 @@ const KakaoMap = () => {
     // Kakao 지도 API가 로드된 후에 실행
     if (window.kakao) {
       const container = document.getElementById('map'); // 지도 컨테이너 엘리먼트를 찾기
+
+      if(navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const lat = position.coords.latitude;
+            const lng = position.coords.longitude;
+          }
+        )
+      }
+
       const options = { // 지도 옵션 설정
         center: new window.kakao.maps.LatLng(37.497400850714165, 127.02723103671623), // 강남역 위치 중심 좌표
         level: 5, // 확대 레벨
@@ -102,35 +109,6 @@ const KakaoMap = () => {
 
       updateCategoryMarkers(map, "coffee");
 
-      const markerPosition = new window.kakao.maps.LatLng(36.436988, 126.802021);
-      const markerPosition1 = new window.kakao.maps.LatLng(36.459105, 126.802004); // 마커 위치
-      
-      const marker = new window.kakao.maps.Marker({ position: markerPosition }); // 마커 생성
-      const marker1 = new window.kakao.maps.Marker({ position: markerPosition1 }); // 마커1 생성
-
-      // 지도에 마커 표시
-      marker.setMap(map);
-      marker1.setMap(map);
-
-      // 인포윈도우 (마커 클릭 시 표시될 정보창)
-      const infowindow = new window.kakao.maps.InfoWindow({
-        content: '<div style="padding:5px;font-size:16px;">후라보노보노</div>' +
-        '<a href="https://cnsu.ac.kr/main.do" style={{ color: "blue" }} target="_blank" rel="noreferrer">충남도립대학교</a>',
-        removable: true,
-      });
-
-      // 마커 클릭 이벤트
-      window.kakao.maps.event.addListener(marker, "click", () => {
-        infowindow.open(map, marker);
-      });
-
-      // 지도 클릭 이벤트 추가
-      // window.kakao.maps.event.addListener(map, "click", (mouseEvent) => {
-      //   const latLng = mouseEvent.latLng; // 클릭한 위치의 좌표
-      //   addMarker(latLng); // 클릭한 위치에 마커 추가
-      //   //console.log("마커 찍기");
-      // });
-
       // ★★★★ 스카이뷰 , 일반 맵 유형 지정
       const mapTypeControl = new window.kakao.maps.MapTypeControl();
       // ★ 기존의 지도 위에 새롭게 설정
@@ -139,8 +117,6 @@ const KakaoMap = () => {
       // 줌 컨트롤 추가
       const zoomControl = new window.kakao.maps.ZoomControl();
       map.addControl(zoomControl, window.kakao.maps.ControlPosition.LEFT);
-
-
 
 
       // 커스텀 오버레이 생성
@@ -342,9 +318,6 @@ const KakaoMap = () => {
         }, 100);
       }
     });
-
-    // 상태에 마커와 인포윈도우 저장 
-    setMarkers((prevMarkers) => [...prevMarkers, { marker, infowindow }]);
 
     // Drawing Toolbox marker 생성
     const toolbox1 = new kakao.maps.drawing.Toolbox({ drawingManager: manager1 });
@@ -605,20 +578,28 @@ const handleSearch = () => {
 
   places.keywordSearch(searchQuery, (data, status) => {
     if (status === kakao.maps.services.Status.OK) {
+
       displaySearchMarkers(data); // 검색 결과 마커 표시
 
-      setResults(
+      const firstPlace = data[0];
+
+      //map.setCenter(firstPlace);
+
+      setFilteredResults(
         data.map((place) => ({
           id: place.id,
           name: place.place_name,
           address: place.road_address_name || place.address_name,
-          rating: 0, // Kakao API에는 리뷰 점수가 없으므로 기본값으로 설정
-          reviews: 0, // Kakao API에는 리뷰 수가 없으므로 기본값으로 설정
+          purl: place.place_url,
+          //cgc: place.category_group_code,
+          phone: place.phone,
+          rating: 0, // Kakao API에는 리뷰 점수가 없으
+          reviews: 0, // Kakao API에는 리뷰 수가 없으
         }))
       );
 
     } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
-      alert("검색 결과가 없습니다.");
+      setFilteredResults([]);
     } else {
       console.error("검색 중 오류가 발생했습니다.");
     }
@@ -658,6 +639,7 @@ const displaySearchMarkers = (data) => {
 
     const infowindow = new kakao.maps.InfoWindow({
       content: `<div style="padding:5px;font-size:12px;">${place.place_name}</div>`,
+      removable: true,
     });
 
     kakao.maps.event.addListener(marker, "click", () => {
@@ -827,7 +809,7 @@ const createClusterer = (markers) => {
 
   return (
     <div style={{ fontFamily: "'Noto Sans KR', sans-serif" }}>
-
+          <div className="container">
             <nav className="navbar">
                 <ul className="navbar__menu">
                     <li className="navbar__item">
@@ -843,7 +825,7 @@ const createClusterer = (markers) => {
 
                 <ul className="navbar__menu">
                     <li className="navbar__item">
-                        <a href="#" className="navbar__link"><i data-feather="chevrons-left"></i><span>chevrons-left</span></a>
+                      <a href="#" className="navbar__link" onClick={toggleNavbar}><i data-feather={icon}></i><span>{icon}</span></a>
                     </li>
                 </ul>
 
@@ -860,7 +842,7 @@ const createClusterer = (markers) => {
                 </ul>
             </nav>
             
-            <nav className="navbar1">
+            <nav className={`navbar1 ${navbarCollapsed ? "collapsed" : ""}`}>
                 <ul className="navbar1__menu">
                     
                     <div style={{ padding: "20px", fontFamily: "Arial, sans-serif" }}>
@@ -896,6 +878,8 @@ const createClusterer = (markers) => {
 
                                 <h3 style={{ margin: "0 0 10px" }}>{place.name}</h3>
                                 <p style={{ margin: "0 0 5px" }}>{place.address}</p>
+                                <p style={{ margin: "0 0 5px" }}>전화번호: {place.phone || '정보 없음'}</p>
+                                <a style={{ margin: "0 0 5px" }} href={place.purl} target="_blank" rel="noopener noreferrer">상세보기</a>
                                 <p style={{ margin: 0 }}>⭐ {place.rating} (후기 {place.reviews})</p>
                                 </div>
                             ))
@@ -907,7 +891,7 @@ const createClusterer = (markers) => {
                 </ul>
             </nav>
 
-    <div id="map"></div>
+      <div id="map"></div>
       <div className="category" style={{
         textAlign: 'center',
         marginTop: '20px',
@@ -979,6 +963,7 @@ const createClusterer = (markers) => {
           __html: info,
         }} />
       </div>
+    </div>
     </div>
   );
 };

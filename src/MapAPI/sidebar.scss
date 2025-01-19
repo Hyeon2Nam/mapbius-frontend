@@ -86,6 +86,7 @@ body{
     position: relative;
     display: flex;
     flex-direction: column;
+    margin-bottom: 275px;
   }
   &__item{
     margin-bottom: 3rem;
@@ -137,6 +138,9 @@ body{
 }
 
 
+.navbar1.collapsed {
+  transform: translateX(-130%); // 접힌 상태
+}
 
 .navbar1{
   $ref: &;
@@ -232,5 +236,31 @@ body{
         
       }
     }
+  }
+}
+
+
+.results {
+  max-height: 1070px;
+  overflow-y: auto; // 세로 스크롤
+  padding: 4px;
+  background-color: #e5e0ff;
+
+  // 스크롤바 스타일
+  &::-webkit-scrollbar {
+    width: 8px; // 스크롤바 너비
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #1A1F00; // #888 기존색상 스크롤바 색상
+    border-radius: 4px; // 스크롤바 둥글게
+    &:hover {
+      background-color: #555; // 호버 시 색상 변경
+    }
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: #f1f1f1; // 스크롤 트랙 색상
+    border-radius: 4px; // 트랙 둥글게
   }
 }

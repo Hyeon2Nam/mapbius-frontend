@@ -7,6 +7,8 @@ import './sidebar.scss';
 const KakaoMap = () => {
 
     const [searchTerm, setSearchTerm] = useState("");
+    const [navbarCollapsed, setNavbarCollapsed] = useState(false); // navbar1 상태
+    const [icon, setIcon] = useState("chevrons-left"); // 아이콘 상태
     const [results, setResults] = useState([
         { id: 1, name: "행복한쭈꾸미와갑오징어", address: "충남 청양군 청양읍 문화예술로 180", rating: 5.0, reviews: 47 },
         { id: 2, name: "진영분식", address: "충남 청양군 청양읍 문화예술로 180", rating: 4.0, reviews: 9 },
@@ -14,24 +16,25 @@ const KakaoMap = () => {
         { id: 4, name: "축제갈비", address: "충남 청양군 청양읍 중앙로열길 18", rating: 4.0, reviews: 19 },
         { id: 5, name: "고향회관", address: "충남 청양군 청양읍 칠갑산로7길 6", rating: 3.0, reviews: 14 },
         { id: 6, name: "둘순네 부대찌개", address: "충남 청양군 청양읍 중앙로 76", rating: 1.0, reviews: 1 },
-        { id: 7, name: "둘순네 부대찌개", address: "충남 청양군 청양읍 중앙로 76", rating: 1.0, reviews: 1 },
-        { id: 8, name: "둘순네 부대찌개", address: "충남 청양군 청양읍 중앙로 76", rating: 1.0, reviews: 1 },
-        { id: 9, name: "둘순네 부대찌개", address: "충남 청양군 청양읍 중앙로 76", rating: 1.0, reviews: 1 },
-        { id: 10, name: "둘순네 부대찌개", address: "충남 청양군 청양읍 중앙로 76", rating: 1.0, reviews: 1 },
       ]);
 
-      const handleSearch = (e) => {
+    const handleSearch = (e) => {
         setSearchTerm(e.target.value);
-      };
+    };
 
-      const filteredResults = results.filter((result) =>
+    const filteredResults = results.filter((result) =>
         result.name.toLowerCase().includes(searchTerm.toLowerCase())
       );
+
+    const toggleNavbar = () => {
+        setNavbarCollapsed(!navbarCollapsed); 
+        setIcon(navbarCollapsed ? "chevrons-left" : "chevrons-right");
+    };
 
     useEffect(() => {
         const feather = require('feather-icons');
         feather.replace();
-    }, []);
+    }, [icon]);
 
     return (
         <div style={{ fontFamily: "'Noto Sans KR', sans-serif" }}>
@@ -50,7 +53,7 @@ const KakaoMap = () => {
 
                 <ul className="navbar__menu">
                     <li className="navbar__item">
-                        <a href="#" className="navbar__link"><i data-feather="chevrons-left"></i><span>chevrons-left</span></a>
+                        <a href="#" className="navbar__link" onClick={toggleNavbar}><i data-feather={icon}></i><span>{icon}</span></a>
                     </li>
                 </ul>
 
@@ -68,7 +71,7 @@ const KakaoMap = () => {
             </nav>
             
 
-            <nav className="navbar1">
+            <nav className={`navbar1 ${navbarCollapsed ? "collapsed" : ""}`}>
                 <ul className="navbar1__menu">
                     
                     <div style={{ padding: "20px", fontFamily: "Arial, sans-serif" }}>
@@ -83,8 +86,8 @@ const KakaoMap = () => {
                                 padding: "10px",
                                 borderRadius: "5px",
                                 border: "1px solid #ccc",
-                            }}
-                            />
+                            }}/>
+                            
                             <i data-feather="search"
                             style={{
                                 padding: "10px 10px",
@@ -103,6 +106,7 @@ const KakaoMap = () => {
                             filteredResults.map((result) => (
                                 <div key={result.id}
                                 style={{
+                                    overflowY: "auto",
                                     border: "1px solid #ccc",
                                     borderRadius: "5px",
                                     padding: "15px",
@@ -119,8 +123,7 @@ const KakaoMap = () => {
                             <p style={{ textAlign: "center" }}>검색 결과가 없습니다.</p>
                             )}
                         </div>
-                        </div>
-                    
+                        </div>     
                 </ul>
             </nav>
         </div>
