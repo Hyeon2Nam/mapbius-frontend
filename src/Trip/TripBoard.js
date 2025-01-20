@@ -115,7 +115,6 @@ const TripBoard = () => {
   useEffect(() => {
     checkPage();
     setCurpage(params.page);
-    console.log(params.page, typeof params.page);
 
     if (params.page === "1") {
       setNoticeList(dump.slice(0, 4));

@@ -14,6 +14,36 @@ const KakaoMap = ({ setRoute, routeData, mode }) => {
   const [routeName, setRouteName] = useState("");
   const [selectedRoute, setSelectedRoute] = useState(null);
 
+  const reFormPathData = () => {
+    const coordinates = routeData.locationInfo
+      .split(",")
+      .reduce((acc, value, index, array) => {
+        if (index % 2 === 0) {
+          acc.push({
+            lat: parseFloat(value),
+            lng: parseFloat(array[index + 1]),
+          });
+        }
+        return acc;
+      }, []);
+
+    return coordinates;
+  };
+
+  useEffect(() => {
+    if (mode === "view" && routeData) {
+      const savedPaths = reFormPathData();
+
+      setDistances([routeData.distances]);
+      setPaths(savedPaths);
+
+      const kakao = window.kakao;
+      clickLine.setPath(
+        savedPaths.map((p) => new kakao.maps.LatLng(p.lat, p.lng))
+      );
+    }
+  }, [routeData]);
+
   useEffect(() => {
     if (!window.kakao || !window.kakao.maps) {
       console.error("Kakao Maps API is not loaded.");
@@ -72,6 +102,10 @@ const KakaoMap = ({ setRoute, routeData, mode }) => {
   }, []);
 
   const handleClick = (mouseEvent) => {
+    if (mode === "view") {
+      return;
+    }
+
     const latLng = mouseEvent.latLng;
     const kakao = window.kakao;
 
@@ -106,6 +140,10 @@ const KakaoMap = ({ setRoute, routeData, mode }) => {
   };
 
   const handleMouseMove = (mouseEvent) => {
+    if (mode === "view") {
+      return;
+    }
+
     const latLng = mouseEvent.latLng;
 
     if (isdrawing && paths.length > 0) {
@@ -131,6 +169,10 @@ const KakaoMap = ({ setRoute, routeData, mode }) => {
   };
 
   const handleRightClick = () => {
+    if (mode === "view") {
+      return;
+    }
+
     setIsdrawing(false);
     moveLine.setPath([]); // 이동 중인 선 초기화
   };
@@ -152,29 +194,20 @@ const KakaoMap = ({ setRoute, routeData, mode }) => {
   }, [map, isdrawing, paths]);
 
   const savePathData = () => {
-    // if (!routeName) {
-    //   alert("경로 이름을 입력하세요.");
-    //   return;
-    // }
-
     const pathData = {
-      // name: routeName,
       paths,
       distances,
     };
 
-    // setSavedRoutes((prev) => [...prev, pathData]);
-    // setRouteName("");
     setRoute(pathData);
 
     // 폴리라인 초기화
-    setPaths([]);
-    setDistances([]);
-    if (clickLine) clickLine.setPath([]);
-    if (moveLine) moveLine.setPath([]);
+    // setPaths([]);
+    // setDistances([]);
+    // if (clickLine) clickLine.setPath([]);
+    // if (moveLine) moveLine.setPath([]);
 
     alert(`경로가 저장되었습니다.`);
-    // alert(`경로 '${routeName}'이(가) 저장되었습니다.`);
   };
 
   const loadPathData = () => {
@@ -241,38 +274,11 @@ const KakaoMap = ({ setRoute, routeData, mode }) => {
         }}
       ></div>
 
-      {/* <input
-        type="text"
-        className="distance-input"
-        placeholder="경로 이름"
-        value={routeName}
-        onChange={(e) => setRouteName(e.target.value)}
-      /> */}
-
       {mode === "create" && (
         <button className="distance-button" onClick={savePathData}>
           경로 저장
         </button>
       )}
-
-      {/* <button className="distance-button" onClick={loadPathData}>
-        경로 불러오기
-      </button> */}
-
-      {/* <select
-        className="distance-select"
-        value={selectedRoute || ""}
-        onChange={(e) => setSelectedRoute(e.target.value)}
-      >
-        <option value="" disabled>
-          저장된 경로 선택
-        </option>
-        {savedRoutes.map((route, index) => (
-          <option key={index} value={route.name}>
-            {route.name}
-          </option>
-        ))}
-      </select> */}
 
       {distances.length > 0 && <DistanceInfo distance={distances[0]} />}
     </div>

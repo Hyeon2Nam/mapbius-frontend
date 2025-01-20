@@ -8,3 +8,7 @@ export const createTripRoute = (obj, token) => {
     },
   });
 };
+
+export const getTripRouteData = (obj) => {
+  return api.post("/api/public/travel-route/detail", obj);
+};

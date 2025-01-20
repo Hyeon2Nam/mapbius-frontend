@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import KakaoMap from "./calculatePolylineDistance";
 import ProfileImageUpload from "./ProfileImageUpload";
 import { useParams } from "react-router-dom";
+import { getTripRouteData } from "../api/tripRouteApi";
 
 const MainPage = () => {
   const params = useParams();
@@ -13,9 +14,32 @@ const MainPage = () => {
   const [routeId, setRouteId] = useState(0);
   const [routeData, setRouteData] = useState({});
 
+  const getRouteDataHandler = () => {
+    let obj = {
+      id: params.id,
+    };
+
+    getTripRouteData(obj)
+      .then((res) => {
+        if (res.status === 200) {
+          setRouteData(res.data.objData);
+        }
+      })
+      .catch((e) => {
+        // if (e.status === 404) {
+        alert("오류가 발생하였습니다");
+        window.location = "/";
+        // }
+      });
+  };
+
   useEffect(() => {
     setMode(params.mode);
     setRouteId(params.id);
+
+    if (params.mode === "view") {
+      getRouteDataHandler();
+    }
   }, []);
 
   return (

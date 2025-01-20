@@ -29,8 +29,6 @@ export const plusHeartCnt = (obj, token) => {
 };
 
 export const setBookmark = (obj, token) => {
-  console.log(obj, token);
-
   return api.post("/api/private/account/favorite/enroll", JSON.stringify(obj), {
     headers: {
       Authorization: `Bearer ${token}`,

@@ -22,12 +22,7 @@ const ProfileImageUpload = ({ route }) => {
       distances: route.distances[0],
       locationInfo: makeStringData(),
     });
-    // console.log("route", route);
   }, [route]);
-
-  // useEffect(() => {
-  //   console.log("formData", formData);
-  // }, [formData]);
 
   const makeStringData = () => {
     if (route.paths) {
@@ -59,8 +54,6 @@ const ProfileImageUpload = ({ route }) => {
 
   // 파일 업로드 요청 처리
   const handleSubmit = async () => {
-    console.log(formData);
-
     const form = new FormData();
 
     // 파일 데이터 추가 (파일이 없을 경우 제외)
@@ -73,15 +66,9 @@ const ProfileImageUpload = ({ route }) => {
       form.append(key, formData[key]);
     });
 
-    // FormData의 내용 확인
-    for (let [key, value] of form.entries()) {
-      console.log(`${key}: ${value}`);
-    }
-
     createTripRoute(form, localStorage.getItem("userToken"))
       .then((res) => {
         alert("업로드 성공!");
-        console.log(res.data);
       })
       .catch((e) => {
         if (e.status === 403) {
