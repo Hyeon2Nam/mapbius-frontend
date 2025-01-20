@@ -27,7 +27,9 @@ const KakaoMap = () => {
   const [drawingManager, setDrawingManager] = useState(null);
   const [drawnData, setDrawnData] = useState(null);
 
-  const [regionInfo, setRegionInfo] = useState("현재 위치의 정보를 불러옵니다...");
+  const [regionInfo, setRegionInfo] = useState(
+    "현재 위치의 정보를 불러옵니다..."
+  );
 
   const [navbarCollapsed, setNavbarCollapsed] = useState(false); // navbar1 상태
   const [icon, setIcon] = useState("chevrons-left"); // 아이콘 상태
@@ -103,7 +105,7 @@ const KakaoMap = () => {
 
             const options = {
               // 지도 옵션 설정
-              center: new window.kakao.maps.LatLng(lat,lng),
+              center: new window.kakao.maps.LatLng(lat, lng),
               level: 5,
             };
 
@@ -116,11 +118,13 @@ const KakaoMap = () => {
 
             updateCategoryMarkers(map, "coffee");
 
-
             // ★★★★ 스카이뷰 , 일반 맵 유형 지정
             const mapTypeControl = new window.kakao.maps.MapTypeControl();
             // ★ 기존의 지도 위에 새롭게 설정
-            map.addControl(mapTypeControl, window.kakao.maps.ControlPosition.TOPLEFT);
+            map.addControl(
+              mapTypeControl,
+              window.kakao.maps.ControlPosition.TOPLEFT
+            );
 
             // 줌 컨트롤 추가
             const zoomControl = new window.kakao.maps.ZoomControl();
@@ -206,7 +210,9 @@ const KakaoMap = () => {
               },
             };
 
-            const manager = new kakao.maps.drawing.DrawingManager(drawingOptions);
+            const manager = new kakao.maps.drawing.DrawingManager(
+              drawingOptions
+            );
             setDrawingManager(manager);
 
             // Drawing Toolbox 생성
@@ -229,11 +235,13 @@ const KakaoMap = () => {
               },
             };
 
-            const manager1 = new kakao.maps.drawing.DrawingManager(drawingOptions1);
+            const manager1 = new kakao.maps.drawing.DrawingManager(
+              drawingOptions1
+            );
             setDrawingManager(manager1);
 
             // 마커가 생성될 때 이벤트 리스너 추가
-              kakao.maps.event.addListener(manager1, "drawend", function (data) {
+            kakao.maps.event.addListener(manager1, "drawend", function (data) {
               if (data.overlayType === kakao.maps.drawing.OverlayType.MARKER) {
                 const marker = data.target; // 생성된 마커
 
@@ -266,7 +274,7 @@ const KakaoMap = () => {
                 const infowindow = new kakao.maps.InfoWindow({
                   content: infowindowContent,
                 });
-      
+
                 let isFixed = false; //인포윈도우 고정 상태 플래그
 
                 // 닫기 버튼 클릭 이벤트 추가
@@ -317,7 +325,8 @@ const KakaoMap = () => {
 
                 // 커스텀 닫기 버튼 이벤트 추가
                 setTimeout(() => {
-                  const closeButton = document.querySelector(".infowindow .close");
+                  const closeButton =
+                    document.querySelector(".infowindow .close");
                   if (closeButton) {
                     closeButton.addEventListener("click", () => {
                       infowindow.close();
@@ -332,7 +341,10 @@ const KakaoMap = () => {
             const toolbox1 = new kakao.maps.drawing.Toolbox({
               drawingManager: manager1,
             });
-            map.addControl(toolbox1.getElement(), kakao.maps.ControlPosition.TOP);
+            map.addControl(
+              toolbox1.getElement(),
+              kakao.maps.ControlPosition.TOP
+            );
 
             const customMarkerImageSrc =
               "https://cdn-icons-png.flaticon.com/512/684/684908.png"; // 커스텀 마커 이미지 URL
@@ -346,7 +358,7 @@ const KakaoMap = () => {
               customMarkerImageSize,
               customMarkerImageOption
             );
-    
+
             const drawingOptions2 = {
               map,
               drawingMode: [kakao.maps.drawing.OverlayType.MARKER],
@@ -358,13 +370,18 @@ const KakaoMap = () => {
               },
             };
 
-            const manager2 = new kakao.maps.drawing.DrawingManager(drawingOptions2);
+            const manager2 = new kakao.maps.drawing.DrawingManager(
+              drawingOptions2
+            );
             setDrawingManager(manager2);
 
             const toolbox2 = new kakao.maps.drawing.Toolbox({
               drawingManager: manager2,
             });
-            map.addControl(toolbox2.getElement(), kakao.maps.ControlPosition.TOP);
+            map.addControl(
+              toolbox2.getElement(),
+              kakao.maps.ControlPosition.TOP
+            );
 
             // Toolbox 요소를 생성한 후 DOM을 가져와 스타일 변경
             const toolboxElement = toolbox2.getElement();
@@ -396,7 +413,6 @@ const KakaoMap = () => {
 
             // 지도에 추가
             map.addControl(customControl);
-
           });
         } else {
           setRegionInfo("현재 위치를 가져올 수 없습니다.");
@@ -570,7 +586,10 @@ const KakaoMap = () => {
 
         const firstPlace = data[0];
         if (firstPlace) {
-          const firstPlacePosition = new kakao.maps.LatLng(firstPlace.y, firstPlace.x);
+          const firstPlacePosition = new kakao.maps.LatLng(
+            firstPlace.y,
+            firstPlace.x
+          );
           map.setCenter(firstPlacePosition);
         }
 
@@ -888,7 +907,7 @@ const KakaoMap = () => {
               </a>
             </li>
             <li className="navbar__item">
-              <Link to={"/travel"} className="navbar__link">
+              <Link to={"/trip/1"} className="navbar__link">
                 <i data-feather="map"></i>
                 <span>map</span>
               </Link>

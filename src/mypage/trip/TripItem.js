@@ -1,36 +1,65 @@
 import { sliceText } from "../UtileFunc";
+import { setDateText } from "./../UtileFunc";
 
 const TripItem = ({ item }) => {
   return (
-    <div className="trip-item">
-      <img className="back-img" src={item.img} alt="" />
+    <div
+      className="trip-item"
+      onClick={() => {
+        window.location = "/travel/view/" + item.id;
+      }}
+    >
+      <img
+        className="back-img"
+        src={
+          item.coverImageName
+            ? item.coverImageName
+            : process.env.PUBLIC_URL + "/imgs/gyeongbokgung.jpg"
+        }
+        alt=""
+      />
       <div className="content-wrapper">
         <div className="text-wrapper">
           <div className="title-text">
-            <span>{sliceText(item.name, 13, "루트 이름")}</span>
-            {item.range === "private" ? (
+            <span>{sliceText(item.title, 13, "루트 이름")}</span>
+            {item.isPrivate ? (
               <img
                 src={process.env.PUBLIC_URL + "/imgs/passwordIcon.png"}
                 alt=""
+                onError={(e) => {
+                  e.target.src =
+                    process.env.PUBLIC_URL + "/imgs/gyeongbokgung.jpg";
+                }}
               />
             ) : (
               ""
             )}
           </div>
           <span className="desc-text">
-            {sliceText(item.description, 60, "루트 이름")}
+            {sliceText(item.content, 60, "루트 이름")}
           </span>
         </div>
         <div className="profile-container">
-          <img src={item.profileImg} className="profile-img" alt="" />
-          <span>{item.nickname}</span>
+          <img
+            src={
+              item.profileImage
+                ? item.profileImage
+                : process.env.PUBLIC_URL + "/imgs/gyeongbokgung.jpg"
+            }
+            className="profile-img"
+            alt=""
+            onError={(e) => {
+              e.target.src = process.env.PUBLIC_URL + "/imgs/gyeongbokgung.jpg";
+            }}
+          />
+          <span>{item.creatorNickName}</span>
         </div>
       </div>
       <div className="downside">
-        <span>{item.date}</span>
+        <span>{setDateText(item.createdAt)}</span>
         <div>
           <img src={process.env.PUBLIC_URL + "/imgs/heartIcon.png"} />
-          {item.like}
+          {item.heartCount}
         </div>
       </div>
     </div>

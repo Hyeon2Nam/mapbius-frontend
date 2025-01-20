@@ -24,7 +24,6 @@ const FavoriteItem = ({ item }) => {
         }
       })
       .catch((e) => {
-        console.log(1);
         setBackImg(process.env.PUBLIC_URL + "/imgs/gyeongbokgung.jpg");
       });
   };
