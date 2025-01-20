@@ -1,0 +1,65 @@
+@use "util.scss" as *;
+
+// .none {
+//   display: none;
+// }
+
+.chat-gpt-page {
+  z-index: 1;
+  position: absolute;
+  // 위치 옮기기
+  bottom: 0;
+  margin-left: 500px;
+  box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.15);
+
+  .header-box {
+    height: 50px;
+    background-color: $map-theme;
+    border-radius: 20px 20px 0 0;
+    font-size: 1.3rem;
+
+    div {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  .chat-box {
+    width: 350px;
+    height: 600px;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    border-radius: 0 0 12px 12px;
+    overflow: hidden;
+  }
+
+  .message-box {
+    flex-grow: 1;
+    padding: 16px;
+    overflow-y: auto;
+    background-color: #fff;
+  }
+
+  .input-field {
+    display: flex;
+    padding: 16px;
+    margin-right: 8px;
+    background-color: #fff;
+    border-radius: 4px;
+
+    button {
+      padding: 12px 16px;
+      color: #000;
+      font-weight: bold;
+      background-color: $map-theme;
+      border: none;
+
+      &:hover {
+        background-color: #bcb7d4;
+      }
+    }
+  }
+}

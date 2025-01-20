@@ -1,0 +1,145 @@
+@use "util.scss" as *;
+
+.notice-board-container {
+  font-family: "malssami815";
+  margin-bottom: 300px;
+  overflow: hidden;
+
+  .page-title-wrapper {
+    width: 70%;
+    text-align: start;
+    margin: auto;
+
+    .page-title {
+      font-size: 3rem;
+      cursor: pointer;
+    }
+  }
+
+  .back-text {
+    position: relative;
+    font-size: 5.5rem;
+    color: #e1e1e1;
+    z-index: -1;
+    top: 2%;
+    right: -50%;
+  }
+
+  .search {
+    border: 4px solid black;
+    min-width: 30%;
+    max-width: 40%;
+    padding: 10px 20px;
+    margin: auto;
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    border-radius: 50px;
+
+    input,
+    button,
+    select {
+      font-family: "malssami815";
+      border: none;
+      outline: none;
+      background: initial;
+      font-size: 1.2rem;
+    }
+
+    select {
+      width: 20%;
+      margin-right: 10px;
+      text-align: center;
+    }
+
+    button {
+      width: 10%;
+      img {
+        width: 40px;
+        height: auto;
+        cursor: pointer;
+      }
+    }
+
+    input[type="text"] {
+      width: 65%;
+    }
+  }
+
+  .pagenation {
+    margin: 30px 0;
+
+    button {
+      margin: 0 5px;
+      background: initial;
+      border: none;
+      font-size: 1.2rem;
+      padding: 10px;
+      width: 40px;
+      border-radius: 30px;
+    }
+
+    button:hover {
+      background-color: #e1e1e1;
+      border-radius: 30px;
+    }
+
+    .cur-page {
+      color: $main-color;
+      font-weight: bold;
+    }
+  }
+
+  .bottom-menu {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+
+    button {
+      font-family: "malssami815";
+      font-size: 17px;
+      background: gray;
+      border-radius: 20px;
+      padding: 10px;
+      color: #fff;
+      border: none;
+      width: 90px;
+    }
+  }
+
+  .notice-list {
+    width: 70%;
+    margin: auto;
+  }
+
+  table {
+    width: 100%;
+    border-top: 1px solid black;
+
+    @for $i from 1 through 3 {
+      td:nth-child(#{$i}) {
+        width: if($i%2==1, 20%, 60%);
+      }
+    }
+
+    th {
+      padding: 20px 0;
+    }
+
+    tr {
+      height: 60px;
+    }
+
+    th,
+    td {
+      border-bottom: 1px solid #cdcdcd;
+      font-size: 1.1rem;
+    }
+
+    a {
+      @include linkTextDecorate;
+      color: #000;
+    }
+  }
+}

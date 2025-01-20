@@ -1,0 +1,174 @@
+$main-color: #294be7;
+$btn-blue: #3e61ff;
+$btn-yellow: #ffde59;
+$kakao-brown: #81583b;
+$map-theme: #e5e0ff;
+
+$breakpoint-mobile: 335px;
+$breakpoint-tablet: 758px;
+$breakpoint-desktop: 1024px;
+$breakpoint-large-desktop: 2048px;
+
+@font-face {
+  font-family: "malssami815";
+  src: url("./fonts/malssami815.otf");
+}
+
+@font-face {
+  font-family: "DNFForgedBlade";
+  font-style: normal;
+  font-weight: 300;
+  src: url("//cdn.df.nexon.com/img/common/font/DNFForgedBlade-Light.otf")
+    format("opentype");
+}
+
+@font-face {
+  font-family: "Wolyeonggyo";
+  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_13@1.0/Wolyeonggyo.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "BMJUA";
+  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMJUA.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "NanumSquareNeo";
+  src: url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquareNeo/NanumSquareNeoTTF-bRg.eot);
+  src: url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquareNeo/NanumSquareNeoTTF-bRg.eot?#iefix)
+      format("embedded-opentype"),
+    url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquareNeo/NanumSquareNeoTTF-bRg.woff)
+      format("woff"),
+    url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquareNeo/NanumSquareNeoTTF-bRg.ttf)
+      format("truetype");
+}
+
+@font-face {
+  font-family: "SDSamliphopangche_Basic";
+  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts-20-12@1.0/SDSamliphopangche_Basic.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Paperlogy-8ExtraBold";
+  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-8ExtraBold.woff2")
+    format("woff2");
+  font-weight: 800;
+  font-style: normal;
+}
+
+@mixin random-bgr() {
+  background: rgb(random(255), random(255), random(255));
+}
+
+@mixin linkTextDecorate() {
+  text-decoration: none;
+  color: $main-color;
+}
+
+@mixin mobile {
+  @media (min-width: #{$breakpoint-mobile}) and (max-width: #{$breakpoint-tablet - 1px}) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (min-width: #{$breakpoint-tablet}) and (max-width: #{$breakpoint-desktop - 1px}) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: #{$breakpoint-desktop}) and (max-width: #{$breakpoint-large-desktop - 1px}) {
+    @content;
+  }
+}
+
+@mixin large-desktop {
+  @media (min-width: #{$breakpoint-large-desktop}) {
+    @content;
+  }
+}
+
+@mixin blue-btn {
+  button,
+  input[type="button"] {
+    font-family: "malssami815";
+    border: none;
+    padding: 20px;
+    border-radius: 50px;
+    font-size: 1.2rem;
+    height: 60px;
+    color: white;
+    background-color: $btn-blue;
+    margin-right: 30px;
+    width: 140px;
+    cursor: pointer;
+  }
+}
+
+@mixin rounded-blue() {
+  font-family: "malssami815";
+  border: none;
+  padding: 20px;
+  border-radius: 50px;
+  font-size: 1.2rem;
+  height: 60px;
+  color: white;
+  background-color: $btn-blue;
+  margin-right: 30px;
+  width: 140px;
+  cursor: pointer;
+}
+
+@mixin size-blue-btn($w, $h, $font) {
+  button,
+  input[type="button"] {
+    width: $w;
+    height: $h;
+    font-family: "malssami815";
+    border: none;
+    padding: 20px;
+    border-radius: 50px;
+    font-size: $font;
+    color: white;
+    background-color: $btn-blue;
+    cursor: pointer;
+  }
+}
+
+@mixin size-btn($w, $h, $font) {
+  width: $w;
+  height: $h;
+  font-family: "malssami815";
+  border: none;
+  padding: 20px;
+  border-radius: 50px;
+  font-size: $font;
+  color: white;
+  background-color: $btn-blue;
+  cursor: pointer;
+}
+
+@mixin class-blu-btn {
+  button,
+  input[type="button"] {
+    font-family: "malssami815";
+    border: none;
+    padding: 20px;
+    border-radius: 50px;
+    color: white;
+    background-color: $btn-blue;
+    margin-right: 30px;
+    font-size: 1.2rem;
+    cursor: pointer;
+  }
+}
