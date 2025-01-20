@@ -106,7 +106,7 @@ const KakaoMap = () => {
 
             const options = {
               // 지도 옵션 설정
-              center: new window.kakao.maps.LatLng(lat,lng),
+              center: new window.kakao.maps.LatLng(lat, lng),
               level: 5,
             };
 
@@ -136,7 +136,10 @@ const KakaoMap = () => {
             // ★★★★ 스카이뷰 , 일반 맵 유형 지정
             const mapTypeControl = new window.kakao.maps.MapTypeControl();
             // ★ 기존의 지도 위에 새롭게 설정
-            map.addControl(mapTypeControl, window.kakao.maps.ControlPosition.TOPLEFT);
+            map.addControl(
+              mapTypeControl,
+              window.kakao.maps.ControlPosition.TOPLEFT
+            );
 
             // 줌 컨트롤 추가
             const zoomControl = new window.kakao.maps.ZoomControl();
@@ -222,7 +225,9 @@ const KakaoMap = () => {
               },
             };
 
-            const manager = new kakao.maps.drawing.DrawingManager(drawingOptions);
+            const manager = new kakao.maps.drawing.DrawingManager(
+              drawingOptions
+            );
             setDrawingManager(manager);
 
             // Drawing Toolbox 생성
@@ -245,11 +250,13 @@ const KakaoMap = () => {
               },
             };
 
-            const manager1 = new kakao.maps.drawing.DrawingManager(drawingOptions1);
+            const manager1 = new kakao.maps.drawing.DrawingManager(
+              drawingOptions1
+            );
             setDrawingManager(manager1);
 
             // 마커가 생성될 때 이벤트 리스너 추가
-              kakao.maps.event.addListener(manager1, "drawend", function (data) {
+            kakao.maps.event.addListener(manager1, "drawend", function (data) {
               if (data.overlayType === kakao.maps.drawing.OverlayType.MARKER) {
                 const marker = data.target; // 생성된 마커
 
@@ -282,7 +289,7 @@ const KakaoMap = () => {
                 const infowindow = new kakao.maps.InfoWindow({
                   content: infowindowContent,
                 });
-      
+
                 let isFixed = false; //인포윈도우 고정 상태 플래그
 
                 // 닫기 버튼 클릭 이벤트 추가
@@ -333,7 +340,8 @@ const KakaoMap = () => {
 
                 // 커스텀 닫기 버튼 이벤트 추가
                 setTimeout(() => {
-                  const closeButton = document.querySelector(".infowindow .close");
+                  const closeButton =
+                    document.querySelector(".infowindow .close");
                   if (closeButton) {
                     closeButton.addEventListener("click", () => {
                       infowindow.close();
@@ -348,7 +356,10 @@ const KakaoMap = () => {
             const toolbox1 = new kakao.maps.drawing.Toolbox({
               drawingManager: manager1,
             });
-            map.addControl(toolbox1.getElement(), kakao.maps.ControlPosition.TOP);
+            map.addControl(
+              toolbox1.getElement(),
+              kakao.maps.ControlPosition.TOP
+            );
 
           });
         } else {
@@ -523,7 +534,10 @@ const KakaoMap = () => {
 
         const firstPlace = data[0];
         if (firstPlace) {
-          const firstPlacePosition = new kakao.maps.LatLng(firstPlace.y, firstPlace.x);
+          const firstPlacePosition = new kakao.maps.LatLng(
+            firstPlace.y,
+            firstPlace.x
+          );
           map.setCenter(firstPlacePosition);
         }
 
@@ -841,7 +855,7 @@ const KakaoMap = () => {
               </a>
             </li>
             <li className="navbar__item">
-              <Link to={"/travel"} className="navbar__link">
+              <Link to={"/trip/1"} className="navbar__link">
                 <i data-feather="map"></i>
                 <span>map</span>
               </Link>
@@ -946,9 +960,9 @@ const KakaoMap = () => {
       <div
         style={{
           position: "absolute",
-          top: "10px",
-          right: "10px",
-          zIndex: 10000,
+          top: "1px",
+          right: "500px",
+          zIndex: 1000,
         }}
       >
         <button

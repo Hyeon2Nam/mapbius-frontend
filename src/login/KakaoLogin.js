@@ -26,11 +26,8 @@ const KakaoLogin = () => {
   };
 
   const handleCallback = async () => {
-    console.log(1);
-
     const urlParams = new URLSearchParams(window.location.search);
     const authorizationCode = urlParams.get("code");
-    console.log("auth code : " + authorizationCode);
 
     if (authorizationCode && localStorage.getItem("RegType") !== "normal") {
       tryKakaoLogin(authorizationCode)
@@ -46,8 +43,6 @@ const KakaoLogin = () => {
           }
         })
         .catch((e) => {
-          console.log(e);
-
           if (e.status >= 400) {
             alert("회원가입 실패");
             nav("/login");

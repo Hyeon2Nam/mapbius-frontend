@@ -64,3 +64,11 @@ export const getUserBookmarkList = (token) => {
     },
   });
 };
+
+export const getUserTripRouteList = (token) => {
+  return api.post("/api/private/travel-route/entire-list", "", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
