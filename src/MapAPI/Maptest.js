@@ -907,7 +907,7 @@ const KakaoMap = () => {
               </a>
             </li>
             <li className="navbar__item">
-              <Link to={"/travel/create/0"} className="navbar__link">
+              <Link to={"/trip/1"} className="navbar__link">
                 <i data-feather="map"></i>
                 <span>map</span>
               </Link>

@@ -12,3 +12,7 @@ export const createTripRoute = (obj, token) => {
 export const getTripRouteData = (obj) => {
   return api.post("/api/public/travel-route/detail", obj);
 };
+
+export const getPublicTripRouteList = () => {
+  return api.post("/api/public/travel-route/entire-list", "");
+};

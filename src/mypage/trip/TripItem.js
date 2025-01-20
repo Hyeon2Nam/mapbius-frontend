@@ -26,6 +26,10 @@ const TripItem = ({ item }) => {
               <img
                 src={process.env.PUBLIC_URL + "/imgs/passwordIcon.png"}
                 alt=""
+                onError={(e) => {
+                  e.target.src =
+                    process.env.PUBLIC_URL + "/imgs/gyeongbokgung.jpg";
+                }}
               />
             ) : (
               ""
@@ -36,7 +40,18 @@ const TripItem = ({ item }) => {
           </span>
         </div>
         <div className="profile-container">
-          <img src={item.profileImg} className="profile-img" alt="" />
+          <img
+            src={
+              item.profileImage
+                ? item.profileImage
+                : process.env.PUBLIC_URL + "/imgs/gyeongbokgung.jpg"
+            }
+            className="profile-img"
+            alt=""
+            onError={(e) => {
+              e.target.src = process.env.PUBLIC_URL + "/imgs/gyeongbokgung.jpg";
+            }}
+          />
           <span>{item.creatorNickName}</span>
         </div>
       </div>
@@ -44,7 +59,7 @@ const TripItem = ({ item }) => {
         <span>{setDateText(item.createdAt)}</span>
         <div>
           <img src={process.env.PUBLIC_URL + "/imgs/heartIcon.png"} />
-          {item.like}
+          {item.heartCount}
         </div>
       </div>
     </div>
