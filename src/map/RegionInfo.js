@@ -19,6 +19,8 @@ const RegionInfo = ({ region }) => {
   const [tripRouteList, setTripRouteList] = useState(null);
   const [festivalList, setFestivalList] = useState(null);
 
+
+
   const getPopulation = () => {
     let obj = {
       region: region.name,
@@ -60,6 +62,8 @@ const RegionInfo = ({ region }) => {
 
     if (areaCode > 0) {
       getTourInfo(areaCode);
+    } else {
+      setProductList(null);
     }
   };
 
@@ -79,7 +83,7 @@ const RegionInfo = ({ region }) => {
 
   const getFestival = () => {
     let obj = {
-      region: region.name,
+      region: region.name.slice(0, -1),
     };
 
     getRegionFes(obj)
@@ -122,7 +126,6 @@ const RegionInfo = ({ region }) => {
   const getTwoTripList = () => {
     getPublicTripRouteList()
       .then((res) => {
-        console.log(res);
         if (res.status === 200) {
           setTripRouteList(res.data.objData.slice(0, 2));
         }

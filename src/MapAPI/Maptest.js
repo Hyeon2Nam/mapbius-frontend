@@ -9,6 +9,8 @@ import "../style/ChatPage.scss";
 import CampaignOutlinedIcon from "@mui/icons-material/CampaignOutlined";
 import { Link } from "react-router-dom";
 import { getRateAndCnt } from "../api/mapApi";
+import LayersIcon from '@mui/icons-material/Layers';
+import GpsFixedIcon from '@mui/icons-material/GpsFixed';
 
 /* global kakao */
 
@@ -27,17 +29,38 @@ const KakaoMap = () => {
   const [drawingManager, setDrawingManager] = useState(null);
   const [drawnData, setDrawnData] = useState(null);
 
-  const [regionInfo, setRegionInfo] = useState(
-    "현재 위치의 정보를 불러옵니다..."
-  );
+  const mapContainer = useRef(null); // 카카오맵을 렌더링할 DOM 참조
+  const [showButtons, setShowButtons] = useState(true); // 버튼 표시 여부
+
+  const [regionInfo, setRegionInfo] = useState("현재 위치의 정보를 불러옵니다...");
 
   const [navbarCollapsed, setNavbarCollapsed] = useState(false); // navbar1 상태
   const [icon, setIcon] = useState("chevrons-left"); // 아이콘 상태
 
   const [filteredResults, setFilteredResults] = useState([]); // 바로 필터링된 결과 저장
 
+  const regionFullNameMap = {
+    "서울": "서울특별시",
+    "부산": "부산광역시",
+    "대구": "대구광역시",
+    "인천": "인천광역시",
+    "광주": "광주광역시",
+    "대전": "대전광역시",
+    "울산": "울산광역시",
+    "세종": "세종특별자치시",
+    "경기": "경기도",
+    "강원": "강원도",
+    "충북": "충청북도",
+    "충남": "충청남도",
+    "전북": "전라북도",
+    "전남": "전라남도",
+    "경북": "경상북도",
+    "경남": "경상남도",
+    "제주": "제주특별자치도"
+  };
+
   // 카카오맵 주소 검색 API 호출 함수
-  const fetchRegionInfo = (lat, lng, setRegionInfo) => {
+  const fetchRegionInfo = (lat, lng) => {
     const geocoder = new kakao.maps.services.Geocoder();
     const coord = new kakao.maps.LatLng(lat, lng);
 
@@ -45,12 +68,18 @@ const KakaoMap = () => {
       if (status === kakao.maps.services.Status.OK) {
         if (result.length > 0) {
           const address = result[0].address;
-          const region = `${address.region_1depth_name} > ${address.region_2depth_name} > ${address.region_3depth_name}`;
+          const region1DepthFullName = regionFullNameMap[address.region_1depth_name] || address.region_1depth_name;
+          const region = `${region1DepthFullName} > ${address.region_2depth_name}`;
+
           setRegionInfo(region);
+          setRegionData({
+            category: region1DepthFullName,
+            name:address.region_2depth_name
+          })
+          setSpotType("region")
         }
       } else {
-        console.error("주소를 가져오는 데 실패했습니다:", status);
-        setRegionInfo("정보를 가져오지 못했습니다.");
+        setRegionInfo("행정구역 정보를 불러올 수 없습니다.");
       }
     });
   };
@@ -73,6 +102,15 @@ const KakaoMap = () => {
     category: "충청남도",
     name: "청양",
   };
+
+
+//   useEffect(() => {
+// setSpotType("region")
+// setRegionData({
+//   category : regionInfo.slice(),
+//   name : regionInfo,
+// })
+//   }, [regionInfo]);
 
   // 사용자 로그인 상태
   const [userState, setUserState] = useState("none");
@@ -97,6 +135,7 @@ const KakaoMap = () => {
       // Kakao 지도 API가 로드된 후에 실행
       if (window.kakao) {
         const container = document.getElementById("map"); // 지도 컨테이너 엘리먼트를 찾기
+        if (!container) return;
 
         if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition((position) => {
@@ -114,7 +153,21 @@ const KakaoMap = () => {
             mapRef.current = map; // Store the map instance in the ref 추가
 
             // 현재 위치 기반 행정구역 정보 가져오기
-            fetchRegionInfo(lat, lng, setRegionInfo);
+            // kakao.maps.event.addListener(map, "center_changed", () => {
+            //   const center = map.getCenter();
+            //   fetchRegionInfo(center.getLat(), center.getLng());
+            // });
+            fetchRegionInfo(lat, lng);
+
+            let debounceTimer;
+
+            kakao.maps.event.addListener(map, "idle", () => {
+              clearTimeout(debounceTimer);
+              debounceTimer = setTimeout(() => {
+                const center = map.getCenter();
+                fetchRegionInfo(center.getLat(), center.getLng());
+              }, 500); // Adjust debounce delay as needed
+            });
 
             updateCategoryMarkers(map, "coffee");
 
@@ -123,12 +176,11 @@ const KakaoMap = () => {
             // ★ 기존의 지도 위에 새롭게 설정
             map.addControl(
               mapTypeControl,
-              window.kakao.maps.ControlPosition.TOPLEFT
-            );
+              window.kakao.maps.ControlPosition.TOP);
 
             // 줌 컨트롤 추가
             const zoomControl = new window.kakao.maps.ZoomControl();
-            map.addControl(zoomControl, window.kakao.maps.ControlPosition.LEFT);
+            map.addControl(zoomControl, window.kakao.maps.ControlPosition.BOTTOMRIGHT);
 
             // 커스텀 오버레이 생성
             const overlayPosition = new kakao.maps.LatLng(37.49887, 127.026581);
@@ -221,7 +273,7 @@ const KakaoMap = () => {
             });
             map.addControl(
               toolbox.getElement(),
-              kakao.maps.ControlPosition.TOP
+              kakao.maps.ControlPosition.BOTTOM
             );
 
             // Drawing Manager 설정 및 초기화
@@ -343,76 +395,9 @@ const KakaoMap = () => {
             });
             map.addControl(
               toolbox1.getElement(),
-              kakao.maps.ControlPosition.TOP
+              kakao.maps.ControlPosition.TOPRIGHT
             );
 
-            const customMarkerImageSrc =
-              "https://cdn-icons-png.flaticon.com/512/684/684908.png"; // 커스텀 마커 이미지 URL
-            const customMarkerImageSize = new kakao.maps.Size(24, 34); // 커스텀 마커 이미지 크기
-            const customMarkerImageOption = {
-              offset: new kakao.maps.Point(12, 35),
-            }; // 이미지 좌표 기준점
-
-            const customMarkerImage = new kakao.maps.MarkerImage(
-              customMarkerImageSrc,
-              customMarkerImageSize,
-              customMarkerImageOption
-            );
-
-            const drawingOptions2 = {
-              map,
-              drawingMode: [kakao.maps.drawing.OverlayType.MARKER],
-              guideTooltip: ["draw", "drag", "edit"],
-              markerOptions: {
-                draggable: true,
-                removable: true,
-                image: customMarkerImage,
-              },
-            };
-
-            const manager2 = new kakao.maps.drawing.DrawingManager(
-              drawingOptions2
-            );
-            setDrawingManager(manager2);
-
-            const toolbox2 = new kakao.maps.drawing.Toolbox({
-              drawingManager: manager2,
-            });
-            map.addControl(
-              toolbox2.getElement(),
-              kakao.maps.ControlPosition.TOP
-            );
-
-            // Toolbox 요소를 생성한 후 DOM을 가져와 스타일 변경
-            const toolboxElement = toolbox2.getElement();
-            toolboxElement.style.display = "none";
-
-            // 커스텀 Toolbox 버튼 생성
-            const customToolboxButton = document.createElement("button");
-            customToolboxButton.style.backgroundImage =
-              "url('https://cdn-icons-png.flaticon.com/512/684/684908.png')";
-            customToolboxButton.style.backgroundSize = "contain";
-            customToolboxButton.style.position = "absolute"; // 버튼의 위치를 절대 위치로 설정
-            customToolboxButton.style.top = "-10px"; // 기존 버튼 위로 배치
-            customToolboxButton.style.right = "10px"; // 우측 정렬
-            customToolboxButton.style.width = "35px";
-            customToolboxButton.style.height = "35px";
-            customToolboxButton.style.borderRadius = "5px";
-            customToolboxButton.style.border = "none";
-            customToolboxButton.style.cursor = "pointer";
-
-            // 버튼 클릭 시 DrawingManager 활성화
-            customToolboxButton.addEventListener("click", () => {
-              manager2.select(kakao.maps.drawing.OverlayType.MARKER);
-            });
-
-            // 컨트롤 생성
-            const customControl = document.createElement("div");
-            customControl.appendChild(customToolboxButton);
-            customControl.style.margin = "10px"; // 필요하면 스타일 추가
-
-            // 지도에 추가
-            map.addControl(customControl);
           });
         } else {
           setRegionInfo("현재 위치를 가져올 수 없습니다.");
@@ -489,6 +474,7 @@ const KakaoMap = () => {
       console.error("지도 타입 변경 중 오류 발생: ", error);
     }
   }, [MapTypeId]);
+
 
   // 도형 데이터를 가져오는 메소드
   const getDrawnData = () => {
@@ -592,8 +578,6 @@ const KakaoMap = () => {
           );
           map.setCenter(firstPlacePosition);
         }
-
-        //map.setCenter(firstPlace);
 
         setFilteredResults(
           await Promise.all(
@@ -723,23 +707,6 @@ const KakaoMap = () => {
     updateCategoryMarkers(map, category);
   };
 
-  const hideMarkers = () => {
-    markers.forEach(({ marker }) => {
-      marker.setMap(null); // 지도에서 마커 숨기기
-    });
-    setHiddenMarkers(markers); // 숨겨진 마커 저장
-    setMarkers([]); // 현재 표시된 마커 초기화
-  };
-
-  const showMarkers = () => {
-    const map = mapRef.current;
-    hiddenMarkers.forEach(({ marker }) => {
-      marker.setMap(map); // 지도에 마커 다시 표시
-    });
-    setMarkers(hiddenMarkers); // 숨겨진 마커를 다시 활성 마커로 설정
-    setHiddenMarkers([]); // 숨겨진 마커 초기화
-  };
-
   const addMarker = (position, isCustom = false) => {
     const map = mapRef.current;
     if (!map) return;
@@ -762,60 +729,6 @@ const KakaoMap = () => {
     marker.setMap(map);
   };
 
-  const clearMarkers = () => {
-    // 저장된 모든 마커와 인포윈도우 삭제
-    markers.forEach(({ marker, infowindow }) => {
-      if (marker) marker.setMap(null); // 지도에서 마커 제거
-      if (infowindow) infowindow.close(); // 인포윈도우 닫기
-    });
-
-    setMarkers([]); // 마커 상태 초기화
-  };
-
-  const getInfo = () => {
-    const map = mapRef.current;
-    if (!map) return;
-
-    const center = map.getCenter(); // 지도의 가운데 지정
-    const level = map.getLevel(); // 지도의 현재 레벨을 얻어옵니다
-    const mapTypeId = map.getMapTypeId(); // 지도타입을 얻어옵니다
-    const bounds = map.getBounds(); // 지도의 현재 영역을 얻어옵니다
-    const swLatLng = bounds.getSouthWest(); // 영역의 남서쪽 좌표를 얻어옵니다
-    const neLatLng = bounds.getNorthEast(); // 영역의 북동쪽 좌표를 얻어옵니다
-
-    let message = "지도 중심좌표는 위도 " + center.getLat() + ", <br>";
-    message += "경도 " + center.getLng() + " 이고 <br>";
-    message += "지도 레벨은 " + level + " 입니다 <br> <br>";
-    message += "지도 타입은 " + mapTypeId + " 이고 <br> ";
-    message +=
-      "지도의 남서쪽 좌표는 " +
-      swLatLng.getLat() +
-      ", " +
-      swLatLng.getLng() +
-      " 이고 <br>";
-    message +=
-      "북동쪽 좌표는 " +
-      neLatLng.getLat() +
-      ", " +
-      neLatLng.getLng() +
-      " 입니다.";
-
-    setInfo(message);
-  };
-
-  const resetMapBounds = () => {
-    const map = mapRef.current;
-    if (!map) return;
-
-    const bounds = new kakao.maps.LatLngBounds();
-    bounds.extend(new kakao.maps.LatLng(36.43698897735751, 126.80202130837696)); // 충도대 좌표 추가
-    bounds.extend(
-      new kakao.maps.LatLng(36.459105780044275, 126.80200414891813)
-    ); // 추가 영역 좌표
-
-    map.setBounds(bounds); // 지도의 영역을 설정
-  };
-
   const showCurrentLocation = () => {
     if (!navigator.geolocation) {
       alert("현재 위치를 가져올 수 없습니다.");
@@ -836,17 +749,11 @@ const KakaoMap = () => {
         currentLocationMarker.setMap(null);
       }
 
-      // 현재 위치 마커 생성
-      const newMarker = new kakao.maps.Marker({
-        position: currentLatLng,
-        map: map,
-      });
-      setCurrentLocationMarker(newMarker);
-
       //지도 중심 이동
       map.setCenter(currentLatLng);
     });
   };
+
 
   return (
     <div
@@ -961,14 +868,9 @@ const KakaoMap = () => {
                 </button>
               </div>
 
-              <a href="#" className="navbar__link" style={{ left: "100px" }}>
-                <img
-                  style={{ width: "300px", height: "50px" }}
-                  src={weather}
-                  alt="s"
-                />
-                <span>날씨</span>
-              </a>
+              <div href="#" className="" style={{ left: "100px" }}>
+                {regionInfo}
+              </div>
               <div className="results">
                 {filteredResults.length > 0 ? (
                   filteredResults.map((place) => (
@@ -1005,86 +907,108 @@ const KakaoMap = () => {
           </ul>
         </nav>
 
-        <div id="map"></div>
+        <div id="map">
+        <div style={{ position: "relative", width: "100%", height: "500px" }}>
+      {/* 카카오맵 컨테이너 */}
+      <div
+        ref={mapContainer}
+        style={{ width: "100%", height: "100%" }}
+      ></div>
 
-        <div style={{ textAlign: "center", marginTop: "20px" }}>
-          <button className="button" onClick={toggleOverlayVisibility}>
+      {/* 레이어 토글 버튼 */}
+      <div
+        style={{
+          position: "absolute",
+          top: "1px",
+          right: "37%",
+          zIndex: 1000,
+        }}
+      >
+        <div>
+          <button 
+              style={{
+                padding: "8px 14px",
+                margin: "2px",
+                backgroundColor: "#5d9cec",
+                color: "white",
+                border: "none",
+                borderRadius: "5px",
+                cursor: "pointer",
+              }}
+              onClick={showCurrentLocation}>
+              <GpsFixedIcon/>
+            </button>
+
+          <button
+            style={{
+              padding: "8px 14px",
+              margin: "2px",
+              backgroundColor: "#5d9cec",
+              color: "white",
+              border: "none",
+              borderRadius: "5px",
+              cursor: "pointer",
+            }}
+
+            onClick={() => setShowButtons(!showButtons)}>
+            <LayersIcon/>
+          </button>
+        </div>
+
+        {/* 버튼 레이어 */}
+        {showButtons && (
+          <div
+            style={{
+              position: "absolute",
+              right: "-155%",
+              marginTop: "20px",
+              width: "440px",
+
+              zIndex: 1000,
+              backgroundColor: "rgba(255, 255, 255, 0.9)",
+              padding: "10px",
+              borderRadius: "8px",
+              boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
+              display: "grid", // 그리드 레이아웃 설정
+              gridTemplateColumns: "repeat(3, 1fr)", // 3칸으로 나눔
+              gap: "10px", // 버튼 간격 설정
+            }}
+          >
+            <button className="button" onClick={() => setMapTypeId("ROADMAP")}>
+              기본지도
+            </button>
+            
+            <button className="button" onClick={() => setMapTypeId("TRAFFIC")}>
+              교통 정보
+            </button>
+
+            <button className="button" onClick={() => setMapTypeId("ROADVIEW")}>
+              로드뷰
+            </button>
+
+            <button className="button" onClick={() => setMapTypeId("TERRAIN")}>
+              지형 정보
+            </button>
+
+            <button className="button" onClick={() => setMapTypeId("BICYCLE")}>
+              자전거 도로
+            </button>
+
+            <button className="button" onClick={() => setMapTypeId("USE_DISTRICT")}>
+              지적 편집도
+            </button>
+
+            <button className="button" onClick={() => deleteOverlay()}>
+              오버레이 삭제
+            </button>
+
+            <button className="button" onClick={toggleOverlayVisibility}>
             {customOverlay && customOverlay.getMap()
               ? "오버레이 숨기기"
               : "오버레이 보이기"}
           </button>
-        </div>
 
-        <div
-          style={{
-            textAlign: "center",
-            marginTop: "20px",
-            padding: "15px",
-            backgroundColor: "#fff",
-            borderRadius: "10px",
-            boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
-          }}
-        >
-          <h2
-            style={{ fontSize: "1.5rem", color: "#333", marginBottom: "10px" }}
-          >
-            타입 변경
-          </h2>
-          <div style={{ marginBottom: "10px" }}>
-            <button className="button" onClick={() => setMapTypeId("ROADMAP")}>
-              기본지도 보기
-            </button>
-            <button className="button" onClick={() => setMapTypeId("TRAFFIC")}>
-              교통 정보 보기
-            </button>
-            <button className="button" onClick={() => setMapTypeId("ROADVIEW")}>
-              로드뷰 보기
-            </button>
-            <button className="button" onClick={() => setMapTypeId("TERRAIN")}>
-              지형 정보 보기
-            </button>
-            <button className="button" onClick={() => setMapTypeId("BICYCLE")}>
-              자전거 도로 정보 보기
-            </button>
-            <button
-              className="button"
-              onClick={() => setMapTypeId("USE_DISTRICT")}
-            >
-              지적 편집도 보기
-            </button>
-            <button className="button" onClick={() => deleteOverlay()}>
-              오버레이 삭제하기
-            </button>
-          </div>
-
-          <h2 style={{ fontSize: "1.5rem", color: "#333", marginTop: "20px" }}>
-            맵핑 범위
-          </h2>
           <button
-            className="button"
-            id="resetBoundsBtn"
-            onClick={resetMapBounds}
-          >
-            맵핑 범위 재설정
-          </button>
-          <h2 style={{ fontSize: "1.5rem", color: "#333", marginTop: "20px" }}>
-            현재 위치 표시
-          </h2>
-          <button className="button" onClick={showCurrentLocation}>
-            현 위치로 이동 및 마커 추가
-          </button>
-
-          <h2 style={{ fontSize: "1.5rem", color: "#333", marginTop: "20px" }}>
-            마커 제어
-          </h2>
-          <div>
-            <button className="button" onClick={hideMarkers}>
-              모든 마커 숨기기
-            </button>
-            <button className="button" onClick={showMarkers}>
-              모든 마커 다시 표시
-            </button>
-            <button
               className="button"
               onClick={() =>
                 addMarker(new kakao.maps.LatLng(36.437, 126.803), true)
@@ -1092,31 +1016,12 @@ const KakaoMap = () => {
             >
               커스텀 마커 추가
             </button>
-            <button className="button" onClick={clearMarkers}>
-              모든 마커 제거
-            </button>
           </div>
-
-          <h2 style={{ fontSize: "1.5rem", color: "#333", marginTop: "20px" }}>
-            맵 정보 가져오기
-          </h2>
-          <button className="button" id="getInfoBtn" onClick={getInfo}>
-            맵정보 가져오기
-          </button>
-          <div
-            id="info"
-            style={{
-              marginTop: "10px",
-              padding: "10px",
-              border: "1px solid #ddd",
-              borderRadius: "5px",
-              backgroundColor: "#f9f9f9",
-            }}
-            dangerouslySetInnerHTML={{
-              __html: info,
-            }}
-          />
+          
+          )}
         </div>
+      </div>
+      </div>
       </div>
 
       <div className={isChatShow ? "chat-gpt-page" : "none"}>
