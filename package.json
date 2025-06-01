@@ -53,7 +53,7 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://58.74.46.219:61061",
+  "proxy": "http://183.107.82.189:8080",
   "devDependencies": {
     "sass": "^1.83.0"
   }

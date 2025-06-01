@@ -38,7 +38,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="right-section">
-          <span>제작 박정원 남현이 이승현 유근형</span>
+          <span>제작 박정원 남현이 이승현 김주혁 spcial thanks 유근형.</span>
           <span>ⓒ 2025. Mapbius All rights reserved.</span>
         </div>
       </div>

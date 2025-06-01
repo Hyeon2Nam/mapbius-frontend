@@ -22,6 +22,8 @@ const ProfileImageUpload = ({ route }) => {
       distances: route.distances[0],
       locationInfo: makeStringData(),
     });
+
+    
   }, [route]);
 
   const makeStringData = () => {
@@ -65,6 +67,14 @@ const ProfileImageUpload = ({ route }) => {
     Object.keys(formData).forEach((key) => {
       form.append(key, formData[key]);
     });
+
+    // for (const [key, value] of formData.entries()) {
+    //  console.log(key, value);
+    // };
+
+    // locationInfo undefined
+    // distances undefined
+
 
     createTripRoute(form, localStorage.getItem("userToken"))
       .then((res) => {
