@@ -170,9 +170,6 @@ const RegionInfo = ({ region }) => {
       locationAddress: region.name,
     };
 
-    console.log(obj);
-    console.log(region);
-
     setBookmark(obj, localStorage.getItem("userToken")).then((res) => {
       alert(res.data.message);
     });
