@@ -979,11 +979,7 @@ const KakaoMap = () => {
             </button>
             
             <button className="button" onClick={() => setMapTypeId("TRAFFIC")}>
-<<<<<<< HEAD
-              교통 정보
-=======
               교통정보
->>>>>>> d4916f733f7c835e74504b5bfb93a3d809f5480d
             </button>
 
             <button className="button" onClick={() => setMapTypeId("ROADVIEW")}>
@@ -991,21 +987,6 @@ const KakaoMap = () => {
             </button>
 
             <button className="button" onClick={() => setMapTypeId("TERRAIN")}>
-<<<<<<< HEAD
-              지형 정보
-            </button>
-
-            <button className="button" onClick={() => setMapTypeId("BICYCLE")}>
-              자전거 도로
-            </button>
-
-            <button className="button" onClick={() => setMapTypeId("USE_DISTRICT")}>
-              지적 편집도
-            </button>
-
-            <button className="button" onClick={() => deleteOverlay()}>
-              오버레이 삭제
-=======
               지형정보
             </button>
 
@@ -1019,18 +1000,12 @@ const KakaoMap = () => {
 
             <button className="button" onClick={() => deleteOverlay()}>
               오버레이삭제
->>>>>>> d4916f733f7c835e74504b5bfb93a3d809f5480d
             </button>
 
             <button className="button" onClick={toggleOverlayVisibility}>
             {customOverlay && customOverlay.getMap()
-<<<<<<< HEAD
-              ? "오버레이 숨기기"
-              : "오버레이 보이기"}
-=======
               ? "오버레이숨기기"
               : "오버레이보이기"}
->>>>>>> d4916f733f7c835e74504b5bfb93a3d809f5480d
           </button>
 
           <button
@@ -1039,11 +1014,7 @@ const KakaoMap = () => {
                 addMarker(new kakao.maps.LatLng(36.437, 126.803), true)
               }
             >
-<<<<<<< HEAD
-              커스텀 마커 추가
-=======
               커스텀마커 추가
->>>>>>> d4916f733f7c835e74504b5bfb93a3d809f5480d
             </button>
           </div>
           

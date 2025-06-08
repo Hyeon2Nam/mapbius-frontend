@@ -9,13 +9,8 @@ const ProfileImageUpload = ({ route }) => {
 
   // 텍스트 데이터
   const [formData, setFormData] = useState({
-<<<<<<< HEAD
-    title: "서울 여행 추천",
-    content: "서울의 주요 관광 명소를 둘러보는 여행 루트입니다.",
-=======
     title: "OO 여행 추천",
     content: "OO의 주요 관광 명소를 둘러보는 여행 루트입니다.",
->>>>>>> d4916f733f7c835e74504b5bfb93a3d809f5480d
     isPrivate: false,
     locationInfo: route.paths,
     distances: route.distances,
@@ -98,11 +93,7 @@ const ProfileImageUpload = ({ route }) => {
 
   return (
     <div className="distance-container">
-<<<<<<< HEAD
-      <h1 className="distance-h1">프로필 이미지 업로드</h1>
-=======
       <h1 className="distance-h1">여행루트 이미지 업로드</h1>
->>>>>>> d4916f733f7c835e74504b5bfb93a3d809f5480d
       <input
         type="file"
         className="distance-input"

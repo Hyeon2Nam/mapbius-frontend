@@ -9,19 +9,13 @@ const MainPage = () => {
   const [route, setRoute] = useState({
     paths: "",
     distances: 0,
-<<<<<<< HEAD
-=======
     start: null,
     end: null,
->>>>>>> d4916f733f7c835e74504b5bfb93a3d809f5480d
   });
   const [mode, setMode] = useState("create");
   const [routeId, setRouteId] = useState(0);
   const [routeData, setRouteData] = useState({});
-<<<<<<< HEAD
-=======
   const [mapInstance, setMapInstance] = useState(null); // ← 지도 객체 상태 추가
->>>>>>> d4916f733f7c835e74504b5bfb93a3d809f5480d
 
   const getRouteDataHandler = () => {
     let obj = {
@@ -31,16 +25,6 @@ const MainPage = () => {
     getTripRouteData(obj)
       .then((res) => {
         if (res.status === 200) {
-<<<<<<< HEAD
-          setRouteData(res.data.objData);
-        }
-      })
-      .catch((e) => {
-        // if (e.status === 404) {
-        alert("오류가 발생하였습니다");
-        window.location = "/";
-        // }
-=======
           const data = res.data.objData;
           const pathArray = data.locationInfo.split(",").map(Number);
           const coordinates = [];
@@ -95,7 +79,6 @@ const MainPage = () => {
       .catch((e) => {
         alert("오류가 발생하였습니다");
         window.location = "/";
->>>>>>> d4916f733f7c835e74504b5bfb93a3d809f5480d
       });
   };
 
@@ -106,22 +89,14 @@ const MainPage = () => {
     if (params.mode === "view") {
       getRouteDataHandler();
     }
-<<<<<<< HEAD
-  }, []);
-=======
   }, [mapInstance]);
->>>>>>> d4916f733f7c835e74504b5bfb93a3d809f5480d
 
   return (
     <div>
       <main>
         {/* Kakao Map Section */}
         <section>
-<<<<<<< HEAD
-          <KakaoMap setRoute={setRoute} routeData={routeData} mode={mode} />
-=======
           <KakaoMap setRoute={setRoute} routeData={routeData} mode={mode} onMapLoad={setMapInstance} />
->>>>>>> d4916f733f7c835e74504b5bfb93a3d809f5480d
         </section>
         {/* Profile Image Upload Section */}
 
