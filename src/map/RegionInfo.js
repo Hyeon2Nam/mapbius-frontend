@@ -9,6 +9,7 @@ import {
 } from "../api/regionApi";
 import ListContent from "./ListContent";
 import { getPublicTripRouteList } from "../api/tripRouteApi";
+import { checkBookmarkState, setBookmark } from "../api/mapApi";
 
 const RegionInfo = ({ region }) => {
   const [isBookmark, setIsBookmark] = useState(false);
@@ -18,8 +19,7 @@ const RegionInfo = ({ region }) => {
   const [newsList, setNewsList] = useState(null);
   const [tripRouteList, setTripRouteList] = useState(null);
   const [festivalList, setFestivalList] = useState(null);
-
-
+  const [areaCode, setAreaCode] = useState(null);
 
   const getPopulation = () => {
     let obj = {
@@ -47,20 +47,18 @@ const RegionInfo = ({ region }) => {
       region: region.category,
     };
 
-    let areaCode = 0;
-
     await getRegionName(obj)
       .then((res) => {
         if (res.status === 200) {
           const fr = res.data.item.filter((e) =>
             e.areaNm.includes(region.name)
           );
-          areaCode = fr[0].areaCode;
+          setAreaCode(fr[0].areaCode)
         }
       })
       .catch((e) => {});
 
-    if (areaCode > 0) {
+    if (areaCode && areaCode > 0) {
       getTourInfo(areaCode);
     } else {
       setProductList(null);
@@ -143,6 +141,49 @@ const RegionInfo = ({ region }) => {
       getTwoTripList();
     }
   }, [region]);
+
+  useEffect(() => {
+    if (region && region.name && areaCode) {
+      bookmakrCheck();
+    }
+  }, []);
+
+  const bookmakrCheck = async () => {
+    let obj = {
+      locationCode: region.name,
+    };
+    await checkBookmarkState(obj, localStorage.getItem("userToken")).then(
+      (res) => {
+        if (res.status === 200) {
+          setIsBookmark(true);
+        } else if (res.status === 201) setIsBookmark(false);
+        else if (res.status == 500) return;
+      }
+    );
+  };
+
+  const bookmarkHandler = async () => {
+    let obj = {
+      type: "지역",
+      locationCode: areaCode,
+      locationName: region.name,
+      locationAddress: region.name,
+    };
+
+    console.log(obj);
+    console.log(region);
+
+    setBookmark(obj, localStorage.getItem("userToken")).then((res) => {
+      alert(res.data.message);
+    });
+  };
+
+  useEffect(() => {
+    if (region.areaCode === null) return;
+
+    if (region && region.name && areaCode)
+      bookmarkHandler();
+  }, [isBookmark]);
 
   return (
     <>
