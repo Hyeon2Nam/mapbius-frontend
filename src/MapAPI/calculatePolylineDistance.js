@@ -165,7 +165,7 @@ const KakaoMap = ({ setRoute, routeData, mode, onMapLoad }) => {
       strokeStyle: "solid",
     });
 
-    //출발 도착 마커
+    //출발 도착 마커1
     const startMarker = new kakao.maps.Marker({
       map: map,
       position: linePath[0],
