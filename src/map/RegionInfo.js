@@ -9,7 +9,10 @@ import {
 } from "../api/regionApi";
 import ListContent from "./ListContent";
 import { getPublicTripRouteList } from "../api/tripRouteApi";
+<<<<<<< HEAD
 import { checkBookmarkState, setBookmark } from "../api/mapApi";
+=======
+>>>>>>> d4916f733f7c835e74504b5bfb93a3d809f5480d
 
 const RegionInfo = ({ region }) => {
   const [isBookmark, setIsBookmark] = useState(false);
@@ -19,7 +22,12 @@ const RegionInfo = ({ region }) => {
   const [newsList, setNewsList] = useState(null);
   const [tripRouteList, setTripRouteList] = useState(null);
   const [festivalList, setFestivalList] = useState(null);
+<<<<<<< HEAD
   const [areaCode, setAreaCode] = useState(null);
+=======
+
+
+>>>>>>> d4916f733f7c835e74504b5bfb93a3d809f5480d
 
   const getPopulation = () => {
     let obj = {
@@ -47,18 +55,31 @@ const RegionInfo = ({ region }) => {
       region: region.category,
     };
 
+<<<<<<< HEAD
+=======
+    let areaCode = 0;
+
+>>>>>>> d4916f733f7c835e74504b5bfb93a3d809f5480d
     await getRegionName(obj)
       .then((res) => {
         if (res.status === 200) {
           const fr = res.data.item.filter((e) =>
             e.areaNm.includes(region.name)
           );
+<<<<<<< HEAD
           setAreaCode(fr[0].areaCode)
+=======
+          areaCode = fr[0].areaCode;
+>>>>>>> d4916f733f7c835e74504b5bfb93a3d809f5480d
         }
       })
       .catch((e) => {});
 
+<<<<<<< HEAD
     if (areaCode && areaCode > 0) {
+=======
+    if (areaCode > 0) {
+>>>>>>> d4916f733f7c835e74504b5bfb93a3d809f5480d
       getTourInfo(areaCode);
     } else {
       setProductList(null);
@@ -142,6 +163,7 @@ const RegionInfo = ({ region }) => {
     }
   }, [region]);
 
+<<<<<<< HEAD
   useEffect(() => {
     if (region && region.name && areaCode) {
       bookmakrCheck();
@@ -182,6 +204,8 @@ const RegionInfo = ({ region }) => {
       bookmarkHandler();
   }, [isBookmark]);
 
+=======
+>>>>>>> d4916f733f7c835e74504b5bfb93a3d809f5480d
   return (
     <>
       <div className="head-section region">

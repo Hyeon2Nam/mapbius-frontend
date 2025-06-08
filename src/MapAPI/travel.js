@@ -9,10 +9,19 @@ const MainPage = () => {
   const [route, setRoute] = useState({
     paths: "",
     distances: 0,
+<<<<<<< HEAD
+=======
+    start: null,
+    end: null,
+>>>>>>> d4916f733f7c835e74504b5bfb93a3d809f5480d
   });
   const [mode, setMode] = useState("create");
   const [routeId, setRouteId] = useState(0);
   const [routeData, setRouteData] = useState({});
+<<<<<<< HEAD
+=======
+  const [mapInstance, setMapInstance] = useState(null); // ← 지도 객체 상태 추가
+>>>>>>> d4916f733f7c835e74504b5bfb93a3d809f5480d
 
   const getRouteDataHandler = () => {
     let obj = {
@@ -22,6 +31,7 @@ const MainPage = () => {
     getTripRouteData(obj)
       .then((res) => {
         if (res.status === 200) {
+<<<<<<< HEAD
           setRouteData(res.data.objData);
         }
       })
@@ -30,6 +40,62 @@ const MainPage = () => {
         alert("오류가 발생하였습니다");
         window.location = "/";
         // }
+=======
+          const data = res.data.objData;
+          const pathArray = data.locationInfo.split(",").map(Number);
+          const coordinates = [];
+          for (let i = 0; i < pathArray.length; i += 2) {
+            coordinates.push({ lat: pathArray[i], lng: pathArray[i + 1] });
+          }
+
+          // 지도에 출발지, 도착지 마커
+          if (window.kakao && window.kakao.maps && coordinates.length >= 2 && mapInstance) {
+            const kakao = window.kakao;
+            const startMarker = new kakao.maps.Marker({
+              map: mapInstance,
+              position: new kakao.maps.LatLng(coordinates[0].lat, coordinates[0].lng),
+              title: "출발지",
+              image: new kakao.maps.MarkerImage(
+                "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/red_b.png",
+                new kakao.maps.Size(50, 45),
+                { offset: new kakao.maps.Point(14, 45) }
+              ),
+            });
+
+            const endMarker = new kakao.maps.Marker({
+              map: mapInstance,
+              position: new kakao.maps.LatLng(
+                coordinates[coordinates.length - 1].lat,
+                coordinates[coordinates.length - 1].lng
+              ),
+              title: "도착지",
+              image: new kakao.maps.MarkerImage(
+                "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/blue_b.png",
+                new kakao.maps.Size(50, 45),
+                { offset: new kakao.maps.Point(14, 45) }
+              ),
+            });
+
+            // 지도 객체가 로드되면 마커를 지도에 추가
+            if (window.mapInstance) {
+              startMarker.setMap(window.mapInstance);
+              endMarker.setMap(window.mapInstance);
+            }
+          }
+
+          setRoute({
+            paths: data.locationInfo,
+            distances: data.distances,
+            start: coordinates[0],
+            end: coordinates[coordinates.length - 1],
+          });
+          setRouteData(data);
+        }
+      })
+      .catch((e) => {
+        alert("오류가 발생하였습니다");
+        window.location = "/";
+>>>>>>> d4916f733f7c835e74504b5bfb93a3d809f5480d
       });
   };
 
@@ -40,14 +106,22 @@ const MainPage = () => {
     if (params.mode === "view") {
       getRouteDataHandler();
     }
+<<<<<<< HEAD
   }, []);
+=======
+  }, [mapInstance]);
+>>>>>>> d4916f733f7c835e74504b5bfb93a3d809f5480d
 
   return (
     <div>
       <main>
         {/* Kakao Map Section */}
         <section>
+<<<<<<< HEAD
           <KakaoMap setRoute={setRoute} routeData={routeData} mode={mode} />
+=======
+          <KakaoMap setRoute={setRoute} routeData={routeData} mode={mode} onMapLoad={setMapInstance} />
+>>>>>>> d4916f733f7c835e74504b5bfb93a3d809f5480d
         </section>
         {/* Profile Image Upload Section */}
 

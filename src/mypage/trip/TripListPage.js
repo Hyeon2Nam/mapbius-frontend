@@ -7,6 +7,7 @@ import { getUserTripRouteList } from "../../api/myPageApi";
 
 const TripListPage = () => {
   const [curIdx, setCurIdx] = useState(0);
+<<<<<<< HEAD
   const [dataList, setDataList] = useState([
     {
       content: "빵을 먹어요",
@@ -44,6 +45,9 @@ const TripListPage = () => {
       title: "가나디와 빵집 투어",
     },
   ]);
+=======
+  const [dataList, setDataList] = useState([]);
+>>>>>>> d4916f733f7c835e74504b5bfb93a3d809f5480d
 
   const getTripRouteList = () => {
     getUserTripRouteList(localStorage.getItem("userToken"))
