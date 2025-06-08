@@ -54,7 +54,7 @@ const KakaoMap = ({ setRoute, routeData, mode, onMapLoad }) => {
         });
 
         setMap(mapInstance);
-        onMapLoad && onMapLoad(mapInstance); // ← 이 부분 추가
+        onMapLoad && onMapLoad(mapInstance);
 
         const polyline = new kakao.maps.Polyline({
           map: mapInstance,
@@ -165,6 +165,7 @@ const KakaoMap = ({ setRoute, routeData, mode, onMapLoad }) => {
       strokeStyle: "solid",
     });
 
+    //출발 도착 마커
     const startMarker = new kakao.maps.Marker({
       map: map,
       position: linePath[0],

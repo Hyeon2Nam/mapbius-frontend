@@ -32,7 +32,7 @@ const MainPage = () => {
             coordinates.push({ lat: pathArray[i], lng: pathArray[i + 1] });
           }
 
-          // 지도에 출발지, 도착지 마커 표시
+          // 지도에 출발지, 도착지 마커
           if (window.kakao && window.kakao.maps && coordinates.length >= 2 && mapInstance) {
             const kakao = window.kakao;
             const startMarker = new kakao.maps.Marker({
