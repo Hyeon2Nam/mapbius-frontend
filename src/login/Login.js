@@ -47,14 +47,15 @@ export default function Login() {
 
   useEffect(() => {
     if (window.Kakao && !window.Kakao.isInitialized()) {
-      const appkey = process.env.REACT_APP_JS_API_KEY + "";
-      window.Kakao.init(appkey);
+      window.Kakao.init("887dc7c589bdf89694a8b8969b1ca714");
+      //const appkey = process.env.REACT_APP_JS_API_KEY + "";
+      //window.Kakao.init(appkey);
     }
   }, []);
 
   const handleKakaoLogin = () => {
     if (window.Kakao && window.Kakao.Auth) {
-      const redirectUri = "http://192.168.20.124:3000/kakao-register";
+      const redirectUri = "http://localhost:3000/kakao-register";
       window.Kakao.Auth.authorize({
         redirectUri: redirectUri,
       });
